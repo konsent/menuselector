@@ -40,20 +40,26 @@
                     <h2>📋 메뉴 목록</h2>
                     <div id="menu-categories"></div>
                 </section>
-                <section class="shopping-list-container">
-                    <div class="list-header">
-                        <h2>🛒 구매할 식재료</h2>
-                        <button id="copy-button" class="copy-btn">복사</button>
-                    </div>
-                    <ul id="shopping-list"></ul>
-                </section>
+                <div class="right-panel">
+                    <section class="selected-menus-container">
+                        <h2>⭐ 선택한 메뉴</h2>
+                        <ul id="selected-menus-list"></ul>
+                    </section>
+                    <section class="shopping-list-container">
+                        <div class="list-header">
+                            <h2>🛒 구매할 식재료<span id="total-ingredients-count"></span></h2>
+                            <button id="copy-button" class="copy-btn">복사</button>
+                        </div>
+                        <ul id="shopping-list"></ul>
+                    </section>
+                </div>
             </div>
 
             <!-- 재료 우선 모드 -->
             <div id="ingredient-first-mode" class="mode-section">
                 <section class="owned-ingredients-container">
                     <h2>✅ 보유 재료 선택</h2>
-                    <ul id="all-ingredients-list" class="ingredient-grid"></ul>
+                    <div id="all-ingredients-list"></div>
                 </section>
                 <section class="possible-menus-container">
                     <h2>🍳 만들 수 있는 메뉴</h2>
