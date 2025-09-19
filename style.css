@@ -32,6 +32,12 @@ header {
     margin-bottom: 30px;
 }
 
+.notice {
+    font-size: 0.85em;
+    color: #888;
+    margin-top: 10px;
+}
+
 /* 모드 토글 스위치 스타일 */
 .mode-toggle-container {
     display: flex;
