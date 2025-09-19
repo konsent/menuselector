@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>저녁 메뉴 플래너</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>저녁 메뉴 플래너</h1>
+            <p id="header-subtitle">메뉴를 선택하면 구매할 식재료 목록이 나타납니다.</p>
+            <div class="mode-toggle-container">
+                <span class="toggle-label">메뉴 우선</span>
+                <label class="switch">
+                    <input type="checkbox" id="mode-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">재료 우선</span>
+            </div>
+        </header>
+        <main>
+            <!-- 메뉴 우선 모드 -->
+            <div id="menu-first-mode" class="mode-section active">
+                <section class="menu-container">
+                    <h2>📋 메뉴 목록</h2>
+                    <div id="menu-categories"></div>
+                </section>
+                <section class="shopping-list-container">
+                    <div class="list-header">
+                        <h2>🛒 구매할 식재료</h2>
+                        <button id="copy-button" class="copy-btn">복사</button>
+                    </div>
+                    <ul id="shopping-list"></ul>
+                </section>
+            </div>
+
+            <!-- 재료 우선 모드 -->
+            <div id="ingredient-first-mode" class="mode-section">
+                <section class="owned-ingredients-container">
+                    <h2>✅ 보유 재료 선택</h2>
+                    <ul id="all-ingredients-list" class="ingredient-grid"></ul>
+                </section>
+                <section class="possible-menus-container">
+                    <h2>🍳 만들 수 있는 메뉴</h2>
+                    <div id="possible-menus-list"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
