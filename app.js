@@ -196,7 +196,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortedMenus = Array.from(selectedMenus).sort();
         sortedMenus.forEach(menuName => {
             const li = document.createElement('li');
-            li.textContent = menuName;
+            const link = document.createElement('a');
+            link.href = `https://www.google.com/search?q=${encodeURIComponent(menuName + ' 레시피')}`;
+            link.target = '_blank'; // 새 탭에서 열기
+            link.rel = 'noopener noreferrer'; // 보안 및 성능을 위해 추가
+            link.textContent = menuName;
+
+            li.appendChild(link);
             selectedMenusListEl.appendChild(li);
         });
     }

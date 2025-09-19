@@ -265,6 +265,18 @@ section h2 {
     text-align: center;
 }
 
+.selected-menus-container li a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    margin: -10px -15px; /* 부모 li의 padding을 무효화하고 전체 영역을 채움 */
+    padding: 10px 15px; /* 링크에 padding을 다시 적용 */
+    transition: background-color 0.2s ease;
+}
+.selected-menus-container li a:hover {
+    background-color: var(--background-color);
+}
+
 /* 식재료 목록 스타일 */
 .shopping-list-container ul {
     list-style: none;
