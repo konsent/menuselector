@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ingredientFirstModeEl = document.getElementById('ingredient-first-mode');
 
     // 메뉴 우선 모드 요소
+    const menuSearchInput = document.getElementById('menu-search-input');
     const menuCategoriesEl = document.getElementById('menu-categories');
     const shoppingListEl = document.getElementById('shopping-list');
     const copyButton = document.getElementById('copy-button');
@@ -164,6 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 복사 버튼 이벤트 (메뉴 우선 모드)
         copyButton.addEventListener('click', handleCopyClick);
+
+        // 메뉴 검색 이벤트
+        menuSearchInput.addEventListener('input', handleMenuSearch);
     }
 
     /**
@@ -181,6 +185,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateShoppingList();
+    }
+
+    /**
+     * 메뉴 검색 이벤트 처리
+     * @param {Event} event - input 이벤트 객체
+     */
+    function handleMenuSearch(event) {
+        const searchTerm = event.target.value.toLowerCase().trim();
+        const menuSections = menuCategoriesEl.querySelectorAll('.menu-type-section');
+
+        menuSections.forEach(section => {
+            const menuItems = section.querySelectorAll('.type-menu-list li');
+            let sectionHasVisibleItems = false;
+
+            menuItems.forEach(item => {
+                const menuName = item.dataset.menuName.toLowerCase();
+                const isVisible = menuName.includes(searchTerm);
+                // 'flex'는 CSS에서 li에 적용된 display 속성입니다.
+                item.style.display = isVisible ? 'flex' : 'none';
+                if (isVisible) {
+                    sectionHasVisibleItems = true;
+                }
+            });
+
+            // 검색 결과가 있는 섹션만 보여줍니다.
+            section.style.display = sectionHasVisibleItems ? 'block' : 'none';
+        });
     }
 
     /**
@@ -532,18 +563,35 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'possible-menu-card';
 
-            let content = `<h4>${menu.name}</h4>`;
+            // Create heading with link
+            const heading = document.createElement('h4');
+            const link = document.createElement('a');
+            link.href = `https://www.google.com/search?q=${encodeURIComponent(menu.name + ' 레시피')}`;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = menu.name;
+            heading.appendChild(link);
+            card.appendChild(heading);
+
             if (missingIngredients.length === 0) {
-                content += '<p class="ready-to-cook">✅ 재료 모두 보유!</p>';
+                const p = document.createElement('p');
+                p.className = 'ready-to-cook';
+                p.textContent = '✅ 재료 모두 보유!';
+                card.appendChild(p);
             } else {
-                content += '<p>추가 필요 재료:</p>';
-                content += '<ul class="missing-ingredients-list">';
+                const p = document.createElement('p');
+                p.textContent = '추가 필요 재료:';
+                card.appendChild(p);
+
+                const ul = document.createElement('ul');
+                ul.className = 'missing-ingredients-list';
                 missingIngredients.forEach(ing => {
-                    content += `<li>${ing}</li>`;
+                    const li = document.createElement('li');
+                    li.textContent = ing;
+                    ul.appendChild(li);
                 });
-                content += '</ul>';
+                card.appendChild(ul);
             }
-            card.innerHTML = content;
             possibleMenusListEl.appendChild(card);
         });
     }
