@@ -693,6 +693,89 @@
         "ingredients2": []
     },
     {
+        "menu": "버터치킨카레",
+        "type": "커리",
+        "ingredients1": [
+            {
+                "name": "닭다리살 정육",
+                "quantity": "300",
+                "unit": "g"
+            },
+            {
+                "name": "감자",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "버터",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "양파",
+                "quantity": "1/2",
+                "unit": "개"
+            },
+            {
+                "name": "토마토소스",
+                "quantity": "200",
+                "unit": "g"
+            },
+            {
+                "name": "우유",
+                "quantity": "200",
+                "unit": "ml"
+            },
+            {
+                "name": "버터",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "후추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "1",
+                "unit": "큰술"
+            }
+        ],
+        "ingredients2": [
+            {
+                "name": "카레가루",
+                "quantity": "100",
+                "unit": "g"
+            },
+            {
+                "name": "고춧가루",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "맛술",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "간장",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "소금",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "후추",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ]
+    },
+    {
         "menu": "폭탄 계란찜",
         "type": "찜",
         "ingredients1": [
@@ -867,8 +950,8 @@
             },
             {
                 "name": "설탕",
-                "quantity": "1",
-                "unit": "티큰술"
+                "quantity": "1/2",
+                "unit": "큰술"
             },
             {
                 "name": "참기름",
@@ -1249,12 +1332,64 @@
         ]
     },
     {
+        "menu": "고등어 구이",
+        "type": "구이",
+        "ingredients1": [
+            {
+                "name": "고등어",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "식용유",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "후추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "소금",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ]
+    },
+    {
+        "menu": "삼겹살 구이",
+        "type": "구이",
+        "ingredients1": [
+            {
+                "name": "삼겹살",
+                "quantity": "300",
+                "unit": "g"
+            },
+            {
+                "name": "식용유",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "후추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "소금",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ]
+    },
+    {
         "menu": "소갈비찜",
         "type": "찜",
         "ingredients1": [
             {
                 "name": "소갈비",
-                "quantity": "800~900",
+                "quantity": "900",
                 "unit": "g"
             },
             {
@@ -1333,6 +1468,69 @@
                 "name": "참기름",
                 "quantity": "1/2",
                 "unit": "큰술"
+            }
+        ]
+    },
+    {
+        "menu": "황태구이",
+        "type": "구이",
+        "ingredients1": [
+            {
+                "name": "황태",
+                "quantity": "1",
+                "unit": "개"
+            }
+        ],
+        "ingredients2": [
+            {
+                "name": "고추장",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "매실액",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "간장",
+                "quantity": "1.5",
+                "unit": "큰술"
+            },
+            {
+                "name": "올리고당",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "참기름",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "대파",
+                "quantity": "1/4",
+                "unit": "개"
+            },
+            {
+                "name": "청양고추",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "통깨",
+                "quantity": "",
+                "unit": "적당량"
             }
         ]
     },
