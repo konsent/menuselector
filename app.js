@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedMenus = new Set(); // 선택된 메뉴 이름 저장
     let ownedIngredients = new Set(); // 보유한 재료 이름 저장
     let isIngredientModeInitialized = false;
+    const basicIngredientKeywords = ['고춧가루', '마늘', '설탕', '간장', '고추장', '참기름', '소금', '된장', '식초', '후추', '통깨', '맛술', '식용유', '김치국물'];
 
     // --- 재료 카테고리 분류 ---
     const ingredientCategoryMap = {
@@ -47,7 +48,64 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function getIngredientCategory(ingredient) {
         if (ingredient.includes('김치')) return '채소';
-        return ingredientCategoryMap[ingredient] || '기타';
+
+        // ingredientCategoryMap의 키(키워드)를 순회하며 ingredient 이름에 포함되는지 확인
+        // 예를 들어, "돼지고기 앞다리살"은 "돼지고기" 키워드를 포함하므로 '육류'로 분류됩니다.
+        for (const keyword in ingredientCategoryMap) {
+            if (ingredient.includes(keyword)) {
+                return ingredientCategoryMap[keyword];
+            }
+        }
+
+        return '기타'; // 일치하는 키워드가 없으면 '기타'로 분류
+    }
+
+    /**
+     * 문자열 형태의 수량을 숫자로 변환하는 함수 (e.g., "1/2" -> 0.5)
+     * @param {string} qtyStr 
+     * @returns {number}
+     */
+    function parseQuantity(qtyStr) {
+        if (!qtyStr || typeof qtyStr !== 'string' || qtyStr.trim() === '') return 0;
+
+        // "250~300" 같은 범위 값에서 첫 번째 숫자 사용
+        qtyStr = qtyStr.trim().split('~')[0].trim();
+
+        if (qtyStr.includes('/')) {
+            const parts = qtyStr.split('/');
+            if (parts.length === 2) {
+                const num = parseFloat(parts[0]);
+                const den = parseFloat(parts[1]);
+                if (!isNaN(num) && !isNaN(den) && den !== 0) {
+                    return num / den;
+                }
+            }
+        }
+        const num = parseFloat(qtyStr);
+        return isNaN(num) ? 0 : num;
+    }
+
+    /**
+     * 수량을 표시 형식에 맞게 변환하는 함수. 특정 단위에 대해 올림 처리.
+     * @param {number} quantity
+     * @param {string} unit
+     * @returns {string}
+     */
+    function formatQuantity(quantity, unit) {
+        if (quantity > 0) {
+            const roundUpUnits = new Set(['개', '모', '팩']);
+            let displayQuantity;
+            if (roundUpUnits.has(unit) && quantity % 1 !== 0) {
+                displayQuantity = Math.ceil(quantity);
+            } else {
+                // 다른 단위는 소수점 둘째 자리까지 표시 (예: 0.5, 1.25)
+                displayQuantity = Number(quantity.toFixed(2));
+            }
+            return `${displayQuantity} ${unit}`;
+        } else if (unit) {
+            return unit;
+        }
+        return '';
     }
 
     /**
@@ -55,12 +113,22 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     async function init() {
         try {
-            const response = await fetch('data.json');
+            const response = await fetch('recipes.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            allMenus = data.menus;
+            allMenus = data.map(recipe => ({
+                name: recipe.menu,
+                type: recipe.type,
+                // ingredients1과 ingredients2의 모든 재료를 참조
+                // ingredient 이름에서 개행문자 등 정리
+                ingredients: [...(recipe.ingredients1 || []), ...(recipe.ingredients2 || [])].map(ing => ({
+                    name: ing.name.split('\n')[0].trim(),
+                    quantity: ing.quantity,
+                    unit: ing.unit
+                }))
+            })).filter(menu => menu.name); // 이름이 없는 데이터는 제외
 
             renderMenus();
             setupEventListeners();
@@ -239,57 +307,95 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * 선택된 메뉴에 따라 쇼핑 목록 업데이트
+     * 선택된 메뉴를 기반으로 쇼핑 목록 데이터를 계산하는 함수
+     * @returns {{categorizedIngredients: Map<string, any[]>, totalCount: number}}
      */
-    function updateShoppingList() {
-        const ingredientCount = new Map();
+    function getShoppingList() {
+        const ingredientsData = new Map(); // key: name, value: { units: Map<unit, totalQuantity>, nonSummable: Set<unit> }
 
         selectedMenus.forEach(menuName => {
             const menu = allMenus.find(m => m.name === menuName);
-            if (menu) {
-                menu.ingredients.forEach(ingredient => {
-                    ingredientCount.set(ingredient, (ingredientCount.get(ingredient) || 0) + 1);
-                });
-            }
+            if (!menu) return;
+
+            menu.ingredients.forEach(ingredient => {
+                const { name, quantity, unit } = ingredient;
+                if (!name) return;
+
+                // 1. 기본 재료는 쇼핑 목록에서 제외
+                const isBasic = basicIngredientKeywords.some(keyword => name.includes(keyword));
+                if (isBasic) {
+                    return;
+                }
+
+                if (!ingredientsData.has(name)) {
+                    ingredientsData.set(name, { units: new Map(), nonSummable: new Set() });
+                }
+                const data = ingredientsData.get(name);
+
+                const numQuantity = parseQuantity(quantity);
+
+                if (numQuantity > 0 && unit) {
+                    data.units.set(unit, (data.units.get(unit) || 0) + numQuantity);
+                } else {
+                    data.nonSummable.add(unit || '');
+                }
+            });
         });
 
-        const totalCount = ingredientCount.size;
+        // 렌더링을 위해 데이터 구조를 평탄화
+        const flatList = [];
+        for (const [name, data] of ingredientsData.entries()) {
+            for (const [unit, totalQuantity] of data.units.entries()) {
+                flatList.push({ name, quantity: totalQuantity, unit });
+            }
+            for (const unit of data.nonSummable) {
+                flatList.push({ name, quantity: 0, unit });
+            }
+        }
 
-        // 재료를 카테고리별로 그룹화
+        const totalCount = flatList.length;
+
+        // 카테고리별 그룹화 및 정렬
         const categorizedIngredients = new Map();
-        for (const [ingredient, count] of ingredientCount.entries()) {
-            const category = getIngredientCategory(ingredient);
+        flatList.forEach(item => {
+            const category = getIngredientCategory(item.name);
             if (!categorizedIngredients.has(category)) {
                 categorizedIngredients.set(category, []);
             }
-            categorizedIngredients.get(category).push({ name: ingredient, count });
-        }
+            categorizedIngredients.get(category).push(item);
+        });
 
-        // 각 카테고리 내에서 재료를 가나다순으로 정렬
         for (const ingredients of categorizedIngredients.values()) {
             ingredients.sort((a, b) => a.name.localeCompare(b.name));
         }
 
-        // 카테고리 자체를 정해진 순서대로 정렬
         const categoryOrder = ['육류', '해산물', '채소', '가공/유제품', '곡물/면/가루', '소스/기타', '기타'];
         const sortedCategorizedIngredients = new Map(
             [...categorizedIngredients.entries()].sort(([catA], [catB]) => {
                 const indexA = categoryOrder.indexOf(catA);
                 const indexB = categoryOrder.indexOf(catB);
                 if (indexA === -1 && indexB === -1) return catA.localeCompare(catB);
-                if (indexA === -1) return 1;
-                if (indexB === -1) return -1;
+                if (indexA === -1) return 1; // A가 순서에 없으면 뒤로
+                if (indexB === -1) return -1; // B가 순서에 없으면 앞으로
                 return indexA - indexB;
             })
         );
 
+        return { categorizedIngredients: sortedCategorizedIngredients, totalCount };
+    }
+
+    /**
+     * 선택된 메뉴에 따라 쇼핑 목록 업데이트
+     */
+    function updateShoppingList() {
         renderSelectedMenus();
-        renderShoppingList(sortedCategorizedIngredients, totalCount);
+        const { categorizedIngredients, totalCount } = getShoppingList();
+        renderShoppingList(categorizedIngredients, totalCount);
     }
 
     /**
      * 쇼핑 목록을 화면에 렌더링
-     * @param {Map<string, Array<{name: string, count: number}>>} categorizedIngredients - 렌더링할 분류된 재료 목록
+     * @param {Map<string, Array<{name: string, quantity: number, unit: string}>>} categorizedIngredients - 렌더링할 분류된 재료 목록
      * @param {number} totalCount - 총 재료 개수
      */
     function renderShoppingList(categorizedIngredients, totalCount) {
@@ -297,35 +403,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (categorizedIngredients.size === 0) {
             shoppingListEl.innerHTML = '<li class="placeholder">메뉴를 선택해주세요.</li>';
-            copyButton.style.display = 'none'; // 재료가 없으면 버튼 숨기기
+            copyButton.style.display = 'none';
             totalIngredientsCountEl.textContent = '';
             return;
         }
 
-        copyButton.style.display = 'inline-block'; // 재료가 있으면 버튼 보이기
+        copyButton.style.display = 'inline-block';
+        totalIngredientsCountEl.textContent = `(${totalCount}개)`;
 
         for (const [category, ingredients] of categorizedIngredients.entries()) {
-            // 카테고리 헤더 생성
-            totalIngredientsCountEl.textContent = `(${totalCount}개)`;
             const categoryLi = document.createElement('li');
             categoryLi.classList.add('shopping-list-category');
             categoryLi.textContent = category;
             shoppingListEl.appendChild(categoryLi);
 
-            // 해당 카테고리의 재료 아이템들 생성
-            ingredients.forEach(({ name, count }) => {
+            ingredients.forEach(({ name, quantity, unit }) => {
                 const li = document.createElement('li');
-                
+
                 const nameSpan = document.createElement('span');
                 nameSpan.textContent = name;
                 li.appendChild(nameSpan);
 
-                if (count > 1) {
-                    const countSpan = document.createElement('span');
-                    countSpan.classList.add('ingredient-count');
-                    countSpan.textContent = count;
-                    li.appendChild(countSpan);
+                const quantitySpan = document.createElement('span');
+                quantitySpan.classList.add('ingredient-count');
+                quantitySpan.textContent = formatQuantity(quantity, unit);
+                if (quantitySpan.textContent) {
+                    li.appendChild(quantitySpan);
                 }
+
                 shoppingListEl.appendChild(li);
             });
         }
@@ -335,60 +440,26 @@ document.addEventListener('DOMContentLoaded', () => {
      * 쇼핑 목록 복사 버튼 클릭 이벤트 처리
      */
     function handleCopyClick() {
-        // 클립보드 API 지원 여부 다시 확인 (혹시 모를 경우 대비)
         if (!navigator.clipboard || !navigator.clipboard.writeText) {
             alert('이 브라우저에서는 클립보드 복사 기능을 지원하지 않습니다. (HTTPS 또는 localhost 환경에서 사용해주세요)');
             return;
         }
         if (selectedMenus.size === 0) return;
 
-        // 재료 목록을 다시 계산하고 분류
-        const ingredientCount = new Map();
-        selectedMenus.forEach(menuName => {
-            const menu = allMenus.find(m => m.name === menuName);
-            if (menu) {
-                menu.ingredients.forEach(ingredient => {
-                    ingredientCount.set(ingredient, (ingredientCount.get(ingredient) || 0) + 1);
-                });
-            }
-        });
-
-        const categorizedIngredients = new Map();
-        for (const [ingredient, count] of ingredientCount.entries()) {
-            const category = getIngredientCategory(ingredient);
-            if (!categorizedIngredients.has(category)) {
-                categorizedIngredients.set(category, []);
-            }
-            categorizedIngredients.get(category).push({ name: ingredient, count });
-        }
-
-        for (const ingredients of categorizedIngredients.values()) {
-            ingredients.sort((a, b) => a.name.localeCompare(b.name));
-        }
-
-        const categoryOrder = ['육류', '해산물', '채소', '가공/유제품', '곡물/면/가루', '소스/기타', '기타'];
-        const sortedCategorizedIngredients = new Map(
-            [...categorizedIngredients.entries()].sort(([catA], [catB]) => {
-                const indexA = categoryOrder.indexOf(catA);
-                const indexB = categoryOrder.indexOf(catB);
-                if (indexA === -1 && indexB === -1) return catA.localeCompare(catB);
-                if (indexA === -1) return 1;
-                if (indexB === -1) return -1;
-                return indexA - indexB;
-            })
-        );
+        const { categorizedIngredients } = getShoppingList();
 
         // 복사할 텍스트 포맷 생성
         const selectedMenusTitle = '⭐ 선택한 메뉴';
         const selectedMenusText = Array.from(selectedMenus).sort().map(name => `- ${name}`).join('\n');
 
         const ingredientsTitle = '🛒 구매해야하는 식재료';
-        const ingredientsListText = Array.from(sortedCategorizedIngredients.entries())
+        const ingredientsListText = Array.from(categorizedIngredients.entries())
             .map(([category, ingredients]) => {
                 const items = ingredients.map(ing => {
                     let line = `- ${ing.name}`;
-                    if (ing.count > 1) {
-                        line += ` * ${ing.count}`;
+                    const formattedQuantity = formatQuantity(ing.quantity, ing.unit);
+                    if (formattedQuantity) {
+                        line += ` ${formattedQuantity}`;
                     }
                     return line;
                 }).join('\n');
@@ -439,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. 전체 재료 목록 생성 및 그룹화
         const allIngredientsSet = new Set();
         allMenus.forEach(menu => {
-            menu.ingredients.forEach(ing => allIngredientsSet.add(ing));
+            menu.ingredients.forEach(ing => allIngredientsSet.add(ing.name));
         });
 
         const categorizedIngredients = new Map();
@@ -541,7 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const possibleMenus = allMenus.map(menu => {
-            const missingIngredients = menu.ingredients.filter(ing => !ownedIngredients.has(ing));
+            const missingIngredients = menu.ingredients.filter(ing => !ownedIngredients.has(ing.name));
             const ownedCount = menu.ingredients.length - missingIngredients.length;
             return { menu, missingIngredients, ownedCount };
         }).filter(item => item.ownedCount > 0) // 보유 재료가 하나라도 있는 메뉴만 필터링
@@ -587,7 +658,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ul.className = 'missing-ingredients-list';
                 missingIngredients.forEach(ing => {
                     const li = document.createElement('li');
-                    li.textContent = ing;
+                    li.textContent = ing.name;
                     ul.appendChild(li);
                 });
                 card.appendChild(ul);
