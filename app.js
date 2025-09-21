@@ -232,6 +232,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // 선택한 메뉴 목록에서 X 버튼 클릭 이벤트 처리
+        selectedMenusListEl.addEventListener('click', (event) => {
+            const removeBtn = event.target.closest('.remove-menu-btn');
+            if (!removeBtn) return;
+
+            // li 태그에서 메뉴 이름을 가져옴
+            const menuName = removeBtn.parentElement.dataset.menuName;
+            if (!menuName) return;
+
+            // 1. 상태 업데이트 (Set에서 메뉴 제거)
+            selectedMenus.delete(menuName);
+
+            // 2. 메뉴 목록 그리드에서 'selected' 클래스 제거
+            const menuItemInGrid = menuCategoriesEl.querySelector(`li[data-menu-name="${menuName}"]`);
+            if (menuItemInGrid) {
+                menuItemInGrid.classList.remove('selected');
+            }
+
+            // 3. 쇼핑 목록 및 선택된 메뉴 목록 업데이트
+            updateShoppingList();
+        });
+
         // 복사 버튼 이벤트 (메뉴 우선 모드)
         copyButton.addEventListener('click', handleCopyClick);
 
@@ -334,13 +356,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortedMenus = Array.from(selectedMenus).sort();
         sortedMenus.forEach(menuName => {
             const li = document.createElement('li');
+            li.dataset.menuName = menuName; // 삭제 버튼 클릭 시 참조하기 위해 데이터 속성 추가
+
             const link = document.createElement('a');
             link.href = `https://www.google.com/search?q=${encodeURIComponent(menuName + ' 레시피')}`;
             link.target = '_blank'; // 새 탭에서 열기
             link.rel = 'noopener noreferrer'; // 보안 및 성능을 위해 추가
             link.textContent = menuName;
 
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-menu-btn';
+            removeBtn.innerHTML = '&times;'; // 'x' 아이콘
+            removeBtn.setAttribute('aria-label', `${menuName} 제거`); // 접근성 향상
+
             li.appendChild(link);
+            li.appendChild(removeBtn);
             selectedMenusListEl.appendChild(li);
         });
     }
