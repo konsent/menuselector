@@ -2605,7 +2605,7 @@
         "type": "면",
         "ingredients1": [
             {
-                "name": "국수",
+                "name": "소면",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -3035,7 +3035,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "파슬리가루",
+                "name": "파슬리",
                 "quantity": "",
                 "unit": "적당량"
             },
