@@ -353,6 +353,36 @@ section h2 {
     color: #e74c3c;
 }
 
+/* 포함된 기본 재료 목록 스타일 */
+.basic-ingredients-container {
+    display: none; /* 초기에는 숨김 */
+}
+
+.basic-ingredients-container h2 {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.basic-ingredients-container ul {
+    list-style: none;
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.basic-ingredients-container li {
+    background-color: #f1f3f5;
+    color: #495057;
+    font-size: 0.9em;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
 /* 식재료 목록 스타일 */
 .shopping-list-container ul {
     list-style: none;

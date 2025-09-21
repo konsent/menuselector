@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyButton = document.getElementById('copy-button');
     const totalIngredientsCountEl = document.getElementById('total-ingredients-count');
     const selectedMenusListEl = document.getElementById('selected-menus-list');
+    const basicIngredientsContainerEl = document.getElementById('basic-ingredients-container');
+    const basicIngredientsListEl = document.getElementById('basic-ingredients-list');
 
     // 재료 우선 모드 요소
     const allIngredientsListEl = document.getElementById('all-ingredients-list');
@@ -376,6 +378,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
+     * 선택된 메뉴에 포함된 기본 재료 목록을 렌더링
+     */
+    function renderBasicIngredients() {
+        const includedBasicIngredients = new Set();
+
+        selectedMenus.forEach(menuName => {
+            const menu = allMenus.find(m => m.name === menuName);
+            if (!menu) return;
+
+            menu.ingredients.forEach(ingredient => {
+                const { name } = ingredient;
+                // 재료 이름에 포함된 기본 재료 키워드를 찾음
+                const matchedKeyword = basicIngredientKeywords.find(keyword => name.includes(keyword));
+                if (matchedKeyword) {
+                    includedBasicIngredients.add(matchedKeyword);
+                }
+            });
+        });
+
+        basicIngredientsListEl.innerHTML = '';
+        if (includedBasicIngredients.size === 0) {
+            basicIngredientsContainerEl.style.display = 'none'; // 재료가 없으면 컨테이너 숨김
+        } else {
+            basicIngredientsContainerEl.style.display = 'block'; // 재료가 있으면 보임
+            const sortedBasicIngredients = Array.from(includedBasicIngredients).sort((a, b) => a.localeCompare(b));
+            sortedBasicIngredients.forEach(ingredient => {
+                const li = document.createElement('li');
+                li.textContent = ingredient;
+                basicIngredientsListEl.appendChild(li);
+            });
+        }
+    }
+
+    /**
      * 선택된 메뉴를 기반으로 쇼핑 목록 데이터를 계산하는 함수
      * @returns {{categorizedIngredients: Map<string, any[]>, totalCount: number}}
      */
@@ -458,6 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function updateShoppingList() {
         renderSelectedMenus();
+        renderBasicIngredients(); // 기본 재료 목록 렌더링 추가
         const { categorizedIngredients, totalCount } = getShoppingList();
         renderShoppingList(categorizedIngredients, totalCount);
     }
