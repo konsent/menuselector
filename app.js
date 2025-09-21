@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 모드 전환 관련 함수 ---
 
     function switchToMenuMode() {
-        headerSubtitle.textContent = "메뉴를 선택하면 구매할 식재료 목록이 나타납니다.";
+        headerSubtitle.textContent = "원하는 메뉴를 선택하면 필요한 식재료 목록이 자동으로 생성되어, 장보기가 한결 간편해집니다.";
         menuFirstModeEl.classList.add('active');
         ingredientFirstModeEl.classList.remove('active');
         updateShoppingList();
