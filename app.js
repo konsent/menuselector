@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 메뉴 우선 모드 요소
     const menuSearchInput = document.getElementById('menu-search-input');
+    const autocompleteListEl = document.getElementById('autocomplete-list');
     const menuCategoriesEl = document.getElementById('menu-categories');
     const shoppingListEl = document.getElementById('shopping-list');
     const copyButton = document.getElementById('copy-button');
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 상태 관리 ---
     let allMenus = [];
     let allIngredients = new Set();
-    const selectedMenus = new Set(); // 선택된 메뉴 이름 저장
+    const selectedMenus = new Set();
     let ownedIngredients = new Set(); // 보유한 재료 이름 저장
     let isIngredientModeInitialized = false;
     const basicIngredientKeywords = ['고춧가루', '마늘', '설탕', '간장', '고추장', '참기름', '소금', '된장', '식초', '후추', '통깨', '맛술', '식용유', '김치국물'];
@@ -236,6 +237,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 메뉴 검색 이벤트
         menuSearchInput.addEventListener('input', handleMenuSearch);
+
+        // 문서 전체에 클릭 이벤트를 추가하여 자동완성 목록 외부를 클릭하면 목록을 닫음
+        document.addEventListener('click', (e) => {
+            if (e.target !== menuSearchInput) {
+                autocompleteListEl.innerHTML = '';
+            }
+        });
     }
 
     /**
@@ -256,11 +264,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * 메뉴 검색 이벤트 처리
+     * 메뉴 검색 이벤트 처리 (자동완성 및 목록 필터링)
      * @param {Event} event - input 이벤트 객체
      */
     function handleMenuSearch(event) {
         const searchTerm = event.target.value.toLowerCase().trim();
+
+        // 1. 메인 메뉴 목록 필터링
+        filterMenuList(searchTerm);
+
+        // 2. 자동완성 드롭다운 생성
+        autocompleteListEl.innerHTML = '';
+        if (searchTerm.length > 0) {
+            const filteredMenus = allMenus
+                .filter(menu => menu.name.toLowerCase().includes(searchTerm))
+                .slice(0, 7); // 최대 7개까지 제안
+
+            filteredMenus.forEach(menu => {
+                const itemEl = document.createElement('div');
+
+                // 검색어 하이라이팅
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                const highlightedName = menu.name.replace(regex, '<span class="highlight">$1</span>');
+                itemEl.innerHTML = highlightedName;
+
+                itemEl.addEventListener('click', () => {
+                    menuSearchInput.value = menu.name; // 입력창에 선택한 메뉴 이름 설정
+                    autocompleteListEl.innerHTML = ''; // 드롭다운 숨기기
+                    filterMenuList(menu.name.toLowerCase()); // 선택한 메뉴로 목록 필터링
+                });
+                autocompleteListEl.appendChild(itemEl);
+            });
+        }
+    }
+
+    /**
+     * 검색어에 따라 메뉴 목록의 표시 여부를 필터링
+     * @param {string} searchTerm - 필터링할 검색어
+     */
+    function filterMenuList(searchTerm) {
         const menuSections = menuCategoriesEl.querySelectorAll('.menu-type-section');
 
         menuSections.forEach(section => {
@@ -270,15 +312,12 @@ document.addEventListener('DOMContentLoaded', () => {
             menuItems.forEach(item => {
                 const menuName = item.dataset.menuName.toLowerCase();
                 const isVisible = menuName.includes(searchTerm);
-                // 'flex'는 CSS에서 li에 적용된 display 속성입니다.
                 item.style.display = isVisible ? 'flex' : 'none';
-                if (isVisible) {
-                    sectionHasVisibleItems = true;
-                }
+                if (isVisible) sectionHasVisibleItems = true;
             });
 
-            // 검색 결과가 있는 섹션만 보여줍니다.
             section.style.display = sectionHasVisibleItems ? 'block' : 'none';
+            section.classList.toggle('active', searchTerm && sectionHasVisibleItems);
         });
     }
 

@@ -41,7 +41,8 @@
                 <section class="menu-container">
                     <h2>📋 메뉴 목록</h2>
                     <div class="search-container">
-                        <input type="text" id="menu-search-input" placeholder="메뉴 이름 검색...">
+                        <input type="text" id="menu-search-input" placeholder="메뉴 이름 검색..." autocomplete="off">
+                        <div id="autocomplete-list" class="autocomplete-items"></div>
                     </div>
                     <div id="menu-categories"></div>
                 </section>
@@ -73,6 +74,6 @@
             </div>
         </main>
     </div>
-    <script src="app.js"></script>
+    <script src="app.js?v=1.2"></script>
 </body>
 </html>

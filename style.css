@@ -180,6 +180,40 @@ section h2 {
     box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
+/* 자동완성 드롭다운 스타일 */
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: var(--card-bg-color);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-items div {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.autocomplete-items div:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-items div:hover {
+    background-color: #eef5fc;
+}
+
+.autocomplete-items .highlight {
+    font-weight: bold;
+}
+
 /* 메뉴 목록 스타일 */
 .menu-container .type-menu-list {
     display: grid;
