@@ -63,6 +63,54 @@
         ]
     },
     {
+        "menu": "김치볶음밥",
+        "type": "밥",
+        "ingredients1": [
+            {
+                "name": "김치",
+                "quantity": "300",
+                "unit": "g"
+            },
+            {
+                "name": "베이컨",
+                "quantity": "3",
+                "unit": "개"
+            },
+            {
+                "name": "계란",
+                "quantity": "2",
+                "unit": "개"
+            },
+            {
+                "name": "대파",
+                "quantity": "1",
+                "unit": "개"
+            }
+        ],
+        "ingredients2": [
+            {
+                "name": "간장",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "고춧가루",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "통깨",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ]
+    },
+    {
         "menu": "오징어볶음",
         "type": "볶음",
         "ingredients1": [
@@ -1217,7 +1265,7 @@
         ],
         "ingredients2": [
             {
-                "name": "양조간장",
+                "name": "간장",
                 "quantity": "1.5",
                 "unit": "컵"
             },
@@ -2532,7 +2580,7 @@
                 "unit": "컵"
             },
             {
-                "name": "소시지",
+                "name": "소세지",
                 "quantity": "20",
                 "unit": "개"
             },
