@@ -450,14 +450,42 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // 렌더링을 위해 데이터 구조를 평탄화
+        // 렌더링을 위해 데이터 구조를 재구성 및 평탄화
         const flatList = [];
         for (const [name, data] of ingredientsData.entries()) {
-            for (const [unit, totalQuantity] of data.units.entries()) {
+            const totalSummable = data.units.size;
+            const totalNonSummable = data.nonSummable.size;
+            const totalEntries = totalSummable + totalNonSummable;
+
+            if (totalEntries === 1 && totalSummable === 1) {
+                // Case 1: 합산 가능한 단위가 하나만 있는 경우 (예: 양파 1개)
+                const [unit, totalQuantity] = data.units.entries().next().value;
                 flatList.push({ name, quantity: totalQuantity, unit });
-            }
-            for (const unit of data.nonSummable) {
+            } else if (totalEntries === 1 && totalNonSummable === 1) {
+                // Case 2: 합산 불가능한 단위만 하나 있는 경우 (예: 소금 약간)
+                const unit = data.nonSummable.values().next().value;
                 flatList.push({ name, quantity: 0, unit });
+            } else if (totalEntries > 1) {
+                // Case 3: 여러 단위가 섞여 있는 경우 (예: 고추 2개, 고추 1큰술)
+                let maxQuantity = -1;
+                let maxUnit = '';
+
+                // 숫자 단위 중에서 가장 큰 값을 찾음
+                for (const [unit, totalQuantity] of data.units.entries()) {
+                    if (totalQuantity > maxQuantity) {
+                        maxQuantity = totalQuantity;
+                        maxUnit = unit;
+                    }
+                }
+
+                if (maxQuantity > -1) {
+                    // 가장 큰 숫자 단위에 '이상'을 붙여 표시
+                    flatList.push({ name, quantity: maxQuantity, unit: maxUnit, suffix: '이상' });
+                } else {
+                    // 숫자 단위가 없는 경우 (예: 소금 약간, 소금 적당량), 첫 번째 항목만 표시
+                    const firstUnit = data.nonSummable.values().next().value || '';
+                    flatList.push({ name, quantity: 0, unit: firstUnit });
+                }
             }
         }
 
@@ -526,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
             categoryLi.textContent = category;
             shoppingListEl.appendChild(categoryLi);
 
-            ingredients.forEach(({ name, quantity, unit }) => {
+            ingredients.forEach(({ name, quantity, unit, suffix }) => {
                 const li = document.createElement('li');
 
                 const nameSpan = document.createElement('span');
@@ -535,7 +563,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const quantitySpan = document.createElement('span');
                 quantitySpan.classList.add('ingredient-count');
-                quantitySpan.textContent = formatQuantity(quantity, unit);
+                let quantityText = formatQuantity(quantity, unit);
+                if (suffix) {
+                    quantityText += ` ${suffix}`;
+                }
+                quantitySpan.textContent = quantityText;
                 if (quantitySpan.textContent) {
                     li.appendChild(quantitySpan);
                 }
@@ -566,7 +598,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .map(([category, ingredients]) => {
                 const items = ingredients.map(ing => {
                     let line = `- ${ing.name}`;
-                    const formattedQuantity = formatQuantity(ing.quantity, ing.unit);
+                    let formattedQuantity = formatQuantity(ing.quantity, ing.unit);
+                    if (ing.suffix) {
+                        formattedQuantity += ` ${ing.suffix}`;
+                    }
                     if (formattedQuantity) {
                         line += ` ${formattedQuantity}`;
                     }
