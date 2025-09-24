@@ -862,7 +862,7 @@
     },
     {
         "menu": "비빔국수",
-        "type": "면",
+        "type": "분식",
         "ingredients1": [
             {
                 "name": "소면",
@@ -1386,7 +1386,7 @@
             {
                 "name": "고등어",
                 "quantity": "1",
-                "unit": "개"
+                "unit": "마리"
             },
             {
                 "name": "식용유",
@@ -1584,7 +1584,7 @@
     },
     {
         "menu": "떡볶이",
-        "type": "볶음",
+        "type": "분식",
         "ingredients1": [
             {
                 "name": "떡볶이떡",
@@ -2650,7 +2650,7 @@
     },
     {
         "menu": "잔치국수",
-        "type": "면",
+        "type": "분식",
         "ingredients1": [
             {
                 "name": "소면",
@@ -2833,7 +2833,7 @@
     },
     {
         "menu": "크림파스타",
-        "type": "면",
+        "type": "분식",
         "ingredients1": [
             {
                 "name": "올리브유",
@@ -3025,7 +3025,7 @@
     },
     {
         "menu": "토마토 스파게티",
-        "type": "면",
+        "type": "분식",
         "ingredients1": [
             {
                 "name": "스파게티면",
@@ -4856,7 +4856,7 @@
     },
     {
         "menu": "국물 비빔국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/759",
         "ingredients1": [
             {
@@ -5275,7 +5275,7 @@
     },
     {
         "menu": "크림짬뽕",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/751",
         "ingredients1": [
             {
@@ -5520,7 +5520,7 @@
     },
     {
         "menu": "홍콩식 에그누들 볶음면",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/748",
         "ingredients1": [
             {
@@ -5769,7 +5769,7 @@
     },
     {
         "menu": "참깨 닭 비빔국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/745",
         "ingredients1": [
             {
@@ -6239,7 +6239,7 @@
     },
     {
         "menu": "돼지고기 감자 짜글이",
-        "type": "기타",
+        "type": "찌개",
         "link": "https://chef-choice.tistory.com/740",
         "ingredients1": [
             {
@@ -6940,7 +6940,7 @@
     },
     {
         "menu": "회오리 오무라이스",
-        "type": "회",
+        "type": "밥",
         "link": "https://chef-choice.tistory.com/730",
         "ingredients1": [
             {
@@ -7033,7 +7033,7 @@
     },
     {
         "menu": "야매 탕수육",
-        "type": "기타",
+        "type": "튀김",
         "link": "https://chef-choice.tistory.com/723",
         "ingredients1": [
             {
@@ -7111,7 +7111,7 @@
     },
     {
         "menu": "고기국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/724",
         "ingredients1": [
             {
@@ -7454,7 +7454,7 @@
     },
     {
         "menu": "들기름 막국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/718",
         "ingredients1": [
             {
@@ -7502,7 +7502,7 @@
     },
     {
         "menu": "비빔국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/718",
         "ingredients1": [
             {
@@ -7980,7 +7980,7 @@
     },
     {
         "menu": "오징어짬뽕",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/711",
         "ingredients1": [
             {
@@ -8058,7 +8058,7 @@
     },
     {
         "menu": "냉모밀",
-        "type": "기타",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/710",
         "ingredients1": [
             {
@@ -8478,7 +8478,7 @@
     },
     {
         "menu": "바지락칼국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/705",
         "ingredients1": [
             {
@@ -9539,7 +9539,7 @@
     },
     {
         "menu": "매운 삼겹살찜",
-        "type": "구이",
+        "type": "찜",
         "link": "https://chef-choice.tistory.com/678",
         "ingredients1": [
             {
@@ -10211,7 +10211,7 @@
     },
     {
         "menu": "양념 돼지갈비",
-        "type": "기타",
+        "type": "구이",
         "link": "https://chef-choice.tistory.com/645",
         "ingredients1": [
             {
@@ -10440,7 +10440,7 @@
     },
     {
         "menu": "간장비빔국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/640",
         "ingredients1": [
             {
@@ -10488,7 +10488,7 @@
     },
     {
         "menu": "나폴리탄 파스타",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/637",
         "ingredients1": [
             {
@@ -10971,7 +10971,7 @@
     },
     {
         "menu": "김치수제비",
-        "type": "기타",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/618",
         "ingredients1": [
             {
@@ -11334,7 +11334,7 @@
     },
     {
         "menu": "LA갈비",
-        "type": "기타",
+        "type": "구이",
         "link": "https://chef-choice.tistory.com/611",
         "ingredients1": [
             {
@@ -11417,7 +11417,7 @@
     },
     {
         "menu": "불닭볶음면 오꼬노미야끼",
-        "type": "기타",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/610",
         "ingredients1": [
             {
@@ -11998,7 +11998,7 @@
     },
     {
         "menu": "고추장 라구파스타",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/576",
         "ingredients1": [
             {
@@ -12247,8 +12247,8 @@
             },
             {
                 "name": "고등어",
-                "quantity": "350",
-                "unit": "g"
+                "quantity": "1",
+                "unit": "마리"
             },
             {
                 "name": "진간장",
@@ -12441,7 +12441,7 @@
     },
     {
         "menu": "소고기 가라아게",
-        "type": "기타",
+        "type": "튀김",
         "link": "https://chef-choice.tistory.com/559",
         "ingredients1": [
             {
@@ -12539,7 +12539,7 @@
     },
     {
         "menu": "김치비빔국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/557",
         "ingredients1": [
             {
@@ -12607,7 +12607,7 @@
     },
     {
         "menu": "간장비빔국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/556",
         "ingredients1": [
             {
@@ -12660,7 +12660,7 @@
     },
     {
         "menu": "스팸김치칼국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/552",
         "ingredients1": [
             {
@@ -12996,7 +12996,7 @@
         "ingredients2": []
     },
     {
-        "menu": "묵은지 육회말이",
+        "menu": "묵은지 육회말이김밥",
         "type": "밥",
         "link": "https://chef-choice.tistory.com/544",
         "ingredients1": [
@@ -13060,7 +13060,7 @@
     },
     {
         "menu": "하이난 치킨라이스",
-        "type": "기타",
+        "type": "밥",
         "link": "https://chef-choice.tistory.com/526",
         "ingredients1": [
             {
@@ -13231,7 +13231,7 @@
     },
     {
         "menu": "치킨필라프",
-        "type": "기타",
+        "type": "밥",
         "link": "https://chef-choice.tistory.com/521",
         "ingredients1": [
             {
@@ -13437,7 +13437,7 @@
     },
     {
         "menu": "몽골리안 비프 누들",
-        "type": "면",
+        "type": "중식",
         "link": "https://chef-choice.tistory.com/509",
         "ingredients1": [
             {
@@ -13608,7 +13608,7 @@
     },
     {
         "menu": "닭기름 칼국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/500",
         "ingredients1": [
             {
@@ -13953,7 +13953,7 @@
     },
     {
         "menu": "라면 아부라소바",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/465",
         "ingredients1": [
             {
@@ -14031,7 +14031,7 @@
     },
     {
         "menu": "마파두부",
-        "type": "반찬",
+        "type": "볶음",
         "link": "https://chef-choice.tistory.com/462",
         "ingredients1": [
             {
@@ -14207,7 +14207,7 @@
     },
     {
         "menu": "중화잡채",
-        "type": "기타",
+        "type": "중식",
         "link": "https://chef-choice.tistory.com/453",
         "ingredients1": [
             {
@@ -14983,7 +14983,7 @@
     },
     {
         "menu": "돼지곱창전골",
-        "type": "탕",
+        "type": "찌개",
         "link": "https://chef-choice.tistory.com/401",
         "ingredients1": [
             {
@@ -15785,7 +15785,7 @@
     },
     {
         "menu": "장칼국수",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/360",
         "ingredients1": [
             {
@@ -15946,7 +15946,7 @@
     },
     {
         "menu": "라볶이",
-        "type": "기타",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/352",
         "ingredients1": [
             {
@@ -16024,7 +16024,7 @@
     },
     {
         "menu": "크림카레우동",
-        "type": "면",
+        "type": "분식",
         "link": "https://chef-choice.tistory.com/344",
         "ingredients1": [
             {
@@ -16233,7 +16233,7 @@
     },
     {
         "menu": "간단 오므라이스",
-        "type": "기타",
+        "type": "밥",
         "link": "https://chef-choice.tistory.com/339",
         "ingredients1": [
             {
