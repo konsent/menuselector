@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedMenus = new Set();
     let ownedIngredients = new Set(); // 보유한 재료 이름 저장
     let isIngredientModeInitialized = false;
-    const basicIngredientKeywords = ['고춧가루', '마늘', '설탕', '간장', '고추장', '참기름', '소금', '된장', '식초', '후추', '통깨', '맛술', '식용유', '김치국물'];
+    const basicIngredientKeywords = ['고춧가루', '마늘', '쌀', '밥', '설탕', '간장', '고추장', '참기름', '소금', '된장', '식초', '후추', '통깨', '맛술', '식용유', '김치국물'];
 
     // --- 재료 카테고리 분류 ---
     const ingredientCategoryMap = {
@@ -103,7 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function formatQuantity(quantity, unit) {
         if (quantity > 0) {
-            const roundUpUnits = new Set(['개', '모', '팩', '장', '마리', '알', '봉지', '캔', '포기', '통']);
+            // 1000g 이상일 경우 kg으로 변환하고 소수점 첫째 자리에서 올림
+            if (unit === 'g' && quantity >= 1000) {
+                const kgQuantity = quantity / 1000;
+                // 소수점 첫째 자리까지 올림 (예: 1.23kg -> 1.3kg, 1.2kg -> 1.2kg)
+                const displayQuantity = Math.ceil(kgQuantity * 10) / 10;
+                return `${displayQuantity} kg`;
+            }
+
+            const roundUpUnits = new Set(['개', '모', '팩', '장', '마리', '알', '봉지', '캔', '포기', '통', '큰술']);
             let displayQuantity;
             if (roundUpUnits.has(unit) && quantity % 1 !== 0) {
                 displayQuantity = Math.ceil(quantity);
@@ -211,7 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const typeMenuList = document.createElement('ul');
             typeMenuList.classList.add('type-menu-list'); // CSS 적용을 위한 클래스
 
-            menusByType.get(type).forEach(menu => {
+            const menusForType = menusByType.get(type);
+            menusForType.sort((a, b) => a.name.localeCompare(b.name)); // 메뉴 이름을 가나다순으로 정렬
+
+            menusForType.forEach(menu => {
                 const li = document.createElement('li');
                 li.textContent = menu.name;
                 li.dataset.menuName = menu.name; // 데이터 속성으로 메뉴 이름 저장

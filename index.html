@@ -77,7 +77,45 @@
                 </section>
             </div>
         </main>
+
+        <!-- 단위 설명 모달 버튼 -->
+        <button id="unit-info-btn" class="unit-info-btn" aria-label="단위 설명 보기">?</button>
+
+        <!-- 단위 설명 모달 -->
+        <div id="unit-info-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>단위 안내</h2>
+                <br>
+                <p><strong>컵:</strong> 180~200ml</p>
+                <p><strong>큰술:</strong> 15~20ml</p>
+                <br>
+                <hr>
+                <p class="modal-notice">식재료 분량은 대략적인 수치이며, 참고용입니다.</p>
+                <p class="modal-notice">"적당량"의 경우 레시피에 맞게 적당히 참고바랍니다</p>
+            </div>
+        </div>
     </div>
-    <script src="app.js?v=1.2"></script>
+    <script src="app.js?v=1.3"></script>
+    <script>
+        // --- 모달 제어 스크립트 ---
+        const unitModal = document.getElementById('unit-info-modal');
+        const unitBtn = document.getElementById('unit-info-btn');
+        const closeBtn = unitModal.querySelector('.close-btn');
+
+        unitBtn.onclick = function() {
+            unitModal.classList.add('show');
+        }
+
+        closeBtn.onclick = function() {
+            unitModal.classList.remove('show');
+        }
+
+        window.onclick = function(event) {
+            if (event.target == unitModal) {
+                unitModal.classList.remove('show');
+            }
+        }
+    </script>
 </body>
 </html>

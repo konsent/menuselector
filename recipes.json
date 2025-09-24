@@ -2,6 +2,7 @@
     {
         "menu": "제육볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6905743",
         "ingredients1": [
             {
                 "name": "돼지고기 앞다리살",
@@ -113,6 +114,7 @@
     {
         "menu": "오징어볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6903507",
         "ingredients1": [
             {
                 "name": "오징어",
@@ -191,6 +193,7 @@
     {
         "menu": "가지볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6895391",
         "ingredients1": [
             {
                 "name": "가지",
@@ -244,6 +247,7 @@
     {
         "menu": "소고기 미역국",
         "type": "국",
+        "link": "https://www.10000recipe.com/recipe/6873683",
         "ingredients1": [
             {
                 "name": "소고기 국거리용",
@@ -281,6 +285,7 @@
     {
         "menu": "두부조림",
         "type": "조림",
+        "link": "https://www.10000recipe.com/recipe/6891526",
         "ingredients1": [
             {
                 "name": "두부",
@@ -334,6 +339,7 @@
     {
         "menu": "고구마 줄기볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6872787",
         "ingredients1": [
             {
                 "name": "고구마줄기",
@@ -386,6 +392,7 @@
     {
         "menu": "닭도리탕",
         "type": "탕",
+        "link": "https://www.10000recipe.com/recipe/6876357",
         "ingredients1": [
             {
                 "name": "닭",
@@ -454,6 +461,7 @@
     {
         "menu": "메추리알 장조림",
         "type": "조림",
+        "link": "https://www.10000recipe.com/recipe/6838020",
         "ingredients1": [
             {
                 "name": "메추리알",
@@ -489,10 +497,10 @@
             }
         ]
     },
-
     {
         "menu": "소불고기",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6879215",
         "ingredients1": [
             {
                 "name": "소불고기",
@@ -511,8 +519,8 @@
             },
             {
                 "name": "팽이버섯",
-                "quantity": "1",
-                "unit": "팩"
+                "quantity": "150",
+                "unit": "g"
             },
             {
                 "name": "느타리버섯",
@@ -561,6 +569,7 @@
     {
         "menu": "수육",
         "type": "찜",
+        "link": "https://www.10000recipe.com/recipe/6915139",
         "ingredients1": [
             {
                 "name": "돼지고기 앞다리살",
@@ -608,6 +617,7 @@
     {
         "menu": "돼지고기 김치찌개",
         "type": "찌개",
+        "link": "https://www.10000recipe.com/recipe/1785098",
         "ingredients1": [
             {
                 "name": "돼지고기 찌개용",
@@ -686,6 +696,7 @@
     {
         "menu": "카레",
         "type": "커리",
+        "link": "https://www.10000recipe.com/recipe/6851792",
         "ingredients1": [
             {
                 "name": "카레가루",
@@ -743,6 +754,7 @@
     {
         "menu": "버터치킨카레",
         "type": "커리",
+        "link": "https://www.10000recipe.com/recipe/7037491?srsltid=AfmBOopbnXsTw51l50f6e4h-XCYRrBKHuZfjxCAMqvStyFXOmn3w18qG",
         "ingredients1": [
             {
                 "name": "닭다리살 정육",
@@ -765,7 +777,7 @@
                 "unit": "개"
             },
             {
-                "name": "토마토소스",
+                "name": "토마토 스파게티 소스",
                 "quantity": "200",
                 "unit": "g"
             },
@@ -826,6 +838,7 @@
     {
         "menu": "폭탄 계란찜",
         "type": "찜",
+        "link": "https://www.10000recipe.com/recipe/6872350",
         "ingredients1": [
             {
                 "name": "계란",
@@ -863,6 +876,7 @@
     {
         "menu": "비빔국수",
         "type": "분식",
+        "link": "https://www.10000recipe.com/recipe/6882534",
         "ingredients1": [
             {
                 "name": "소면",
@@ -920,6 +934,7 @@
     {
         "menu": "콩나물국",
         "type": "국",
+        "link": "https://www.10000recipe.com/recipe/6870757",
         "ingredients1": [
             {
                 "name": "콩나물",
@@ -968,6 +983,7 @@
     {
         "menu": "간장 멸치볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6891816",
         "ingredients1": [
             {
                 "name": "멸치",
@@ -1016,6 +1032,7 @@
     {
         "menu": "숙주나물무침",
         "type": "무침",
+        "link": "https://www.10000recipe.com/recipe/6865356",
         "ingredients1": [
             {
                 "name": "숙주",
@@ -1058,6 +1075,7 @@
     {
         "menu": "된장찌개",
         "type": "찌개",
+        "link": "https://www.10000recipe.com/recipe/6850626",
         "ingredients1": [
             {
                 "name": "두부",
@@ -1116,6 +1134,7 @@
     {
         "menu": "배추겉절이",
         "type": "반찬",
+        "link": "https://www.10000recipe.com/recipe/6851272",
         "ingredients1": [
             {
                 "name": "알배추",
@@ -1165,7 +1184,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "매실청",
+                "name": "매실액",
                 "quantity": "2",
                 "unit": "큰술"
             },
@@ -1179,6 +1198,7 @@
     {
         "menu": "소고기 장조림",
         "type": "조림",
+        "link": "https://www.10000recipe.com/recipe/6869801",
         "ingredients1": [
             {
                 "name": "소고기 우둔살",
@@ -1212,8 +1232,8 @@
             },
             {
                 "name": "표고버섯",
-                "quantity": "2",
-                "unit": "개"
+                "quantity": "20",
+                "unit": "g"
             },
             {
                 "name": "간장",
@@ -1241,6 +1261,7 @@
     {
         "menu": "돼지갈비찜",
         "type": "찜",
+        "link": "https://www.10000recipe.com/recipe/6883771",
         "ingredients1": [
             {
                 "name": "돼지갈비",
@@ -1304,11 +1325,12 @@
     {
         "menu": "볶음김치",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6877896",
         "ingredients1": [
             {
                 "name": "신김치",
-                "quantity": "3",
-                "unit": "컵"
+                "quantity": "600",
+                "unit": "g"
             },
             {
                 "name": "김치국물",
@@ -1434,6 +1456,7 @@
     {
         "menu": "소갈비찜",
         "type": "찜",
+        "link": "https://www.10000recipe.com/recipe/6881450",
         "ingredients1": [
             {
                 "name": "소갈비",
@@ -1522,6 +1545,7 @@
     {
         "menu": "황태구이",
         "type": "구이",
+        "link": "https://www.10000recipe.com/recipe/6871061",
         "ingredients1": [
             {
                 "name": "황태",
@@ -1585,6 +1609,7 @@
     {
         "menu": "떡볶이",
         "type": "분식",
+        "link": "https://www.10000recipe.com/recipe/6894096",
         "ingredients1": [
             {
                 "name": "떡볶이떡",
@@ -1628,6 +1653,7 @@
     {
         "menu": "고등어무조림",
         "type": "조림",
+        "link": "https://www.10000recipe.com/recipe/3568149",
         "ingredients1": [
             {
                 "name": "고등어",
@@ -1691,6 +1717,7 @@
     {
         "menu": "깻잎김치",
         "type": "반찬",
+        "link": "https://www.10000recipe.com/recipe/6876121",
         "ingredients1": [
             {
                 "name": "간장",
@@ -1754,6 +1781,7 @@
     {
         "menu": "콩나물무침",
         "type": "무침",
+        "link": "https://www.10000recipe.com/recipe/6867256",
         "ingredients1": [
             {
                 "name": "콩나물",
@@ -1807,6 +1835,7 @@
     {
         "menu": "순두부찌개",
         "type": "찌개",
+        "link": "https://www.10000recipe.com/recipe/6842257",
         "ingredients1": [
             {
                 "name": "돼지고기 다짐육",
@@ -1820,8 +1849,8 @@
             },
             {
                 "name": "순두부",
-                "quantity": "1",
-                "unit": "개"
+                "quantity": "300",
+                "unit": "g"
             },
             {
                 "name": "느타리버섯",
@@ -1879,6 +1908,7 @@
     {
         "menu": "고사리 나물볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6872216",
         "ingredients1": [
             {
                 "name": "고사리",
@@ -1891,7 +1921,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "다진파",
+                "name": "다진 대파",
                 "quantity": "1",
                 "unit": "큰술"
             },
@@ -1921,6 +1951,7 @@
     {
         "menu": "잡채",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6879533",
         "ingredients1": [
             {
                 "name": "당면",
@@ -1989,6 +2020,7 @@
     {
         "menu": "오이무침",
         "type": "무침",
+        "link": "https://www.10000recipe.com/recipe/6897261",
         "ingredients1": [
             {
                 "name": "오이",
@@ -2052,6 +2084,7 @@
     {
         "menu": "안동찜닭",
         "type": "찜",
+        "link": "https://www.10000recipe.com/recipe/6880798",
         "ingredients1": [
             {
                 "name": "닭",
@@ -2135,6 +2168,7 @@
     {
         "menu": "부추무침",
         "type": "무침",
+        "link": "https://www.10000recipe.com/recipe/6899906",
         "ingredients1": [
             {
                 "name": "부추",
@@ -2188,6 +2222,7 @@
     {
         "menu": "깍두기",
         "type": "반찬",
+        "link": "https://www.10000recipe.com/recipe/6868573",
         "ingredients1": [
             {
                 "name": "무",
@@ -2211,6 +2246,7 @@
     {
         "menu": "무생채",
         "type": "무침",
+        "link": "https://www.10000recipe.com/recipe/6893285",
         "ingredients1": [
             {
                 "name": "무",
@@ -2233,7 +2269,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "매실청",
+                "name": "매실액",
                 "quantity": "1",
                 "unit": "큰술"
             },
@@ -2268,6 +2304,7 @@
     {
         "menu": "꽈리고추멸치볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6875568",
         "ingredients1": [
             {
                 "name": "꽈리고추",
@@ -2320,6 +2357,7 @@
     {
         "menu": "오이소박이",
         "type": "반찬",
+        "link": "https://www.10000recipe.com/recipe/6896175",
         "ingredients1": [
             {
                 "name": "오이",
@@ -2376,8 +2414,9 @@
         ]
     },
     {
-        "menu": "계란장조림",
+        "menu": "계란 장조림",
         "type": "조림",
+        "link": "https://www.10000recipe.com/recipe/6906766",
         "ingredients1": [
             {
                 "name": "계란",
@@ -2430,6 +2469,7 @@
     {
         "menu": "꽈리고추조림",
         "type": "조림",
+        "link": "https://www.10000recipe.com/recipe/6840310",
         "ingredients1": [
             {
                 "name": "꽈리고추",
@@ -2463,6 +2503,7 @@
     {
         "menu": "참치 김치찌개",
         "type": "찌개",
+        "link": "https://www.10000recipe.com/recipe/6864674",
         "ingredients1": [
             {
                 "name": "신김치",
@@ -2573,6 +2614,7 @@
     {
         "menu": "부대찌개",
         "type": "찌개",
+        "link": "https://www.10000recipe.com/recipe/6884636",
         "ingredients1": [
             {
                 "name": "김치",
@@ -2581,13 +2623,13 @@
             },
             {
                 "name": "소세지",
-                "quantity": "20",
-                "unit": "개"
+                "quantity": "250",
+                "unit": "g"
             },
             {
                 "name": "스팸",
-                "quantity": "1",
-                "unit": "캔"
+                "quantity": "200",
+                "unit": "g"
             },
             {
                 "name": "두부",
@@ -2651,6 +2693,7 @@
     {
         "menu": "잔치국수",
         "type": "분식",
+        "link": "https://www.10000recipe.com/recipe/6836180",
         "ingredients1": [
             {
                 "name": "소면",
@@ -2719,6 +2762,7 @@
     {
         "menu": "간장게장",
         "type": "반찬",
+        "link": "https://www.10000recipe.com/recipe/6890182",
         "ingredients1": [
             {
                 "name": "꽃게",
@@ -2766,6 +2810,7 @@
     {
         "menu": "꽃게탕",
         "type": "탕",
+        "link": "https://www.10000recipe.com/recipe/4164229",
         "ingredients1": [
             {
                 "name": "꽃게",
@@ -2834,6 +2879,7 @@
     {
         "menu": "크림파스타",
         "type": "분식",
+        "link": "https://www.10000recipe.com/recipe/6901938",
         "ingredients1": [
             {
                 "name": "올리브유",
@@ -2896,6 +2942,7 @@
     {
         "menu": "깻잎장아찌",
         "type": "반찬",
+        "link": "https://www.10000recipe.com/recipe/6868367",
         "ingredients1": [
             {
                 "name": "깻잎",
@@ -2923,6 +2970,7 @@
     {
         "menu": "꽃게찜",
         "type": "찜",
+        "link": "https://www.10000recipe.com/recipe/6986892",
         "ingredients1": [
             {
                 "name": "꽃게",
@@ -2946,6 +2994,7 @@
     {
         "menu": "우엉조림",
         "type": "조림",
+        "link": "https://www.10000recipe.com/recipe/6872492",
         "ingredients1": [
             {
                 "name": "우엉",
@@ -2989,6 +3038,7 @@
     {
         "menu": "애호박볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6869602",
         "ingredients1": [
             {
                 "name": "애호박",
@@ -3026,6 +3076,7 @@
     {
         "menu": "토마토 스파게티",
         "type": "분식",
+        "link": "https://www.10000recipe.com/recipe/6865946",
         "ingredients1": [
             {
                 "name": "스파게티면",
@@ -3038,14 +3089,14 @@
                 "unit": "장"
             },
             {
-                "name": "스파게티 소스",
+                "name": "토마토 스파게티 소스",
                 "quantity": "1",
                 "unit": "병"
             },
             {
                 "name": "소세지",
-                "quantity": "2",
-                "unit": "개"
+                "quantity": "20",
+                "unit": "g"
             },
             {
                 "name": "통마늘",
@@ -3098,6 +3149,7 @@
     {
         "menu": "육회",
         "type": "회",
+        "link": "https://www.10000recipe.com/recipe/6865491",
         "ingredients1": [
             {
                 "name": "소고기 우둔살",
@@ -3115,7 +3167,7 @@
                 "unit": "개"
             },
             {
-                "name": "계란 노른자",
+                "name": "계란",
                 "quantity": "1",
                 "unit": "개"
             }
@@ -3161,6 +3213,7 @@
     {
         "menu": "오뎅볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6864526",
         "ingredients1": [
             {
                 "name": "오뎅",
@@ -3209,6 +3262,7 @@
     {
         "menu": "삼계탕",
         "type": "탕",
+        "link": "https://www.10000recipe.com/recipe/6854423",
         "ingredients1": [
             {
                 "name": "닭",
@@ -3246,6 +3300,7 @@
     {
         "menu": "골뱅이무침",
         "type": "무침",
+        "link": "https://www.10000recipe.com/recipe/6900650",
         "ingredients1": [
             {
                 "name": "골뱅이",
@@ -3334,11 +3389,12 @@
     {
         "menu": "고등어김치찜",
         "type": "찜",
+        "link": "https://www.10000recipe.com/recipe/6861545",
         "ingredients1": [
             {
                 "name": "묵은지",
-                "quantity": "2",
-                "unit": "개"
+                "quantity": "5000",
+                "unit": "g"
             },
             {
                 "name": "고등어",
@@ -3412,6 +3468,7 @@
     {
         "menu": "진미채볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6867849",
         "ingredients1": [
             {
                 "name": "진미채",
@@ -3470,6 +3527,7 @@
     {
         "menu": "가지튀김",
         "type": "튀김",
+        "link": "https://www.10000recipe.com/recipe/6857320",
         "ingredients1": [
             {
                 "name": "가지",
@@ -3533,6 +3591,7 @@
     {
         "menu": "오므라이스",
         "type": "밥",
+        "link": "https://www.10000recipe.com/recipe/6836718",
         "ingredients1": [
             {
                 "name": "계란",
@@ -3596,6 +3655,7 @@
     {
         "menu": "콩나물밥",
         "type": "밥",
+        "link": "https://www.10000recipe.com/recipe/6875872",
         "ingredients1": [
             {
                 "name": "쌀",
@@ -3639,6 +3699,7 @@
     {
         "menu": "토마토 계란볶음",
         "type": "볶음",
+        "link": "https://www.10000recipe.com/recipe/6895279",
         "ingredients1": [
             {
                 "name": "토마토",
@@ -3679,7 +3740,7 @@
         "ingredients2": []
     },
     {
-        "menu": "묵은지 김치찜",
+        "menu": "묵은지 크림 김치찜",
         "type": "찜",
         "link": "https://chef-choice.tistory.com/773",
         "ingredients1": [
@@ -3782,7 +3843,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "앞다리살",
+                "name": "돼지고기 앞다리살",
                 "quantity": "300",
                 "unit": "g"
             },
@@ -4170,7 +4231,7 @@
                 "unit": "컵"
             },
             {
-                "name": "명란젓",
+                "name": "명란",
                 "quantity": "150",
                 "unit": "g"
             },
@@ -4326,7 +4387,7 @@
         "link": "https://chef-choice.tistory.com/766",
         "ingredients1": [
             {
-                "name": "목살",
+                "name": "돼지고기 목살",
                 "quantity": "400",
                 "unit": "g"
             },
@@ -4669,8 +4730,8 @@
         "ingredients1": [
             {
                 "name": "두부",
-                "quantity": "500",
-                "unit": "g"
+                "quantity": "2",
+                "unit": "모"
             },
             {
                 "name": "전분가루",
@@ -4739,11 +4800,6 @@
             },
             {
                 "name": "밥",
-                "quantity": "",
-                "unit": "적당량"
-            },
-            {
-                "name": "카레소스",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -4875,7 +4931,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "매실청",
+                "name": "매실액",
                 "quantity": "2",
                 "unit": "큰술"
             },
@@ -5016,7 +5072,7 @@
                 "unit": "g"
             },
             {
-                "name": "명란젓",
+                "name": "명란",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -5147,7 +5203,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "매실청",
+                "name": "매실액",
                 "quantity": "2",
                 "unit": "큰술"
             },
@@ -5398,7 +5454,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "마라소스",
+                "name": "마라 소스",
                 "quantity": "2",
                 "unit": "큰술"
             },
@@ -5452,8 +5508,8 @@
         "ingredients1": [
             {
                 "name": "두부",
-                "quantity": "1",
-                "unit": "kg"
+                "quantity": "3",
+                "unit": "모"
             },
             {
                 "name": "부침가루",
@@ -5994,7 +6050,7 @@
                 "unit": "개"
             },
             {
-                "name": "전분",
+                "name": "전분가루",
                 "quantity": "1",
                 "unit": "큰술"
             },
@@ -6118,11 +6174,6 @@
             },
             {
                 "name": "양상추",
-                "quantity": "",
-                "unit": "적당량"
-            },
-            {
-                "name": "청양 떡갈비",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -6273,7 +6324,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "멸치다시팩",
+                "name": "멸치 다시팩",
                 "quantity": "1",
                 "unit": "팩"
             },
@@ -6565,7 +6616,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "사골국물",
+                "name": "사골곰탕",
                 "quantity": "1",
                 "unit": "컵"
             },
@@ -6581,8 +6632,8 @@
             },
             {
                 "name": "애호박",
-                "quantity": "1/2개",
-                "unit": "g"
+                "quantity": "1/2",
+                "unit": "개"
             },
             {
                 "name": "표고버섯",
@@ -6710,7 +6761,7 @@
             {
                 "name": "애호박",
                 "quantity": "1/2",
-                "unit": "g"
+                "unit": "개"
             },
             {
                 "name": "당근",
@@ -6836,7 +6887,7 @@
                 "unit": "개"
             },
             {
-                "name": "시판 사골곰탕",
+                "name": "사골곰탕",
                 "quantity": "1",
                 "unit": "컵"
             },
@@ -6900,8 +6951,8 @@
             },
             
             {
-                "name": "차돌",
-                "quantity": "6/5",
+                "name": "차돌박이",
+                "quantity": "1",
                 "unit": "kg"
             },
             
@@ -7042,7 +7093,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "앞다리살",
+                "name": "돼지고기 앞다리살",
                 "quantity": "500",
                 "unit": "g"
             },
@@ -7155,7 +7206,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "시판 사골곰탕",
+                "name": "사골곰탕",
                 "quantity": "1",
                 "unit": "팩"
             },
@@ -7632,11 +7683,6 @@
                 "name": "우삼겹",
                 "quantity": "100",
                 "unit": "g"
-            },
-            {
-                "name": "찬밥",
-                "quantity": "",
-                "unit": "적당량"
             }
         ],
         "ingredients2": []
@@ -7838,8 +7884,8 @@
                 "unit": "g"
             },
             {
-                "name": "사골육수",
-                "quantity": "5/2",
+                "name": "사골곰탕",
+                "quantity": "3",
                 "unit": "컵"
             },
             {
@@ -7991,7 +8037,7 @@
             {
                 "name": "양배추",
                 "quantity": "1/5",
-                "unit": "g"
+                "unit": "개"
             },
             {
                 "name": "양파",
@@ -8127,7 +8173,7 @@
             {
                 "name": "무",
                 "quantity": "1/3",
-                "unit": "g"
+                "unit": "개"
             },
             {
                 "name": "양파",
@@ -8532,7 +8578,7 @@
                 "unit": "개"
             },
             {
-                "name": "칼국수",
+                "name": "칼국수면",
                 "quantity": "600",
                 "unit": "g"
             },
@@ -9145,8 +9191,8 @@
                 "unit": "개"
             },
             {
-                "name": "사골육수",
-                "quantity": "5/2",
+                "name": "사골곰탕",
+                "quantity": "3",
                 "unit": "컵"
             },
             {
@@ -9839,7 +9885,7 @@
                 "unit": "개"
             },
             {
-                "name": "전분물",
+                "name": "전분가루",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -9874,7 +9920,7 @@
             {
                 "name": "무",
                 "quantity": "1/3",
-                "unit": "g"
+                "unit": "개"
             },
             {
                 "name": "들기름",
@@ -9922,7 +9968,7 @@
                 "unit": "개"
             },
             {
-                "name": "참치액젓",
+                "name": "참치액",
                 "quantity": "1",
                 "unit": "큰술"
             },
@@ -10142,11 +10188,6 @@
                 "unit": "g"
             },
             {
-                "name": "멸치육수",
-                "quantity": "2",
-                "unit": "컵"
-            },
-            {
                 "name": "고추장",
                 "quantity": "3",
                 "unit": "큰술"
@@ -10215,7 +10256,7 @@
         "link": "https://chef-choice.tistory.com/645",
         "ingredients1": [
             {
-                "name": "앞다리살",
+                "name": "돼지고기 앞다리살",
                 "quantity": "1.5",
                 "unit": "kg"
             },
@@ -10278,7 +10319,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "앞다리살",
+                "name": "돼지고기 앞다리살",
                 "quantity": "1",
                 "unit": "kg"
             },
@@ -10683,7 +10724,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "매실청",
+                "name": "매실액",
                 "quantity": "2",
                 "unit": "큰술"
             },
@@ -10785,7 +10826,7 @@
     },
     {
         "menu": "만능 간장 양념장",
-        "type": "반찬",
+        "type": "기타",
         "link": "https://chef-choice.tistory.com/623",
         "ingredients1": [
             {
@@ -11021,8 +11062,8 @@
             },
             {
                 "name": "애호박",
-                "quantity": "50",
-                "unit": "g"
+                "quantity": "1/4",
+                "unit": "개"
             },
             {
                 "name": "콩나물",
@@ -11222,8 +11263,8 @@
                 "unit": "큰술"
             },
             {
-                "name": "사골육수",
-                "quantity": "5/2",
+                "name": "사골곰탕",
+                "quantity": "3",
                 "unit": "컵"
             },
             {
@@ -11344,8 +11385,8 @@
             },
             {
                 "name": "배",
-                "quantity": "500",
-                "unit": "g"
+                "quantity": "1",
+                "unit": "개"
             },
             {
                 "name": "사과",
@@ -12105,7 +12146,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "토마토 파스타소스",
+                "name": "토마토 스파게티 소스",
                 "quantity": "250",
                 "unit": "g"
             },
@@ -12522,7 +12563,7 @@
             {
                 "name": "양배추",
                 "quantity": "1/5",
-                "unit": "g"
+                "unit": "개"
             },
             {
                 "name": "시치미",
@@ -12846,8 +12887,8 @@
             },
             {
                 "name": "소세지",
-                "quantity": "",
-                "unit": "적당량"
+                "quantity": "100",
+                "unit": "g"
             },
             {
                 "name": "식용유",
@@ -13047,8 +13088,8 @@
             },
             {
                 "name": "묵은지",
-                "quantity": "1/4",
-                "unit": "포기"
+                "quantity": "1500",
+                "unit": "g"
             },
             {
                 "name": "새싹채소",
@@ -13292,7 +13333,7 @@
             {
                 "name": "애호박",
                 "quantity": "1/2",
-                "unit": "g"
+                "unit": "개"
             },
             {
                 "name": "청양고추",
@@ -13446,7 +13487,7 @@
                 "unit": "g"
             },
             {
-                "name": "계란 흰자",
+                "name": "계란",
                 "quantity": "1",
                 "unit": "개"
             },
@@ -13516,7 +13557,7 @@
                 "unit": "g"
             },
             {
-                "name": "깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -13534,7 +13575,7 @@
         "link": "https://chef-choice.tistory.com/506",
         "ingredients1": [
             {
-                "name": "목살",
+                "name": "돼지고기 목살",
                 "quantity": "600",
                 "unit": "g"
             },
@@ -13879,14 +13920,9 @@
         "link": "https://chef-choice.tistory.com/468",
         "ingredients1": [
             {
-                "name": "멸치육수",
-                "quantity": "3",
-                "unit": "컵"
-            },
-            {
                 "name": "무",
                 "quantity": "1/3",
-                "unit": "g"
+                "unit": "개"
             },
             {
                 "name": "바지락",
@@ -13919,7 +13955,7 @@
                 "unit": "g"
             },
             {
-                "name": "명란젓",
+                "name": "명란",
                 "quantity": "200",
                 "unit": "g"
             },
@@ -14193,7 +14229,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "앞다리살",
+                "name": "돼지고기 앞다리살",
                 "quantity": "1",
                 "unit": "kg"
             },
@@ -14226,7 +14262,7 @@
                 "unit": "개"
             },
             {
-                "name": "등심",
+                "name": "소고기 등심",
                 "quantity": "300",
                 "unit": "g"
             },
@@ -14364,7 +14400,7 @@
                 "unit": "개"
             },
             {
-                "name": "명란젓",
+                "name": "명란",
                 "quantity": "200",
                 "unit": "g"
             },
@@ -14987,7 +15023,7 @@
         "link": "https://chef-choice.tistory.com/401",
         "ingredients1": [
             {
-                "name": "돼지곱창",
+                "name": "돼지고기 곱창",
                 "quantity": "1",
                 "unit": "kg"
             },
@@ -15032,7 +15068,7 @@
                 "unit": "g"
             },
             {
-                "name": "사골육수",
+                "name": "사골곰탕",
                 "quantity": "3",
                 "unit": "컵"
             },
@@ -15238,7 +15274,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "매실청",
+                "name": "매실액",
                 "quantity": "2",
                 "unit": "큰술"
             },
@@ -15514,7 +15550,7 @@
             {
                 "name": "밥",
                 "quantity": "350",
-                "unit": "g (2공기)"
+                "unit": "g"
             },
             {
                 "name": "깻잎",
@@ -15639,8 +15675,8 @@
             },
             {
                 "name": "스팸",
-                "quantity": "1",
-                "unit": "캔"
+                "quantity": "200",
+                "unit": "g"
             },
             {
                 "name": "두부",
@@ -15965,7 +16001,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "라면스프",
+                "name": "라면 분말스프",
                 "quantity": "1",
                 "unit": "큰술"
             },
@@ -16476,7 +16512,7 @@
         "link": "https://chef-choice.tistory.com/328",
         "ingredients1": [
             {
-                "name": "목살",
+                "name": "돼지고기 목살",
                 "quantity": "600",
                 "unit": "g"
             },
@@ -16611,6 +16647,945 @@
             {
                 "name": "들기름",
                 "quantity": "1",
+                "unit": "큰술"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "전복 파스타",
+        "type": "분식",
+        "link": "https://chef-choice.tistory.com/321",
+        "ingredients1": [
+            {
+                "name": "전복",
+                "quantity": "10",
+                "unit": "마리"
+            },
+            {
+                "name": "버터",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            { 
+                "name": "다진마늘",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "양파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "소금",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "후추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "계란",
+                "quantity": "3",
+                "unit": "개"
+            },
+            {
+                "name": "파마산 치즈",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "파스타 면",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "페퍼론치노",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "파슬리",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "매운 스지찜",
+        "type": "찜",
+        "link": "https://chef-choice.tistory.com/318",
+        "ingredients1": [
+            {
+                "name": "소고기 힘줄",
+                "quantity": "1",
+                "unit": "kg"
+            },
+            {
+                "name": "아롱사태",
+                "quantity": "200",
+                "unit": "g"
+            },
+            {
+                "name": "된장",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "월계수",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "통후추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "대파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "양파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "마늘",
+                "quantity": "10",
+                "unit": "알"
+            },
+            {
+                "name": "국간장",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "고춧가루",
+                "quantity": "5",
+                "unit": "큰술"
+            },
+            {
+                "name": "진간장",
+                "quantity": "5",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "후추",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "미원",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "청양고추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "참깨",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "참기름",
+                "quantity": "1",
+                "unit": "큰술"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "양송이스프",
+        "type": "기타",
+        "link": "https://chef-choice.tistory.com/316",
+        "ingredients1": [
+            {
+                "name": "버터",
+                "quantity": "30",
+                "unit": "g"
+            },
+            {
+                "name": "밀가루",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "올리브유",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "양파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "양송이 버섯",
+                "quantity": "300",
+                "unit": "g"
+            },
+            {
+                "name": "맛소금",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "생크림",
+                "quantity": "1",
+                "unit": "컵"
+            },
+            {
+                "name": "우유",
+                "quantity": "1",
+                "unit": "컵"
+            },
+            {
+                "name": "치킨스톡",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "파마산 치즈가",
+                "quantity": "1",
+                "unit": "큰술"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "소고기 볶음",
+        "type": "볶음",
+        "link": "https://chef-choice.tistory.com/311",
+        "ingredients1": [
+            {
+                "name": "식용유",
+                "quantity": "5",
+                "unit": "큰술"
+            },
+            {
+                "name": "대파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "다진 소고기",
+                "quantity": "500",
+                "unit": "g"
+            },
+            {
+                "name": "후추",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진 생강",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "양파",
+                "quantity": "1/2",
+                "unit": "개"
+            },
+            {
+                "name": "배",
+                "quantity": "1/3",
+                "unit": "개"
+            },
+            {
+                "name": "고추장",
+                "quantity": "6",
+                "unit": "큰술"
+            },
+            {
+                "name": "물엿",
+                "quantity": "4",
+                "unit": "큰술"
+            },
+            {
+                "name": "진간장",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "2",
+                "unit": "큰술"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "된장오이고추무침",
+        "type": "무침",
+        "link": "https://chef-choice.tistory.com/308",
+        "ingredients1": [
+            {
+                "name": "오이고추",
+                "quantity": "5",
+                "unit": "개"
+            },
+            {
+                "name": "양파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "된장",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "쌈장",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "통깨",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "참기름",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "고춧가루",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "1",
+                "unit": "큰술"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "피자떡볶이",
+        "type": "기타",
+        "link": "https://chef-choice.tistory.com/307",
+        "ingredients1": [
+            {
+                "name": "식용유",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "베이컨",
+                "quantity": "200",
+                "unit": "g"
+            },
+            {
+                "name": "양파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "홍피망",
+                "quantity": "1/2",
+                "unit": "개"
+            },
+            {
+                "name": "청피망",
+                "quantity": "1/2",
+                "unit": "개"
+            },
+            {
+                "name": "스위트콘",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "토마토 스파게티 소스",
+                "quantity": "6",
+                "unit": "큰술"
+            },
+            {
+                "name": "고춧가루",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "고추장",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "진간장",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "떡",
+                "quantity": "200",
+                "unit": "g"
+            },
+            {
+                "name": "어묵",
+                "quantity": "40",
+                "unit": "g"
+            },
+            {
+                "name": "모짜렐라 치즈",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "페퍼로니",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "올리브",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "매운 등갈비찜",
+        "type": "찜",
+        "link": "https://chef-choice.tistory.com/255",
+        "ingredients1": [
+            {
+                "name": "등갈비",
+                "quantity": "2",
+                "unit": "kg"
+            },
+            {
+                "name": "소주",
+                "quantity": "1/2",
+                "unit": "컵"
+            },
+            {
+                "name": "진간장",
+                "quantity": "90",
+                "unit": "컵"
+            },
+            {
+                "name": "월계수",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "양파",
+                "quantity": "1/2",
+                "unit": "개"
+            },
+            {
+                "name": "토마토 스파게티 소스",
+                "quantity": "1",
+                "unit": "컵"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "물엿",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "고춧가루",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "고추장",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "미원",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "후추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "청양고추",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "쪽파",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "쭈꾸미삼겹살볶음",
+        "type": "볶음",
+        "link": "https://chef-choice.tistory.com/291",
+        "ingredients1": [
+            {
+                "name": "삼겹살",
+                "quantity": "400",
+                "unit": "g"
+            },
+            {
+                "name": "쭈꾸미",
+                "quantity": "400",
+                "unit": "g"
+            },
+            {
+                "name": "고춧가루",
+                "quantity": "4",
+                "unit": "큰술"
+            },
+            {
+                "name": "간장",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "맛술",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "물엿",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "고추장",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "굴소스",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "감자전분",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "식용유",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "양배추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "양파",
+                "quantity": "1/4",
+                "unit": "개"
+            },
+            {
+                "name": "대파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "청양고추",
+                "quantity": "2",
+                "unit": "개"
+            },
+            {
+                "name": "통깨",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "참기름",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "즉석 떡볶이",
+        "type": "분식",
+        "link": "https://chef-choice.tistory.com/237",
+        "ingredients1": [
+            {
+                "name": "라면",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "떡",
+                "quantity": "100",
+                "unit": "g"
+            },
+            {
+                "name": "어묵",
+                "quantity": "80",
+                "unit": "g"
+            },
+            {
+                "name": "양배추",
+                "quantity": "100",
+                "unit": "g"
+            },
+            {
+                "name": "물엿",
+                "quantity": "5",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "고운 고춧가루",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "고추장",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "다시다",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "짜장가루",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "라면스프",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "계란",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "밥",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "김가루",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "참기름",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "스팸마요덮밥",
+        "type": "밥",
+        "link": "https://chef-choice.tistory.com/279",
+        "ingredients1": [
+            {
+                "name": "식용유",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "스팸",
+                "quantity": "200",
+                "unit": "g"
+            },
+            {
+                "name": "계란",
+                "quantity": "3",
+                "unit": "개"
+            },
+            {
+                "name": "양파",
+                "quantity": "1/2",
+                "unit": "개"
+            },
+            {
+                "name": "간장",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "맛술",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "굴소스",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "김가루",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "마요네즈",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "고추장불고기",
+        "type": "구이",
+        "link": "https://chef-choice.tistory.com/262",
+        "ingredients1": [
+            {
+                "name": "사과",
+                "quantity": "100",
+                "unit": "g"
+            },
+            {
+                "name": "돼지고기 앞다리살(불고기용)",
+                "quantity": "600",
+                "unit": "g"
+            },
+            {
+                "name": "고추장",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "고운 고춧가루",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "진간장",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "맛술",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "다진마늘",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "참기름",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "다시다",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "양배추",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "양파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "대파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "참깨",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "딸기케이크",
+        "type": "기타",
+        "link": "https://chef-choice.tistory.com/235",
+        "ingredients1": [
+            {
+                "name": "카스테라",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "설탕",
+                "quantity": "50",
+                "unit": "g"
+            },
+            {
+                "name": "생크림",
+                "quantity": "2",
+                "unit": "컵"
+            },
+            {
+                "name": "설탕",
+                "quantity": "6",
+                "unit": "큰술"
+            },
+            {
+                "name": "크림치즈",
+                "quantity": "150",
+                "unit": "g"
+            },
+            {
+                "name": "딸기잼",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "딸기",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "슈가파우더",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
+        "menu": "고깃집 된장찌개",
+        "type": "찌개",
+        "link": "https://chef-choice.tistory.com/2",
+        "ingredients1": [
+            {
+                "name": "식용유",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "된장",
+                "quantity": "3",
+                "unit": "큰술"
+            },
+            {
+                "name": "쌈장",
+                "quantity": "2",
+                "unit": "큰술"
+            },
+            {
+                "name": "고추장",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "애호박",
+                "quantity": "1/4",
+                "unit": "개"
+            },
+            {
+                "name": "양파",
+                "quantity": "1/4",
+                "unit": "개"
+            },
+            {
+                "name": "두부",
+                "quantity": "1/2",
+                "unit": "모"
+            },
+            {
+                "name": "감자",
+                "quantity": "1/4",
+                "unit": "개"
+            },
+            {
+                "name": "팽이버섯 조금",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "대파",
+                "quantity": "1",
+                "unit": "개"
+            },
+            {
+                "name": "멸치 다시다",
+                "quantity": "1/2",
                 "unit": "큰술"
             }
         ],
