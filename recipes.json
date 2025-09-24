@@ -2480,8 +2480,8 @@
         "ingredients2": [
             {
                 "name": "간장",
-                "quantity": "1",
-                "unit": "국자"
+                "quantity": "5",
+                "unit": "큰술"
             },
             {
                 "name": "설탕",
