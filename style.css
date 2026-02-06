@@ -671,3 +671,26 @@ section h2 {
     color: #666;
     margin-top: 10px;
 }
+
+/* 모달 내 재료 리스트 스타일 (기존 .ingredient-grid 스타일 오버라이드) */
+#group-ingredient-list {
+    max-height: none; /* 아코디언 숨김 속성 해제 */
+    overflow: visible;
+    border: none;
+    padding: 10px 0;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
+}
+
+#group-ingredient-list li {
+    min-height: 40px;
+    padding: 8px;
+    font-size: 0.95em;
+}
+
+#group-ingredient-list li.selected {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+    color: #2e7d32;
+    font-weight: bold;
+}

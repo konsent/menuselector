@@ -2887,7 +2887,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "파스타",
+                "name": "파스타면",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -3079,7 +3079,7 @@
         "link": "https://www.10000recipe.com/recipe/6865946",
         "ingredients1": [
             {
-                "name": "스파게티면",
+                "name": "파스타면",
                 "quantity": "250",
                 "unit": "g"
             },
@@ -3820,7 +3820,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "파스타",
+                "name": "파스타면",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -5130,7 +5130,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "파스타",
+                "name": "파스타면",
                 "quantity": "120",
                 "unit": "g"
             },
@@ -6407,7 +6407,7 @@
         "link": "https://chef-choice.tistory.com/736",
         "ingredients1": [
             {
-                "name": "항정살 원육",
+                "name": "항정살",
                 "quantity": "600",
                 "unit": "g"
             },
@@ -10533,7 +10533,7 @@
         "link": "https://chef-choice.tistory.com/637",
         "ingredients1": [
             {
-                "name": "파스타",
+                "name": "파스타면",
                 "quantity": "150",
                 "unit": "g"
             },
@@ -15377,7 +15377,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "중국당면",
+                "name": "당면",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -16698,7 +16698,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "파스타",
+                "name": "파스타면",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -16864,7 +16864,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "파마산 치즈가",
+                "name": "파마산 치즈",
                 "quantity": "1",
                 "unit": "큰술"
             }

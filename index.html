@@ -17,6 +17,13 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png?v=1">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png?v=1">
 
+    <style>
+        /* 그룹 버튼 스타일 */
+        .group-item {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -95,6 +102,15 @@
                 <p class="modal-notice">"적당량"의 경우 레시피에 맞게 적당히 참고바랍니다</p>
             </div>
         </div>
+
+        <!-- 재료 그룹 선택 모달 -->
+        <div id="ingredient-group-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 id="group-modal-title"></h2>
+                <ul id="group-ingredient-list" class="ingredient-grid"></ul>
+            </div>
+        </div>
     </div>
     <script src="app.js?v=1.3"></script>
     <script>
@@ -116,6 +132,17 @@
                 unitModal.classList.remove('show');
             }
         }
+
+        // --- 그룹 모달 제어 스크립트 ---
+        const groupModal = document.getElementById('ingredient-group-modal');
+        const groupCloseBtn = groupModal.querySelector('.close-btn');
+
+        groupCloseBtn.onclick = function() {
+            groupModal.classList.remove('show');
+        }
+        // window.onclick은 위에서 이미 정의됨 (덮어쓰기 주의 필요하지만, app.js에서 제어하거나 
+        // 여기서는 단순 닫기만 처리. 실제로는 app.js에서 동적으로 제어하는 것이 좋음)
+        // 기존 window.onclick에 병합 처리 필요할 수 있음.
     </script>
 </body>
 </html>

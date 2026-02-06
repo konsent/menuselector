@@ -28,24 +28,45 @@ document.addEventListener('DOMContentLoaded', () => {
     let isIngredientModeInitialized = false;
     const basicIngredientKeywords = ['고춧가루', '마늘', '쌀', '밥', '설탕', '간장', '고추장', '참기름', '소금', '된장', '식초', '후추', '통깨', '맛술', '식용유', '김치국물'];
 
+    // --- 재료 그룹 정의 ---
+    const INGREDIENT_GROUPS = {
+        '김치': ['김치', '신김치', '묵은지', '김치국물', '다진 김치', '볶음김치', '배추겉절이', '파김치', '깍두기', '열무김치', '갓김치', '총각김치'],
+        '돼지고기': ['돼지고기', '삼겹살', '목살', '앞다리살', '뒷다리살', '안심', '등심', '갈비', '돼지갈비', '대패삼겹살', '돼지고기 다짐육', '돼지고기 찌개용', '돼지고기 카레용', '돼지고기 잡채용', '돼지고기 앞다리살(불고기용)', '항정살', '등갈비','통삼겹살', '돼지곱창', '돼지껍데기', '수육용 돼지고기', '돼지고기 앞다리살', '돼지고기 안심', '돼지고기 목살', '돼지고기 목뼈', '돼지고기 곱창'],
+        '소고기': ['소고기', '소불고기', '소갈비', '차돌박이', '우삼겹', '양지', '사태', '아롱사태', '우둔살', '소고기 다짐육', '소고기 국거리용', '소고기 스테이크용', '소고기 불고기용', '소고기 등심', 'LA갈비', '소곱창', '소고기 힘줄', '채끝살', '안창살', '살치살', '다진 소고기','소고기 등심', '소고기 우둔살'],
+        '닭': ['닭', '닭다리살', '닭가슴살', '닭안심', '닭봉', '닭날개', '닭 닭도리탕용', '닭다리살 정육', '닭오돌뼈', '통닭', '닭근위'],
+        '버섯': ['버섯', '표고버섯', '팽이버섯', '느타리버섯', '새송이버섯', '양송이버섯', '목이버섯', '능이버섯', '만가닥버섯', '새송이', '모듬 버섯', '황제버섯'],
+        '치즈': ['치즈', '모짜렐라', '모짜렐라 치즈', '체다치즈', '파마산 치즈', '파르미지아노', '파르미지아노 레지아노', '슬라이스 치즈', '크림치즈', '파다노 치즈'],
+        '면류': ['냉면 사리', '당면', '라면', '메밀면', '소면', '실당면', '에그누들', '파스타면', '중면', '중화면', '칼국수면', '페투치네면']
+    };
+
+    // 재료가 속한 그룹 이름을 반환하는 헬퍼 함수
+    function getIngredientGroup(ingredientName) {
+        for (const [groupName, members] of Object.entries(INGREDIENT_GROUPS)) {
+            if (members.includes(ingredientName)) {
+                return groupName;
+            }
+        }
+        return null;
+    }
+
     // --- 재료 카테고리 분류 ---
     const ingredientCategoryMap = {
         // 육류/가공육
         '돼지고기': '육류/가공육', '소고기': '육류/가공육', '닭': '육류/가공육', '오리': '육류/가공육', '갈비': '육류/가공육', '삼겹살': '육류/가공육', '목살': '육류/가공육', '앞다리살': '육류/가공육', '안심': '육류/가공육', '등심': '육류/가공육', '차돌': '육류/가공육', '우삼겹': '육류/가공육', '항정살': '육류/가공육', '아롱사태': '육류/가공육', '우둔살': '육류/가공육', '양지': '육류/가공육', '다짐육': '육류/가공육', '불고기': '육류/가공육', '국거리': '육류/가공육', '사골': '육류/가공육', '잡뼈': '육류/가공육', '곱창': '육류/가공육', '오돌뼈': '육류/가공육', '힘줄': '육류/가공육', '베이컨': '육류/가공육', '소세지': '육류/가공육', '소시지': '육류/가공육', '스팸': '육류/가공육', '어묵': '육류/가공육', '오뎅': '육류/가공육', '순대': '육류/가공육', '떡갈비': '육류/가공육',
         // 해산물
-        '황태': '해산물', '고등어': '해산물', '오징어': '해산물', '새우': '해산물', '해물': '해산물', '멸치': '해산물', '북어': '해산물', '꽁치': '해산물', '낙지': '해산물', '명란': '해산물', '골뱅이': '해산물', '꽃게': '해산물', '참치': '해산물', '진미채': '해산물', '바지락': '해산물', '전복': '해산물', '홍합': '해산물', '가리비': '해산물', '꼬막': '해산물', '굴': '해산물', '장어': '해산물', '날치알': '해산물', '파래': '해산물', '크래미': '해산물', '갈치': '해산물',
+        '황태': '해산물', '고등어': '해산물', '오징어': '해산물', '새우': '해산물', '해물': '해산물', '멸치': '해산물', '북어': '해산물', '꽁치': '해산물', '낙지': '해산물', '명란': '해산물', '골뱅이': '해산물', '꽃게': '해산물', '참치': '해산물', '진미채': '해산물', '바지락': '해산물', '전복': '해산물', '홍합': '해산물', '가리비': '해산물', '꼬막': '해산물', '굴': '해산물', '장어': '해산물', '날치알': '해산물', '파래': '해산물', '크래미': '해산물', '갈치': '해산물', '다시마': '해산물', '건다시마': '해산물',
         // 채소/과일
-        '파': '채소/과일', '양파': '채소/과일', '애호박': '채소/과일', '버섯': '채소/과일', '당근': '채소/과일', '양배추': '채소/과일', '시금치': '채소/과일', '콩나물': '채소/과일', '생강': '채소/과일', '감자': '채소/과일', '피망': '채소/과일', '부추': '채소/과일', '무': '채소/과일', '고구마': '채소/과일', '숙주': '채소/과일', '토마토': '채소/과일', '상추': '채소/과일', '깻잎': '채소/과일', '나물': '채소/과일', '오이': '채소/과일', '고사리': '채소/과일', '가지': '채소/과일', '고추': '채소/과일', '다시마': '채소/과일', '마늘': '채소/과일', '김치': '채소/과일', '배': '채소/과일', '브로콜리': '채소/과일', '사과': '채소/과일', '알배추': '채소/과일', '우엉': '채소/과일', '호박': '채소/과일', '파슬리': '채소/과일', '셀러리': '채소/과일', '청경채': '채소/과일', '쑥갓': '채소/과일', '미나리': '채소/과일', '더덕': '채소/과일', '시래기': '채소/과일', '토란대': '채소/과일', '깻순': '채소/과일', '마늘쫑': '채소/과일', '참나물': '채소/과일', '무순': '채소/과일', '새싹': '채소/과일', '레몬': '채소/과일', '파인애플': '채소/과일', '아보카도': '채소/과일', '할라피뇨': '채소/과일', '로즈마리': '채소/과일', '샐러드': '채소/과일', '허브': '채소/과일',
+        '파': '채소/과일', '양파': '채소/과일', '애호박': '채소/과일', '버섯': '채소/과일', '당근': '채소/과일', '양배추': '채소/과일', '시금치': '채소/과일', '콩나물': '채소/과일', '생강': '채소/과일', '감자': '채소/과일', '피망': '채소/과일', '부추': '채소/과일', '무': '채소/과일', '고구마': '채소/과일', '숙주': '채소/과일', '토마토': '채소/과일', '상추': '채소/과일', '깻잎': '채소/과일', '나물': '채소/과일', '오이': '채소/과일', '고사리': '채소/과일', '가지': '채소/과일', '고추': '채소/과일', '마늘': '채소/과일', '김치': '채소/과일', '배': '채소/과일', '브로콜리': '채소/과일', '사과': '채소/과일', '알배추': '채소/과일', '우엉': '채소/과일', '호박': '채소/과일', '파슬리': '채소/과일', '셀러리': '채소/과일', '청경채': '채소/과일', '쑥갓': '채소/과일', '미나리': '채소/과일', '더덕': '채소/과일', '시래기': '채소/과일', '토란대': '채소/과일', '깻순': '채소/과일', '마늘쫑': '채소/과일', '참나물': '채소/과일', '무순': '채소/과일', '새싹': '채소/과일', '레몬': '채소/과일', '파인애플': '채소/과일', '아보카도': '채소/과일', '할라피뇨': '채소/과일', '샐러드': '채소/과일', '허브': '채소/과일', '묵은지': '채소/과일', '깍두기': '채소/과일',
         // 유제품/계란
-        '치즈': '유제품/계란', '파르미지아노': '유제품/계란', '계란': '유제품/계란', '버터': '유제품/계란', '생크림': '유제품/계란', '우유': '유제품/계란', '메추리알': '유제품/계란', '요거트': '유제품/계란',
+        '치즈': '유제품/계란', '파르미지아노': '유제품/계란', '계란': '유제품/계란', '버터': '유제품/계란', '생크림': '유제품/계란', '우유': '유제품/계란', '메추리알': '유제품/계란', '요거트': '유제품/계란', '모짜렐라': '유제품/계란',
         // 곡물/면/떡/가루
-        '밀가루': '곡물/면/떡/가루', '부침가루': '곡물/면/떡/가루', '당면': '곡물/면/떡/가루', '스파게티': '곡물/면/떡/가루', '떡': '곡물/면/떡/가루', '국수': '곡물/면/떡/가루', '밥': '곡물/면/떡/가루', '빵가루': '곡물/면/떡/가루', '소면': '곡물/면/떡/가루', '쌀': '곡물/면/떡/가루', '찹쌀': '곡물/면/떡/가루', '전분': '곡물/면/떡/가루', '가루': '곡물/면/떡/가루', '들깨가루': '곡물/면/떡/가루', '면': '곡물/면/떡/가루', '누룽지': '곡물/면/떡/가루', '식빵': '곡물/면/떡/가루', '베이글': '곡물/면/떡/가루', '바게트': '곡물/면/떡/가루', '또띠아': '곡물/면/떡/가루', '빵': '곡물/면/떡/가루', '안남미': '곡물/면/떡/가루', '에그누들': '곡물/면/떡/가루',
+        '불닭볶음면': '곡물/면/떡/가루','밀가루': '곡물/면/떡/가루', '부침가루': '곡물/면/떡/가루', '당면': '곡물/면/떡/가루', '스파게티': '곡물/면/떡/가루', '떡': '곡물/면/떡/가루', '국수': '곡물/면/떡/가루', '밥': '곡물/면/떡/가루', '빵가루': '곡물/면/떡/가루', '소면': '곡물/면/떡/가루', '쌀': '곡물/면/떡/가루', '찹쌀': '곡물/면/떡/가루', '전분': '곡물/면/떡/가루', '가루': '곡물/면/떡/가루', '들깨가루': '곡물/면/떡/가루', '면': '곡물/면/떡/가루', '누룽지': '곡물/면/떡/가루', '식빵': '곡물/면/떡/가루', '베이글': '곡물/면/떡/가루', '바게트': '곡물/면/떡/가루', '또띠아': '곡물/면/떡/가루', '빵': '곡물/면/떡/가루', '안남미': '곡물/면/떡/가루', '에그누들': '곡물/면/떡/가루', '파스타': '곡물/면/떡/가루', '감자전분': '곡물/면/떡/가루',
         // 소스/조미료
-        '액젓': '소스/조미료', '새우젓': '소스/조미료', '소스': '소스/조미료', '마요네즈': '소스/조미료', '두반장': '소스/조미료', '다시다': '소스/조미료', '간장': '소스/조미료', '고추장': '소스/조미료', '고춧가루': '소스/조미료', '소금': '소스/조미료', '깨': '소스/조미료', '된장': '소스/조미료', '맛술': '소스/조미료', '매실': '소스/조미료', '물엿': '소스/조미료', '설탕': '소스/조미료', '소주': '소스/조미료', '식초': '소스/조미료', '올리고당': '소스/조미료', '월계수': '소스/조미료', '커피': '소스/조미료', '청주': '소스/조미료', '케첩': '소스/조미료', '후추': '소스/조미료', '쌈장': '소스/조미료', '춘장': '소스/조미료', '우스터': '소스/조미료', '데리야끼': '소스/조미료', '스리라차': '소스/조미료', '타바스코': '소스/조미료', '머스타드': '소스/조미료', '연겨자': '소스/조미료', '와사비': '소스/조미료', '초고추장': '소스/조미료', '초생강': '소스/조미료', '쯔유': '소스/조미료', '노추': '소스/조미료', '조청': '소스/조미료', '시럽': '소스/조미료', '꿀': '소스/조미료', '참치액': '소스/조미료', '육수': '소스/조미료', '스톡': '소스/조미료', '혼다시': '소스/조미료', '미원': '소스/조미료', '페퍼': '소스/조미료', '시즈닝': '소스/조미료', '시치미': '소스/조미료', '바질': '소스/조미료', '오레가노': '소스/조미료', '오향분': '소스/조미료', '갈치속젓': '소스/조미료', '레몬즙': '소스/조미료', '유자청': '소스/조미료', '발사믹': '소스/조미료', '마라': '소스/조미료', '토마토페이스트': '소스/조미료', '가람마살라': '소스/조미료', '큐민': '소스/조미료', '강황': '소스/조미료', '스테비아': '소스/조미료',
+        '소고기 다시다': '소스/조미료', '액젓': '소스/조미료', '새우젓': '소스/조미료', '소스': '소스/조미료', '마요네즈': '소스/조미료', '두반장': '소스/조미료', '다시다': '소스/조미료', '간장': '소스/조미료', '고추장': '소스/조미료', '고춧가루': '소스/조미료', '소금': '소스/조미료', '깨': '소스/조미료', '된장': '소스/조미료', '맛술': '소스/조미료', '매실': '소스/조미료', '물엿': '소스/조미료', '설탕': '소스/조미료', '소주': '소스/조미료', '식초': '소스/조미료', '올리고당': '소스/조미료', '월계수': '소스/조미료', '커피': '소스/조미료', '청주': '소스/조미료', '케첩': '소스/조미료', '후추': '소스/조미료', '쌈장': '소스/조미료', '춘장': '소스/조미료', '우스터': '소스/조미료', '데리야끼': '소스/조미료', '스리라차': '소스/조미료', '타바스코': '소스/조미료', '머스타드': '소스/조미료', '연겨자': '소스/조미료', '와사비': '소스/조미료', '초고추장': '소스/조미료', '초생강': '소스/조미료', '쯔유': '소스/조미료', '노추': '소스/조미료', '조청': '소스/조미료', '시럽': '소스/조미료', '꿀': '소스/조미료', '참치액': '소스/조미료', '육수': '소스/조미료', '스톡': '소스/조미료', '혼다시': '소스/조미료', '미원': '소스/조미료', '페퍼': '소스/조미료', '시즈닝': '소스/조미료', '시치미': '소스/조미료', '바질': '소스/조미료', '오레가노': '소스/조미료', '오향분': '소스/조미료', '갈치속젓': '소스/조미료', '레몬즙': '소스/조미료', '유자청': '소스/조미료', '발사믹': '소스/조미료', '마라': '소스/조미료', '토마토페이스트': '소스/조미료', '가람마살라': '소스/조미료', '큐민': '소스/조미료', '강황': '소스/조미료', '스테비아': '소스/조미료', '허브솔트': '소스/조미료', '슈가파우더': '소스/조미료', '로즈마리': '소스/조미료',
         // 유지류
         '올리브유': '유지류', '들기름': '유지류', '식용유': '유지류', '참기름': '유지류', '고추기름': '유지류', '기름': '유지류',
         // 기타
-        '두부': '기타', '유부': '기타', '만두': '기타', '김': '기타', '가쓰오부시': '기타', '베이크드빈': '기타', '스위트콘': '기타', '약재': '기타', '코코넛 밀크': '기타', '초콜릿': '기타'
+        '두부': '기타', '유부': '기타', '만두': '기타', '김': '기타', '가쓰오부시': '기타', '베이크드빈': '기타', '스위트콘': '기타', '약재': '기타', '코코넛 밀크': '기타', '초콜릿': '기타', '코코아파우더': '기타'
     };
 
     // 가장 긴 키워드부터 확인하기 위해 키워드를 길이순으로 정렬합니다.
@@ -160,6 +181,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             allMenus = Array.from(menuMap.values());
+            
+            // 전체 재료 목록 생성 (그룹 모달에서 사용)
+            allMenus.forEach(menu => {
+                menu.ingredients.forEach(ing => allIngredients.add(ing.name));
+            });
 
             renderMenus();
             setupEventListeners();
@@ -299,6 +325,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 autocompleteListEl.innerHTML = '';
             }
         });
+
+        // 모달 외부 클릭 시 닫기 (단위 모달 및 그룹 모달 통합 처리)
+        window.onclick = function(event) {
+            const unitModal = document.getElementById('unit-info-modal');
+            const groupModal = document.getElementById('ingredient-group-modal');
+            if (event.target == unitModal) {
+                unitModal.classList.remove('show');
+            }
+            if (event.target == groupModal) {
+                groupModal.classList.remove('show');
+            }
+        }
     }
 
     /**
@@ -686,13 +724,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeIngredientMode() {
         // 1. 전체 재료 목록 생성 및 그룹화
-        const allIngredientsSet = new Set();
-        allMenus.forEach(menu => {
-            menu.ingredients.forEach(ing => allIngredientsSet.add(ing.name));
-        });
-
         const categorizedIngredients = new Map();
-        allIngredientsSet.forEach(ingredient => {
+        allIngredients.forEach(ingredient => {
             const category = getIngredientCategory(ingredient);
             if (!categorizedIngredients.has(category)) {
                 categorizedIngredients.set(category, []);
@@ -700,9 +733,27 @@ document.addEventListener('DOMContentLoaded', () => {
             categorizedIngredients.get(category).push(ingredient);
         });
 
-        // 각 카테고리 내에서 재료를 가나다순으로 정렬
+        // 각 카테고리 내에서 재료를 정렬 (그룹이 있는 경우 우선 배치)
         for (const ingredients of categorizedIngredients.values()) {
-            ingredients.sort((a, b) => a.localeCompare(b));
+            ingredients.sort((a, b) => {
+                const groupA = getIngredientGroup(a);
+                const groupB = getIngredientGroup(b);
+
+                // 둘 다 그룹에 속한 경우
+                if (groupA && groupB) {
+                    // 같은 그룹이면 이름순 (사실 렌더링 시 하나로 합쳐지므로 순서 중요치 않음)
+                    if (groupA === groupB) return a.localeCompare(b);
+                    // 다른 그룹이면 그룹 이름순
+                    return groupA.localeCompare(groupB);
+                }
+
+                // 그룹에 속한 항목을 우선 배치
+                if (groupA) return -1;
+                if (groupB) return 1;
+
+                // 둘 다 그룹이 아니면 이름순
+                return a.localeCompare(b);
+            });
         }
 
         // 카테고리 자체를 정해진 순서대로 정렬
@@ -731,14 +782,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const ingredientGrid = document.createElement('ul');
             ingredientGrid.className = 'ingredient-grid';
 
+            const renderedGroups = new Set(); // 해당 카테고리에서 이미 렌더링된 그룹 추적
+
             ingredients.forEach(ingredient => {
-                const li = document.createElement('li');
-                li.textContent = ingredient;
-                li.dataset.ingredientName = ingredient;
-                if (ownedIngredients.has(ingredient)) {
-                    li.classList.add('selected');
+                const groupName = getIngredientGroup(ingredient);
+
+                if (groupName) {
+                    // 그룹에 속한 재료인 경우
+                    if (!renderedGroups.has(groupName)) {
+                        const li = document.createElement('li');
+                        li.textContent = groupName + ' ▾'; // 드롭다운 표시
+                        li.dataset.groupName = groupName;
+                        li.classList.add('group-item');
+                        
+                        // 그룹 내 재료 중 하나라도 선택되어 있으면 그룹 버튼도 선택 상태로 표시
+                        const groupMembers = INGREDIENT_GROUPS[groupName];
+                        if (groupMembers.some(member => ownedIngredients.has(member))) {
+                            li.classList.add('selected');
+                        }
+                        
+                        ingredientGrid.appendChild(li);
+                        renderedGroups.add(groupName);
+                    }
+                } else {
+                    // 일반 재료인 경우
+                    const li = document.createElement('li');
+                    li.textContent = ingredient;
+                    li.dataset.ingredientName = ingredient;
+                    if (ownedIngredients.has(ingredient)) {
+                        li.classList.add('selected');
+                    }
+                    ingredientGrid.appendChild(li);
                 }
-                ingredientGrid.appendChild(li);
             });
 
             categorySection.appendChild(ingredientGrid);
@@ -751,7 +826,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetH3 = event.target.closest('.ingredient-category-section h3');
 
             if (targetLi) {
-                handleIngredientClick(targetLi);
+                if (targetLi.dataset.groupName) {
+                    openGroupModal(targetLi.dataset.groupName);
+                } else {
+                    handleIngredientClick(targetLi);
+                }
                 return; // 재료 아이템 클릭 시 드롭다운 토글 방지
             }
 
@@ -762,6 +841,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         isIngredientModeInitialized = true;
+    }
+
+    /**
+     * 그룹 모달 열기
+     * @param {string} groupName 
+     */
+    function openGroupModal(groupName) {
+        const modal = document.getElementById('ingredient-group-modal');
+        const title = document.getElementById('group-modal-title');
+        const list = document.getElementById('group-ingredient-list');
+        
+        title.textContent = groupName;
+        list.innerHTML = '';
+        
+        const groupMembers = INGREDIENT_GROUPS[groupName];
+        
+        // 레시피에 실제로 존재하는 재료만 필터링하여 표시
+        groupMembers.forEach(ingName => {
+             if (allIngredients.has(ingName)) {
+                 const li = document.createElement('li');
+                 li.textContent = ingName;
+                 li.dataset.ingredientName = ingName;
+                 if (ownedIngredients.has(ingName)) {
+                     li.classList.add('selected');
+                 }
+                 li.addEventListener('click', () => {
+                     handleIngredientClick(li);
+                     updateGroupButtonState(groupName);
+                 });
+                 list.appendChild(li);
+             }
+        });
+        
+        modal.classList.add('show');
+    }
+
+    function updateGroupButtonState(groupName) {
+        const groupBtn = document.querySelector(`li[data-group-name="${groupName}"]`);
+        if (groupBtn) {
+            const groupMembers = INGREDIENT_GROUPS[groupName];
+            const hasOwned = groupMembers.some(member => ownedIngredients.has(member));
+            groupBtn.classList.toggle('selected', hasOwned);
+        }
     }
 
     /**
