@@ -20,12 +20,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const allIngredientsListEl = document.getElementById('all-ingredients-list');
     const possibleMenusListEl = document.getElementById('possible-menus-list');
 
+    // 프리셋 관련 요소
+    const presetManageBtn = document.getElementById('preset-manage-btn');
+    const savePresetMenuBtn = document.getElementById('save-preset-menu-btn');
+    const savePresetIngredientBtn = document.getElementById('save-preset-ingredient-btn');
+    const presetModal = document.getElementById('preset-modal');
+    const presetListEl = document.getElementById('preset-list');
+    const presetModalCloseBtn = presetModal.querySelector('.close-btn');
+
     // --- 상태 관리 ---
     let allMenus = [];
     let allIngredients = new Set();
     const selectedMenus = new Set();
     let ownedIngredients = new Set(); // 보유한 재료 이름 저장
     let isIngredientModeInitialized = false;
+    let allPresets = [];
+    const GROCERY_PLANNER_PRESETS_KEY = 'groceryPlannerPresets';
     const basicIngredientKeywords = ['고춧가루', '마늘', '쌀', '밥', '설탕', '간장', '고추장', '참기름', '소금', '된장', '식초', '후추', '통깨', '맛술', '식용유', '김치국물'];
 
     // --- 재료 그룹 정의 ---
@@ -34,9 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
         '돼지고기': ['돼지고기', '삼겹살', '목살', '앞다리살', '뒷다리살', '안심', '등심', '갈비', '돼지갈비', '대패삼겹살', '돼지고기 다짐육', '돼지고기 찌개용', '돼지고기 카레용', '돼지고기 잡채용', '돼지고기 앞다리살(불고기용)', '항정살', '등갈비','통삼겹살', '돼지곱창', '돼지껍데기', '수육용 돼지고기', '돼지고기 앞다리살', '돼지고기 안심', '돼지고기 목살', '돼지고기 목뼈', '돼지고기 곱창'],
         '소고기': ['소고기', '소불고기', '소갈비', '차돌박이', '우삼겹', '양지', '사태', '아롱사태', '우둔살', '소고기 다짐육', '소고기 국거리용', '소고기 스테이크용', '소고기 불고기용', '소고기 등심', 'LA갈비', '소곱창', '소고기 힘줄', '채끝살', '안창살', '살치살', '다진 소고기','소고기 등심', '소고기 우둔살'],
         '닭': ['닭', '닭다리살', '닭가슴살', '닭안심', '닭봉', '닭날개', '닭 닭도리탕용', '닭다리살 정육', '닭오돌뼈', '통닭', '닭근위'],
-        '버섯': ['버섯', '표고버섯', '팽이버섯', '느타리버섯', '새송이버섯', '양송이버섯', '목이버섯', '능이버섯', '만가닥버섯', '새송이', '모듬 버섯', '황제버섯'],
+        '버섯': ['버섯', '표고버섯', '팽이버섯', '느타리버섯', '새송이버섯', '양송이버섯', '목이버섯', '능이버섯', '만가닥버섯', '새송이', '모듬 버섯', '황제버섯', '양송이'],
         '치즈': ['치즈', '모짜렐라', '모짜렐라 치즈', '체다치즈', '파마산 치즈', '파르미지아노', '파르미지아노 레지아노', '슬라이스 치즈', '크림치즈', '파다노 치즈'],
-        '면류': ['냉면 사리', '당면', '라면', '메밀면', '소면', '실당면', '에그누들', '파스타면', '중면', '중화면', '칼국수면', '페투치네면']
+        '면류': ['냉면 사리', '당면', '라면', '메밀면', '소면', '실당면', '에그누들', '파스타면', '중면', '중화면', '칼국수면', '페투치네면'],
+        '대파': ['대파', '다진 대파', '쪽파'],
+        '부추': ['부추', '다진 부추'],
+        '생강': ['생강', '다진 생강'],
+        '피망': ['피망', '청피망', '홍피망'],
+        '마늘': ['마늘', '통마늘', '다진 마늘']
     };
 
     // 재료가 속한 그룹 이름을 반환하는 헬퍼 함수
@@ -52,21 +67,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 재료 카테고리 분류 ---
     const ingredientCategoryMap = {
         // 육류/가공육
-        '돼지고기': '육류/가공육', '소고기': '육류/가공육', '닭': '육류/가공육', '오리': '육류/가공육', '갈비': '육류/가공육', '삼겹살': '육류/가공육', '목살': '육류/가공육', '앞다리살': '육류/가공육', '안심': '육류/가공육', '등심': '육류/가공육', '차돌': '육류/가공육', '우삼겹': '육류/가공육', '항정살': '육류/가공육', '아롱사태': '육류/가공육', '우둔살': '육류/가공육', '양지': '육류/가공육', '다짐육': '육류/가공육', '불고기': '육류/가공육', '국거리': '육류/가공육', '사골': '육류/가공육', '잡뼈': '육류/가공육', '곱창': '육류/가공육', '오돌뼈': '육류/가공육', '힘줄': '육류/가공육', '베이컨': '육류/가공육', '소세지': '육류/가공육', '소시지': '육류/가공육', '스팸': '육류/가공육', '어묵': '육류/가공육', '오뎅': '육류/가공육', '순대': '육류/가공육', '떡갈비': '육류/가공육',
+        '돼지고기': '육류/가공육', '소고기': '육류/가공육', '닭': '육류/가공육', '오리': '육류/가공육', '갈비': '육류/가공육', '삼겹살': '육류/가공육', '목살': '육류/가공육', '앞다리살': '육류/가공육', '안심': '육류/가공육', '등심': '육류/가공육', '차돌': '육류/가공육', '우삼겹': '육류/가공육', '항정살': '육류/가공육', '아롱사태': '육류/가공육', '우둔살': '육류/가공육', '양지': '육류/가공육', '다짐육': '육류/가공육', '불고기': '육류/가공육', '국거리': '육류/가공육', '사골': '육류/가공육', '잡뼈': '육류/가공육', '곱창': '육류/가공육', '오돌뼈': '육류/가공육', '힘줄': '육류/가공육', '베이컨': '육류/가공육', '소세지': '육류/가공육', '소시지': '육류/가공육', '스팸': '육류/가공육', '어묵': '육류/가공육', '오뎅': '육류/가공육', '순대': '육류/가공육', '떡갈비': '육류/가공육', '페퍼로니': '육류/가공육',
         // 해산물
-        '황태': '해산물', '고등어': '해산물', '오징어': '해산물', '새우': '해산물', '해물': '해산물', '멸치': '해산물', '북어': '해산물', '꽁치': '해산물', '낙지': '해산물', '명란': '해산물', '골뱅이': '해산물', '꽃게': '해산물', '참치': '해산물', '진미채': '해산물', '바지락': '해산물', '전복': '해산물', '홍합': '해산물', '가리비': '해산물', '꼬막': '해산물', '굴': '해산물', '장어': '해산물', '날치알': '해산물', '파래': '해산물', '크래미': '해산물', '갈치': '해산물', '다시마': '해산물', '건다시마': '해산물',
+        '황태': '해산물', '고등어': '해산물', '오징어': '해산물', '새우': '해산물', '해물': '해산물', '멸치': '해산물', '북어': '해산물', '꽁치': '해산물', '낙지': '해산물', '명란': '해산물', '골뱅이': '해산물', '꽃게': '해산물', '참치': '해산물', '진미채': '해산물', '바지락': '해산물', '전복': '해산물', '홍합': '해산물', '가리비': '해산물', '꼬막': '해산물', '굴': '해산물', '장어': '해산물', '날치알': '해산물', '파래': '해산물', '크래미': '해산물', '갈치': '해산물', '다시마': '해산물', '건다시마': '해산물', '쭈꾸미': '해산물', '연어': '해산물',
         // 채소/과일
-        '파': '채소/과일', '양파': '채소/과일', '애호박': '채소/과일', '버섯': '채소/과일', '당근': '채소/과일', '양배추': '채소/과일', '시금치': '채소/과일', '콩나물': '채소/과일', '생강': '채소/과일', '감자': '채소/과일', '피망': '채소/과일', '부추': '채소/과일', '무': '채소/과일', '고구마': '채소/과일', '숙주': '채소/과일', '토마토': '채소/과일', '상추': '채소/과일', '깻잎': '채소/과일', '나물': '채소/과일', '오이': '채소/과일', '고사리': '채소/과일', '가지': '채소/과일', '고추': '채소/과일', '마늘': '채소/과일', '김치': '채소/과일', '배': '채소/과일', '브로콜리': '채소/과일', '사과': '채소/과일', '알배추': '채소/과일', '우엉': '채소/과일', '호박': '채소/과일', '파슬리': '채소/과일', '셀러리': '채소/과일', '청경채': '채소/과일', '쑥갓': '채소/과일', '미나리': '채소/과일', '더덕': '채소/과일', '시래기': '채소/과일', '토란대': '채소/과일', '깻순': '채소/과일', '마늘쫑': '채소/과일', '참나물': '채소/과일', '무순': '채소/과일', '새싹': '채소/과일', '레몬': '채소/과일', '파인애플': '채소/과일', '아보카도': '채소/과일', '할라피뇨': '채소/과일', '샐러드': '채소/과일', '허브': '채소/과일', '묵은지': '채소/과일', '깍두기': '채소/과일',
+        '파': '채소/과일', '양파': '채소/과일', '애호박': '채소/과일', '버섯': '채소/과일', '당근': '채소/과일', '양배추': '채소/과일', '시금치': '채소/과일', '콩나물': '채소/과일', '생강': '채소/과일', '감자': '채소/과일', '피망': '채소/과일', '부추': '채소/과일', '무': '채소/과일', '고구마': '채소/과일', '숙주': '채소/과일', '토마토': '채소/과일', '상추': '채소/과일', '깻잎': '채소/과일', '나물': '채소/과일', '오이': '채소/과일', '고사리': '채소/과일', '가지': '채소/과일', '고추': '채소/과일', '마늘': '채소/과일', '김치': '채소/과일', '배': '채소/과일', '브로콜리': '채소/과일', '사과': '채소/과일', '알배추': '채소/과일', '우엉': '채소/과일', '호박': '채소/과일', '파슬리': '채소/과일', '셀러리': '채소/과일', '청경채': '채소/과일', '쑥갓': '채소/과일', '미나리': '채소/과일', '더덕': '채소/과일', '시래기': '채소/과일', '토란대': '채소/과일', '깻순': '채소/과일', '마늘쫑': '채소/과일', '참나물': '채소/과일', '무순': '채소/과일', '새싹': '채소/과일', '레몬': '채소/과일', '파인애플': '채소/과일', '아보카도': '채소/과일', '할라피뇨': '채소/과일', '샐러드': '채소/과일', '허브': '채소/과일', '묵은지': '채소/과일', '깍두기': '채소/과일', '딸기': '채소/과일', '방울토마토': '채소/과일',
         // 유제품/계란
         '치즈': '유제품/계란', '파르미지아노': '유제품/계란', '계란': '유제품/계란', '버터': '유제품/계란', '생크림': '유제품/계란', '우유': '유제품/계란', '메추리알': '유제품/계란', '요거트': '유제품/계란', '모짜렐라': '유제품/계란',
         // 곡물/면/떡/가루
-        '불닭볶음면': '곡물/면/떡/가루','밀가루': '곡물/면/떡/가루', '부침가루': '곡물/면/떡/가루', '당면': '곡물/면/떡/가루', '스파게티': '곡물/면/떡/가루', '떡': '곡물/면/떡/가루', '국수': '곡물/면/떡/가루', '밥': '곡물/면/떡/가루', '빵가루': '곡물/면/떡/가루', '소면': '곡물/면/떡/가루', '쌀': '곡물/면/떡/가루', '찹쌀': '곡물/면/떡/가루', '전분': '곡물/면/떡/가루', '가루': '곡물/면/떡/가루', '들깨가루': '곡물/면/떡/가루', '면': '곡물/면/떡/가루', '누룽지': '곡물/면/떡/가루', '식빵': '곡물/면/떡/가루', '베이글': '곡물/면/떡/가루', '바게트': '곡물/면/떡/가루', '또띠아': '곡물/면/떡/가루', '빵': '곡물/면/떡/가루', '안남미': '곡물/면/떡/가루', '에그누들': '곡물/면/떡/가루', '파스타': '곡물/면/떡/가루', '감자전분': '곡물/면/떡/가루',
+        '불닭볶음면': '곡물/면/떡/가루','밀가루': '곡물/면/떡/가루', '부침가루': '곡물/면/떡/가루', '당면': '곡물/면/떡/가루', '스파게티': '곡물/면/떡/가루', '떡': '곡물/면/떡/가루', '국수': '곡물/면/떡/가루', '밥': '곡물/면/떡/가루', '빵가루': '곡물/면/떡/가루', '소면': '곡물/면/떡/가루', '쌀': '곡물/면/떡/가루', '찹쌀': '곡물/면/떡/가루', '전분': '곡물/면/떡/가루', '가루': '곡물/면/떡/가루', '들깨가루': '곡물/면/떡/가루', '면': '곡물/면/떡/가루', '누룽지': '곡물/면/떡/가루', '식빵': '곡물/면/떡/가루', '베이글': '곡물/면/떡/가루', '바게트': '곡물/면/떡/가루', '또띠아': '곡물/면/떡/가루', '빵': '곡물/면/떡/가루', '안남미': '곡물/면/떡/가루', '에그누들': '곡물/면/떡/가루', '파스타': '곡물/면/떡/가루', '감자전분': '곡물/면/떡/가루', '라면': '곡물/면/떡/가루', '칼국수면': '곡물/면/떡/가루', '우동면': '곡물/면/떡/가루', '페투치네면': '곡물/면/떡/가루', '중화면': '곡물/면/떡/가루', '메밀면': '곡물/면/떡/가루', '소면': '곡물/면/떡/가루', '밀떡': '곡물/면/떡/가루', '가래떡': '곡물/면/떡/가루', '떡볶이떡': '곡물/면/떡/가루', '찹쌀누룽지': '곡물/면/떡/가루', '우동사리': '곡물/면/떡/가루', '분모자': '곡물/면/떡/가루',
         // 소스/조미료
-        '소고기 다시다': '소스/조미료', '액젓': '소스/조미료', '새우젓': '소스/조미료', '소스': '소스/조미료', '마요네즈': '소스/조미료', '두반장': '소스/조미료', '다시다': '소스/조미료', '간장': '소스/조미료', '고추장': '소스/조미료', '고춧가루': '소스/조미료', '소금': '소스/조미료', '깨': '소스/조미료', '된장': '소스/조미료', '맛술': '소스/조미료', '매실': '소스/조미료', '물엿': '소스/조미료', '설탕': '소스/조미료', '소주': '소스/조미료', '식초': '소스/조미료', '올리고당': '소스/조미료', '월계수': '소스/조미료', '커피': '소스/조미료', '청주': '소스/조미료', '케첩': '소스/조미료', '후추': '소스/조미료', '쌈장': '소스/조미료', '춘장': '소스/조미료', '우스터': '소스/조미료', '데리야끼': '소스/조미료', '스리라차': '소스/조미료', '타바스코': '소스/조미료', '머스타드': '소스/조미료', '연겨자': '소스/조미료', '와사비': '소스/조미료', '초고추장': '소스/조미료', '초생강': '소스/조미료', '쯔유': '소스/조미료', '노추': '소스/조미료', '조청': '소스/조미료', '시럽': '소스/조미료', '꿀': '소스/조미료', '참치액': '소스/조미료', '육수': '소스/조미료', '스톡': '소스/조미료', '혼다시': '소스/조미료', '미원': '소스/조미료', '페퍼': '소스/조미료', '시즈닝': '소스/조미료', '시치미': '소스/조미료', '바질': '소스/조미료', '오레가노': '소스/조미료', '오향분': '소스/조미료', '갈치속젓': '소스/조미료', '레몬즙': '소스/조미료', '유자청': '소스/조미료', '발사믹': '소스/조미료', '마라': '소스/조미료', '토마토페이스트': '소스/조미료', '가람마살라': '소스/조미료', '큐민': '소스/조미료', '강황': '소스/조미료', '스테비아': '소스/조미료', '허브솔트': '소스/조미료', '슈가파우더': '소스/조미료', '로즈마리': '소스/조미료',
+        '소고기 다시다': '소스/조미료', '액젓': '소스/조미료', '새우젓': '소스/조미료', '소스': '소스/조미료', '마요네즈': '소스/조미료', '두반장': '소스/조미료', '다시다': '소스/조미료', '간장': '소스/조미료', '고추장': '소스/조미료', '고춧가루': '소스/조미료', '소금': '소스/조미료', '깨': '소스/조미료', '된장': '소스/조미료', '맛술': '소스/조미료', '매실': '소스/조미료', '물엿': '소스/조미료', '설탕': '소스/조미료', '소주': '소스/조미료', '식초': '소스/조미료', '올리고당': '소스/조미료', '월계수': '소스/조미료', '커피': '소스/조미료', '청주': '소스/조미료', '케첩': '소스/조미료', '후추': '소스/조미료', '쌈장': '소스/조미료', '춘장': '소스/조미료', '우스터': '소스/조미료', '데리야끼': '소스/조미료', '스리라차': '소스/조미료', '타바스코': '소스/조미료', '머스타드': '소스/조미료', '연겨자': '소스/조미료', '와사비': '소스/조미료', '초고추장': '소스/조미료', '초생강': '소스/조미료', '쯔유': '소스/조미료', '노추': '소스/조미료', '조청': '소스/조미료', '시럽': '소스/조미료', '꿀': '소스/조미료', '참치액': '소스/조미료', '육수': '소스/조미료', '스톡': '소스/조미료', '혼다시': '소스/조미료', '미원': '소스/조미료', '페퍼': '소스/조미료', '시즈닝': '소스/조미료', '시치미': '소스/조미료', '바질': '소스/조미료', '오레가노': '소스/조미료', '오향분': '소스/조미료', '갈치속젓': '소스/조미료', '레몬즙': '소스/조미료', '유자청': '소스/조미료', '발사믹': '소스/조미료', '마라': '소스/조미료', '토마토페이스트': '소스/조미료', '가람마살라': '소스/조미료', '큐민': '소스/조미료', '강황': '소스/조미료', '스테비아': '소스/조미료', '허브솔트': '소스/조미료', '슈가파우더': '소스/조미료', '로즈마리': '소스/조미료', '멸치다시팩': '소스/조미료', '멸치 다시팩': '소스/조미료', '멸치 액젓': '소스/조미료', '멸치액젓': '소스/조미료', '진간장': '소스/조미료', '국간장': '소스/조미료', '양조간장': '소스/조미료', '참소스': '소스/조미료', '돈까스 소스': '소스/조미료', '캐러멜 소스': '소스/조미료', '애플 사이다 식초': '소스/조미료', '메이플 시럽': '소스/조미료', '맛소금': '소스/조미료', '꽃소금': '소스/조미료', '굵은 소금': '소스/조미료', '순후추': '소스/조미료', '통후추': '소스/조미료', '땅콩버터': '소스/조미료', '홀그레인머스타드': '소스/조미료', '라면 후레이크 스프': '소스/조미료', '라면 분말스프': '소스/조미료', '코인 육수': '소스/조미료', '사골곰탕': '소스/조미료', '도가니탕': '소스/조미료', '냉면 육수': '소스/조미료', '짜장가루': '소스/조미료',
         // 유지류
         '올리브유': '유지류', '들기름': '유지류', '식용유': '유지류', '참기름': '유지류', '고추기름': '유지류', '기름': '유지류',
         // 기타
-        '두부': '기타', '유부': '기타', '만두': '기타', '김': '기타', '가쓰오부시': '기타', '베이크드빈': '기타', '스위트콘': '기타', '약재': '기타', '코코넛 밀크': '기타', '초콜릿': '기타', '코코아파우더': '기타'
+        '두부': '기타', '유부': '기타', '만두': '기타', '김': '기타', '가쓰오부시': '기타', '베이크드빈': '기타', '스위트콘': '기타', '약재': '기타', '코코넛 밀크': '기타', '초콜릿': '기타', '코코아파우더': '기타', '갈아만든 배': '기타', '삼계탕 약재': '기타', '찹쌀가루': '기타', '김가루': '기타', '콩': '기타', '두태기름': '기타', '카스테라': '기타', '딸기잼': '기타', '페퍼론치노': '기타', '올리브': '기타', '쭈꾸미': '해산물', '연어': '해산물', '딸기': '채소/과일'
     };
 
     // 가장 긴 키워드부터 확인하기 위해 키워드를 길이순으로 정렬합니다.
@@ -114,6 +129,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const num = parseFloat(qtyStr);
         return isNaN(num) ? 0 : num;
+    }
+
+    /**
+     * 로컬 스토리지에서 프리셋을 불러오는 함수
+     */
+    function loadPresetsFromStorage() {
+        try {
+            const storedPresets = localStorage.getItem(GROCERY_PLANNER_PRESETS_KEY);
+            if (storedPresets) {
+                allPresets = JSON.parse(storedPresets);
+            }
+        } catch (e) {
+            console.error("프리셋을 불러오는 데 실패했습니다:", e);
+            allPresets = [];
+        }
     }
 
     /**
@@ -186,6 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
             allMenus.forEach(menu => {
                 menu.ingredients.forEach(ing => allIngredients.add(ing.name));
             });
+
+            loadPresetsFromStorage(); // 프리셋 불러오기
 
             renderMenus();
             setupEventListeners();
@@ -326,16 +358,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 모달 외부 클릭 시 닫기 (단위 모달 및 그룹 모달 통합 처리)
+        // 프리셋 관리 버튼
+        presetManageBtn.addEventListener('click', openPresetModal);
+        presetModalCloseBtn.addEventListener('click', () => presetModal.classList.remove('show'));
+
+        // 프리셋 저장 버튼
+        savePresetMenuBtn.addEventListener('click', saveCurrentStateAsPreset);
+        savePresetIngredientBtn.addEventListener('click', saveCurrentStateAsPreset);
+
+        // 프리셋 목록 내 이벤트 위임 (불러오기, 삭제)
+        presetListEl.addEventListener('click', handlePresetActions);
+
+        // 모달 관련 이벤트 리스너 통합
+        const unitInfoBtn = document.getElementById('unit-info-btn');
+        const unitInfoModal = document.getElementById('unit-info-modal');
+        const unitInfoModalCloseBtn = unitInfoModal.querySelector('.close-btn');
+        const groupModal = document.getElementById('ingredient-group-modal');
+        const groupModalCloseBtn = groupModal.querySelector('.close-btn');
+
+        unitInfoBtn.addEventListener('click', () => unitInfoModal.classList.add('show'));
+        unitInfoModalCloseBtn.addEventListener('click', () => unitInfoModal.classList.remove('show'));
+        groupModalCloseBtn.addEventListener('click', () => groupModal.classList.remove('show'));
+
+        // 모달 외부 클릭 시 닫기 (단위, 그룹, 프리셋 모달 통합 처리)
         window.onclick = function(event) {
-            const unitModal = document.getElementById('unit-info-modal');
-            const groupModal = document.getElementById('ingredient-group-modal');
-            if (event.target == unitModal) {
-                unitModal.classList.remove('show');
-            }
-            if (event.target == groupModal) {
-                groupModal.classList.remove('show');
-            }
+            if (event.target == unitInfoModal) unitInfoModal.classList.remove('show');
+            if (event.target == groupModal) groupModal.classList.remove('show');
+            if (event.target == presetModal) presetModal.classList.remove('show');
         }
     }
 
@@ -618,7 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         copyButton.style.display = 'inline-block';
-        totalIngredientsCountEl.textContent = `(${totalCount}개)`;
+        totalIngredientsCountEl.textContent = ` (${totalCount}개)`;
 
         for (const [category, ingredients] of categorizedIngredients.entries()) {
             const categoryLi = document.createElement('li');
@@ -969,6 +1018,180 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             possibleMenusListEl.appendChild(card);
         });
+    }
+
+    // --- 프리셋 관련 함수 ---
+
+    /**
+     * 프리셋 관리 모달을 열고 목록을 렌더링하는 함수
+     */
+    function openPresetModal() {
+        renderPresetList();
+        presetModal.classList.add('show');
+    }
+
+    /**
+     * 프리셋 목록을 모달에 렌더링하는 함수
+     */
+    function renderPresetList() {
+        presetListEl.innerHTML = '';
+        if (allPresets.length === 0) {
+            presetListEl.innerHTML = '<li class="placeholder">저장된 프리셋이 없습니다.</li>';
+            return;
+        }
+
+        // 최신순으로 정렬
+        const sortedPresets = [...allPresets].sort((a, b) => b.timestamp - a.timestamp);
+
+        sortedPresets.forEach(preset => {
+            const li = document.createElement('li');
+            li.dataset.presetId = preset.id;
+
+            const modeText = preset.mode === 'menu' ? '메뉴' : '재료';
+            const itemCount = preset.data.length;
+
+            li.innerHTML = `
+                <div class="preset-info">
+                    <span class="preset-name">${preset.name}</span>
+                    <span class="preset-details">${modeText} 프리셋 | ${itemCount}개 항목</span>
+                </div>
+                <div class="preset-actions">
+                    <button class="preset-load-btn" data-action="load">불러오기</button>
+                    <button class="preset-delete-btn" data-action="delete">삭제</button>
+                </div>
+            `;
+            presetListEl.appendChild(li);
+        });
+    }
+
+    /**
+     * 현재 상태를 프리셋으로 저장하는 함수
+     */
+    function saveCurrentStateAsPreset() {
+        const isMenuMode = !modeToggle.checked;
+        const dataToSave = isMenuMode ? Array.from(selectedMenus) : Array.from(ownedIngredients);
+
+        if (dataToSave.length === 0) {
+            alert('저장할 항목이 없습니다. 메뉴 또는 재료를 먼저 선택해주세요.');
+            return;
+        }
+
+        const presetName = prompt('프리셋 이름을 입력하세요:', '');
+        if (!presetName || presetName.trim() === '') {
+            return; // 사용자가 취소하거나 빈 이름을 입력한 경우
+        }
+
+        const mode = isMenuMode ? 'menu' : 'ingredient';
+        const existingPresetIndex = allPresets.findIndex(p => p.name === presetName.trim() && p.mode === mode);
+
+        if (existingPresetIndex > -1) {
+            if (!confirm(`같은 이름의 프리셋이 이미 존재합니다. 덮어쓰시겠습니까?`)) {
+                return;
+            }
+            // 덮어쓰기
+            allPresets[existingPresetIndex].data = dataToSave;
+            allPresets[existingPresetIndex].timestamp = Date.now();
+        } else {
+            // 새로 추가
+            const newPreset = {
+                id: `preset_${Date.now()}`,
+                name: presetName.trim(),
+                mode: mode,
+                data: dataToSave,
+                timestamp: Date.now()
+            };
+            allPresets.push(newPreset);
+        }
+
+        try {
+            localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
+            alert(`'${presetName.trim()}' 프리셋이 저장되었습니다.`);
+            if (presetModal.classList.contains('show')) {
+                renderPresetList(); // 모달이 열려있으면 목록 새로고침
+            }
+        } catch (e) {
+            console.error("프리셋 저장에 실패했습니다:", e);
+            alert('프리셋 저장 중 오류가 발생했습니다.');
+        }
+    }
+
+    /**
+     * 프리셋 목록의 버튼 클릭(불러오기/삭제)을 처리하는 함수
+     * @param {Event} event
+     */
+    function handlePresetActions(event) {
+        const button = event.target.closest('button');
+        if (!button) return;
+
+        const li = button.closest('li');
+        const presetId = li.dataset.presetId;
+        const action = button.dataset.action;
+
+        if (action === 'load') {
+            loadPreset(presetId);
+        } else if (action === 'delete') {
+            deletePreset(presetId);
+        }
+    }
+
+    /**
+     * 특정 프리셋을 불러오는 함수
+     * @param {string} presetId
+     */
+    function loadPreset(presetId) {
+        const preset = allPresets.find(p => p.id === presetId);
+        if (!preset) {
+            alert('프리셋을 불러오는 데 실패했습니다.');
+            return;
+        }
+
+        if (preset.mode === 'menu') {
+            if (modeToggle.checked) {
+                modeToggle.checked = false;
+                switchToMenuMode();
+            }
+            selectedMenus.clear();
+            preset.data.forEach(menuName => selectedMenus.add(menuName));
+            renderMenus();
+            updateShoppingList();
+        } else { // 'ingredient' mode
+            if (!modeToggle.checked) {
+                modeToggle.checked = true;
+                switchToIngredientMode();
+            }
+            ownedIngredients.clear();
+            preset.data.forEach(ingName => ownedIngredients.add(ingName));
+            document.querySelectorAll('#all-ingredients-list li').forEach(li => {
+                const ingName = li.dataset.ingredientName;
+                const groupName = li.dataset.groupName;
+                if (ingName) li.classList.toggle('selected', ownedIngredients.has(ingName));
+                if (groupName) updateGroupButtonState(groupName);
+            });
+            updatePossibleMenus();
+        }
+
+        presetModal.classList.remove('show');
+        alert(`'${preset.name}' 프리셋을 불러왔습니다.`);
+    }
+
+    /**
+     * 특정 프리셋을 삭제하는 함수
+     * @param {string} presetId
+     */
+    function deletePreset(presetId) {
+        const presetToDelete = allPresets.find(p => p.id === presetId);
+        if (!presetToDelete) return;
+
+        if (confirm(`'${presetToDelete.name}' 프리셋을 정말 삭제하시겠습니까?`)) {
+            allPresets = allPresets.filter(p => p.id !== presetId);
+            try {
+                localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
+                renderPresetList(); // 모달 목록 새로고침
+            } catch (e) {
+                console.error("프리셋 삭제에 실패했습니다:", e);
+                alert('프리셋 삭제 중 오류가 발생했습니다.');
+            }
+        }
     }
 
     // 앱 실행

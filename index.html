@@ -41,6 +41,9 @@
                 </label>
                 <span class="toggle-label">재료 우선</span>
             </div>
+            <div class="header-actions">
+                <button id="preset-manage-btn" class="header-btn">프리셋 관리</button>
+            </div>
         </header>
         <main>
             <!-- 메뉴 우선 모드 -->
@@ -65,7 +68,10 @@
                     <section class="shopping-list-container">
                         <div class="list-header">
                             <h2>🛒 구매할 식재료<span id="total-ingredients-count"></span></h2>
-                            <button id="copy-button" class="copy-btn">복사</button>
+                            <div class="header-button-group">
+                                <button id="save-preset-menu-btn" class="copy-btn">프리셋 저장</button>
+                                <button id="copy-button" class="copy-btn">복사</button>
+                            </div>
                         </div>
                         <ul id="shopping-list"></ul>
                     </section>
@@ -75,7 +81,10 @@
             <!-- 재료 우선 모드 -->
             <div id="ingredient-first-mode" class="mode-section">
                 <section class="owned-ingredients-container">
-                    <h2>✅ 보유 재료 선택</h2>
+                    <div class="list-header">
+                        <h2>✅ 보유 재료 선택</h2>
+                        <button id="save-preset-ingredient-btn" class="copy-btn">프리셋 저장</button>
+                    </div>
                     <div id="all-ingredients-list"></div>
                 </section>
                 <section class="possible-menus-container">
@@ -111,38 +120,18 @@
                 <ul id="group-ingredient-list" class="ingredient-grid"></ul>
             </div>
         </div>
+
+        <!-- 프리셋 관리 모달 -->
+        <div id="preset-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>프리셋 관리</h2>
+                <ul id="preset-list">
+                    <!-- 프리셋 목록이 여기에 동적으로 생성됩니다. -->
+                </ul>
+            </div>
+        </div>
     </div>
     <script src="app.js?v=1.3"></script>
-    <script>
-        // --- 모달 제어 스크립트 ---
-        const unitModal = document.getElementById('unit-info-modal');
-        const unitBtn = document.getElementById('unit-info-btn');
-        const closeBtn = unitModal.querySelector('.close-btn');
-
-        unitBtn.onclick = function() {
-            unitModal.classList.add('show');
-        }
-
-        closeBtn.onclick = function() {
-            unitModal.classList.remove('show');
-        }
-
-        window.onclick = function(event) {
-            if (event.target == unitModal) {
-                unitModal.classList.remove('show');
-            }
-        }
-
-        // --- 그룹 모달 제어 스크립트 ---
-        const groupModal = document.getElementById('ingredient-group-modal');
-        const groupCloseBtn = groupModal.querySelector('.close-btn');
-
-        groupCloseBtn.onclick = function() {
-            groupModal.classList.remove('show');
-        }
-        // window.onclick은 위에서 이미 정의됨 (덮어쓰기 주의 필요하지만, app.js에서 제어하거나 
-        // 여기서는 단순 닫기만 처리. 실제로는 app.js에서 동적으로 제어하는 것이 좋음)
-        // 기존 window.onclick에 병합 처리 필요할 수 있음.
-    </script>
 </body>
 </html>
