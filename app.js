@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedMenusListEl = document.getElementById('selected-menus-list');
     const basicIngredientsContainerEl = document.getElementById('basic-ingredients-container');
     const basicIngredientsListEl = document.getElementById('basic-ingredients-list');
+    const ownedIngredientsDisplayContainerEl = document.getElementById('owned-ingredients-display-container');
+    const ownedIngredientsDisplayListEl = document.getElementById('owned-ingredients-display-list');
 
     // 재료 우선 모드 요소
     const allIngredientsListEl = document.getElementById('all-ingredients-list');
@@ -24,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const presetManageBtn = document.getElementById('preset-manage-btn');
     const savePresetMenuBtn = document.getElementById('save-preset-menu-btn');
     const savePresetIngredientBtn = document.getElementById('save-preset-ingredient-btn');
+    const updatePresetMenuBtn = document.getElementById('update-preset-menu-btn');
+    const updatePresetIngredientBtn = document.getElementById('update-preset-ingredient-btn');
     const presetModal = document.getElementById('preset-modal');
     const presetListEl = document.getElementById('preset-list');
     const presetModalCloseBtn = presetModal.querySelector('.close-btn');
@@ -33,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let allIngredients = new Set();
     const selectedMenus = new Set();
     let ownedIngredients = new Set(); // 보유한 재료 이름 저장
+    let currentPresetId = null; // 현재 선택된 프리셋 ID
     let isIngredientModeInitialized = false;
     let allPresets = [];
     const GROCERY_PLANNER_PRESETS_KEY = 'groceryPlannerPresets';
@@ -231,6 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             loadPresetsFromStorage(); // 프리셋 불러오기
 
+            // 프리셋 표시 요소 생성
+            const presetDisplay = document.createElement('span');
+            presetDisplay.id = 'current-preset-display';
+            presetDisplay.className = 'current-preset-display';
+            if (presetManageBtn && presetManageBtn.parentNode) {
+                presetManageBtn.parentNode.insertBefore(presetDisplay, presetManageBtn.nextSibling);
+            }
+
             renderMenus();
             setupEventListeners();
 
@@ -377,6 +390,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // 프리셋 저장 버튼
         savePresetMenuBtn.addEventListener('click', saveCurrentStateAsPreset);
         savePresetIngredientBtn.addEventListener('click', saveCurrentStateAsPreset);
+
+        // 프리셋 업데이트 버튼 (메인 화면)
+        updatePresetMenuBtn.addEventListener('click', () => {
+            if (currentPresetId) updatePreset(currentPresetId);
+        });
+        updatePresetIngredientBtn.addEventListener('click', () => {
+            if (currentPresetId) updatePreset(currentPresetId);
+        });
 
         // 프리셋 목록 내 이벤트 위임 (불러오기, 삭제)
         presetListEl.addEventListener('click', handlePresetActions);
@@ -548,11 +569,79 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
+     * 선택된 메뉴에 포함된 프리셋(보유) 재료 목록을 렌더링
+     */
+    function renderPresetIngredients() {
+        const includedPresetIngredients = new Set();
+        
+        let presetIngredients = new Set();
+        if (currentPresetId) {
+            const currentPreset = allPresets.find(p => p.id === currentPresetId);
+            if (currentPreset) {
+                const ingredients = currentPreset.ingredients || (currentPreset.mode === 'ingredient' ? currentPreset.data : []);
+                if (ingredients) {
+                    ingredients.forEach(ing => presetIngredients.add(ing));
+                }
+            }
+        }
+
+        if (presetIngredients.size === 0) {
+            if (ownedIngredientsDisplayContainerEl) ownedIngredientsDisplayContainerEl.style.display = 'none';
+            return;
+        }
+
+        selectedMenus.forEach(menuName => {
+            const menu = allMenus.find(m => m.name === menuName);
+            if (!menu) return;
+
+            menu.ingredients.forEach(ingredient => {
+                const { name } = ingredient;
+                if (!name) return;
+
+                // 기본 재료는 제외 (이미 기본 재료 섹션에 표시됨)
+                const isBasic = basicIngredientKeywords.some(keyword => name.includes(keyword));
+                if (isBasic) return;
+
+                if (presetIngredients.has(name)) {
+                    includedPresetIngredients.add(name);
+                }
+            });
+        });
+
+        if (ownedIngredientsDisplayListEl) {
+            ownedIngredientsDisplayListEl.innerHTML = '';
+            if (includedPresetIngredients.size === 0) {
+                ownedIngredientsDisplayContainerEl.style.display = 'none';
+            } else {
+                ownedIngredientsDisplayContainerEl.style.display = 'block';
+                const sortedIngredients = Array.from(includedPresetIngredients).sort((a, b) => a.localeCompare(b));
+                sortedIngredients.forEach(ingredient => {
+                    const li = document.createElement('li');
+                    li.textContent = ingredient;
+                    ownedIngredientsDisplayListEl.appendChild(li);
+                });
+            }
+        }
+    }
+
+    /**
      * 선택된 메뉴를 기반으로 쇼핑 목록 데이터를 계산하는 함수
      * @returns {{categorizedIngredients: Map<string, any[]>, totalCount: number}}
      */
     function getShoppingList() {
         const ingredientsData = new Map(); // key: name, value: { units: Map<unit, totalQuantity>, nonSummable: Set<unit> }
+
+        // 현재 적용된 재료 프리셋 확인
+        let presetIngredients = new Set();
+        if (currentPresetId) {
+            const currentPreset = allPresets.find(p => p.id === currentPresetId);
+            if (currentPreset) {
+                const ingredients = currentPreset.ingredients || (currentPreset.mode === 'ingredient' ? currentPreset.data : []);
+                if (ingredients) {
+                    ingredients.forEach(ing => presetIngredients.add(ing));
+                }
+            }
+        }
 
         selectedMenus.forEach(menuName => {
             const menu = allMenus.find(m => m.name === menuName);
@@ -565,6 +654,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 1. 기본 재료는 쇼핑 목록에서 제외
                 const isBasic = basicIngredientKeywords.some(keyword => name.includes(keyword));
                 if (isBasic) {
+                    return;
+                }
+
+                // 2. 재료 프리셋에 포함된 재료 제외
+                if (presetIngredients.has(name)) {
                     return;
                 }
 
@@ -659,6 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateShoppingList() {
         renderSelectedMenus();
         renderBasicIngredients(); // 기본 재료 목록 렌더링 추가
+        renderPresetIngredients(); // 프리셋(보유) 재료 목록 렌더링 추가
         const { categorizedIngredients, totalCount } = getShoppingList();
         renderShoppingList(categorizedIngredients, totalCount);
     }
@@ -972,18 +1067,65 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const possibleMenus = allMenus.map(menu => {
+        let possibleMenus = allMenus.map(menu => {
             const missingIngredients = menu.ingredients.filter(ing => !ownedIngredients.has(ing.name));
             const ownedCount = menu.ingredients.length - missingIngredients.length;
-            return { menu, missingIngredients, ownedCount };
-        }).filter(item => item.ownedCount > 0) // 보유 재료가 하나라도 있는 메뉴만 필터링
-          .sort((a, b) => {
+            
+            // 부족한 재료 포맷팅 및 정렬 키 생성
+            let missingGroupedCount = 0;
+            const missingGroups = [];
+            const formattedMissingIngredients = missingIngredients.map(ing => {
+                const group = getIngredientGroup(ing.name);
+                if (group) {
+                    missingGroupedCount++;
+                    missingGroups.push(group);
+                } else {
+                    missingGroups.push(ing.name);
+                }
+                return group ? `${group} [ ${ing.name} ]` : ing.name;
+            }).sort();
+            const missingKey = formattedMissingIngredients.join('|');
+            
+            // 정렬을 위한 대표 그룹 선정
+            const primaryGroup = missingGroups.sort()[0] || '';
+
+            return { menu, missingIngredients, ownedCount, formattedMissingIngredients, missingKey, missingGroupedCount, primaryGroup };
+        }).filter(item => item.ownedCount > 0); // 보유 재료가 하나라도 있는 메뉴만 필터링
+
+        // 그룹 빈도수 계산
+        const groupFrequency = new Map();
+        possibleMenus.forEach(item => {
+            if (item.missingIngredients.length > 0) {
+                const group = item.primaryGroup;
+                groupFrequency.set(group, (groupFrequency.get(group) || 0) + 1);
+            }
+        });
+
+        possibleMenus.sort((a, b) => {
               // 1. 부족한 재료가 적은 순
               if (a.missingIngredients.length !== b.missingIngredients.length) {
                   return a.missingIngredients.length - b.missingIngredients.length;
               }
-              // 2. 보유한 재료가 많은 순
-              return b.ownedCount - a.ownedCount;
+              // 2. 부족한 재료의 그룹 빈도수 (내림차순)
+              const freqA = groupFrequency.get(a.primaryGroup) || 0;
+              const freqB = groupFrequency.get(b.primaryGroup) || 0;
+              if (freqA !== freqB) {
+                  return freqB - freqA;
+              }
+              // 3. 부족한 재료의 그룹 이름 (오름차순) - 같은 빈도수끼리 뭉치게
+              if (a.primaryGroup !== b.primaryGroup) {
+                  return a.primaryGroup.localeCompare(b.primaryGroup);
+              }
+              // 4. 재료 그룹에 속한 케이스 우선
+              if (a.missingGroupedCount !== b.missingGroupedCount) {
+                  return b.missingGroupedCount - a.missingGroupedCount;
+              }
+              // 5. 세부 항목(보유 재료)이 더 많은 항목 먼저
+              if (a.ownedCount !== b.ownedCount) {
+                  return b.ownedCount - a.ownedCount;
+              }
+              // 6. 부족한 재료 이름 순
+              return a.missingKey.localeCompare(b.missingKey);
           });
 
         if (possibleMenus.length === 0) {
@@ -991,7 +1133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        possibleMenus.forEach(({ menu, missingIngredients }) => {
+        possibleMenus.forEach(({ menu, missingIngredients, formattedMissingIngredients }) => {
             const card = document.createElement('div');
             card.className = 'possible-menu-card';
 
@@ -1021,9 +1163,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const ul = document.createElement('ul');
                 ul.className = 'missing-ingredients-list';
-                missingIngredients.forEach(ing => {
+                formattedMissingIngredients.forEach(name => {
                     const li = document.createElement('li');
-                    li.textContent = ing.name;
+                    li.textContent = name;
                     ul.appendChild(li);
                 });
                 card.appendChild(ul);
@@ -1058,14 +1200,27 @@ document.addEventListener('DOMContentLoaded', () => {
         sortedPresets.forEach(preset => {
             const li = document.createElement('li');
             li.dataset.presetId = preset.id;
+            
+            // 현재 선택된 프리셋 하이라이트
+            if (preset.id === currentPresetId) {
+                li.classList.add('active-preset');
+            }
 
-            const modeText = preset.mode === 'menu' ? '메뉴' : '재료';
-            const itemCount = preset.data.length;
+            let detailsText = '';
+            if (preset.menus || preset.ingredients) {
+                const mCount = (preset.menus || []).length;
+                const iCount = (preset.ingredients || []).length;
+                detailsText = `메뉴 ${mCount}개, 재료 ${iCount}개`;
+            } else {
+                const modeText = preset.mode === 'menu' ? '메뉴' : '재료';
+                const itemCount = preset.data.length;
+                detailsText = `${modeText} 프리셋 | ${itemCount}개 항목`;
+            }
 
             li.innerHTML = `
                 <div class="preset-info">
                     <span class="preset-name">${preset.name}</span>
-                    <span class="preset-details">${modeText} 프리셋 | ${itemCount}개 항목</span>
+                    <span class="preset-details">${detailsText}</span>
                 </div>
                 <div class="preset-actions">
                     <button class="preset-load-btn" data-action="load">불러오기</button>
@@ -1080,11 +1235,11 @@ document.addEventListener('DOMContentLoaded', () => {
      * 현재 상태를 프리셋으로 저장하는 함수
      */
     function saveCurrentStateAsPreset() {
-        const isMenuMode = !modeToggle.checked;
-        const dataToSave = isMenuMode ? Array.from(selectedMenus) : Array.from(ownedIngredients);
+        const menusToSave = Array.from(selectedMenus);
+        const ingredientsToSave = Array.from(ownedIngredients);
 
-        if (dataToSave.length === 0) {
-            alert('저장할 항목이 없습니다. 메뉴 또는 재료를 먼저 선택해주세요.');
+        if (menusToSave.length === 0 && ingredientsToSave.length === 0) {
+            alert('저장할 항목이 없습니다. 메뉴 또는 재료를 선택해주세요.');
             return;
         }
 
@@ -1093,31 +1248,38 @@ document.addEventListener('DOMContentLoaded', () => {
             return; // 사용자가 취소하거나 빈 이름을 입력한 경우
         }
 
-        const mode = isMenuMode ? 'menu' : 'ingredient';
-        const existingPresetIndex = allPresets.findIndex(p => p.name === presetName.trim() && p.mode === mode);
+        const existingPresetIndex = allPresets.findIndex(p => p.name === presetName.trim());
 
         if (existingPresetIndex > -1) {
             if (!confirm(`같은 이름의 프리셋이 이미 존재합니다. 덮어쓰시겠습니까?`)) {
                 return;
             }
             // 덮어쓰기
-            allPresets[existingPresetIndex].data = dataToSave;
+            allPresets[existingPresetIndex].menus = menusToSave;
+            allPresets[existingPresetIndex].ingredients = ingredientsToSave;
+            // 레거시 데이터 삭제
+            delete allPresets[existingPresetIndex].mode;
+            delete allPresets[existingPresetIndex].data;
+            
             allPresets[existingPresetIndex].timestamp = Date.now();
+            currentPresetId = allPresets[existingPresetIndex].id;
         } else {
             // 새로 추가
             const newPreset = {
                 id: `preset_${Date.now()}`,
                 name: presetName.trim(),
-                mode: mode,
-                data: dataToSave,
+                menus: menusToSave,
+                ingredients: ingredientsToSave,
                 timestamp: Date.now()
             };
             allPresets.push(newPreset);
+            currentPresetId = newPreset.id;
         }
 
         try {
             localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
             alert(`'${presetName.trim()}' 프리셋이 저장되었습니다.`);
+            updateCurrentPresetDisplay();
             if (presetModal.classList.contains('show')) {
                 renderPresetList(); // 모달이 열려있으면 목록 새로고침
             }
@@ -1157,33 +1319,84 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (preset.mode === 'menu') {
-            if (modeToggle.checked) {
-                modeToggle.checked = false;
-                switchToMenuMode();
+        let menusToLoad = [];
+        let ingredientsToLoad = [];
+
+        if (preset.menus || preset.ingredients) {
+            menusToLoad = preset.menus || [];
+            ingredientsToLoad = preset.ingredients || [];
+        } else if (preset.mode && preset.data) {
+            if (preset.mode === 'menu') {
+                menusToLoad = preset.data;
+            } else {
+                ingredientsToLoad = preset.data;
             }
-            selectedMenus.clear();
-            preset.data.forEach(menuName => selectedMenus.add(menuName));
-            renderMenus();
-            updateShoppingList();
-        } else { // 'ingredient' mode
-            if (!modeToggle.checked) {
-                modeToggle.checked = true;
-                switchToIngredientMode();
-            }
-            ownedIngredients.clear();
-            preset.data.forEach(ingName => ownedIngredients.add(ingName));
-            document.querySelectorAll('#all-ingredients-list li').forEach(li => {
-                const ingName = li.dataset.ingredientName;
-                const groupName = li.dataset.groupName;
-                if (ingName) li.classList.toggle('selected', ownedIngredients.has(ingName));
-                if (groupName) updateGroupButtonState(groupName);
-            });
-            updatePossibleMenus();
         }
+
+        // 메뉴 적용
+        selectedMenus.clear();
+        menusToLoad.forEach(menuName => selectedMenus.add(menuName));
+        
+        // 재료 적용
+        ownedIngredients.clear();
+        ingredientsToLoad.forEach(ingName => ownedIngredients.add(ingName));
+
+        // UI 업데이트
+        renderMenus(); 
+        
+        if (!isIngredientModeInitialized) initializeIngredientMode();
+        document.querySelectorAll('#all-ingredients-list li').forEach(li => {
+            const ingName = li.dataset.ingredientName;
+            const groupName = li.dataset.groupName;
+            if (ingName) li.classList.toggle('selected', ownedIngredients.has(ingName));
+            if (groupName) updateGroupButtonState(groupName);
+        });
+
+        updateShoppingList();
+        updatePossibleMenus();
+
+        currentPresetId = preset.id;
+        updateCurrentPresetDisplay();
 
         presetModal.classList.remove('show');
         alert(`'${preset.name}' 프리셋을 불러왔습니다.`);
+    }
+
+    /**
+     * 프리셋 업데이트 함수
+     * @param {string} presetId 
+     */
+    function updatePreset(presetId) {
+        const presetIndex = allPresets.findIndex(p => p.id === presetId);
+        if (presetIndex === -1) return;
+
+        const preset = allPresets[presetIndex];
+        const menusToSave = Array.from(selectedMenus);
+        const ingredientsToSave = Array.from(ownedIngredients);
+
+        if (menusToSave.length === 0 && ingredientsToSave.length === 0) {
+            alert('저장할 항목이 없습니다.');
+            return;
+        }
+
+        if (confirm(`'${preset.name}' 프리셋을 현재 선택된 내용(메뉴 및 재료)으로 업데이트하시겠습니까?`)) {
+            allPresets[presetIndex].menus = menusToSave;
+            allPresets[presetIndex].ingredients = ingredientsToSave;
+            delete allPresets[presetIndex].mode;
+            delete allPresets[presetIndex].data;
+            allPresets[presetIndex].timestamp = Date.now();
+            
+            try {
+                localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
+                alert(`'${preset.name}' 프리셋이 업데이트되었습니다.`);
+                currentPresetId = presetId;
+                updateCurrentPresetDisplay();
+                renderPresetList();
+            } catch (e) {
+                console.error("프리셋 업데이트 실패:", e);
+                alert('프리셋 업데이트 중 오류가 발생했습니다.');
+            }
+        }
     }
 
     /**
@@ -1198,11 +1411,45 @@ document.addEventListener('DOMContentLoaded', () => {
             allPresets = allPresets.filter(p => p.id !== presetId);
             try {
                 localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
+                if (currentPresetId === presetId) {
+                    currentPresetId = null;
+                    updateCurrentPresetDisplay();
+                }
                 renderPresetList(); // 모달 목록 새로고침
             } catch (e) {
                 console.error("프리셋 삭제에 실패했습니다:", e);
                 alert('프리셋 삭제 중 오류가 발생했습니다.');
             }
+        }
+    }
+
+    /**
+     * 현재 선택된 프리셋 이름을 화면에 표시
+     */
+    function updateCurrentPresetDisplay() {
+        const displayEl = document.getElementById('current-preset-display');
+        
+        // 업데이트 버튼 표시 상태 제어
+        if (currentPresetId) {
+            updatePresetMenuBtn.style.display = 'inline-block';
+            updatePresetIngredientBtn.style.display = 'inline-block';
+        } else {
+            updatePresetMenuBtn.style.display = 'none';
+            updatePresetIngredientBtn.style.display = 'none';
+        }
+
+        if (!displayEl) return;
+
+        if (currentPresetId) {
+            const preset = allPresets.find(p => p.id === currentPresetId);
+            if (preset) {
+                displayEl.textContent = `현재 프리셋: ${preset.name}`;
+                displayEl.style.display = 'inline-block';
+            } else {
+                displayEl.style.display = 'none';
+            }
+        } else {
+            displayEl.style.display = 'none';
         }
     }
 

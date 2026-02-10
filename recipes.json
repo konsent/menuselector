@@ -874,6 +874,35 @@
         "ingredients2": []
     },
     {
+        "menu": "간장국수",
+        "type": "분식",
+        "link": "",
+        "ingredients1": [
+            {
+                "name": "간장",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "설탕",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "들기름",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "소면",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+
+    {
         "menu": "비빔국수",
         "type": "분식",
         "link": "https://www.10000recipe.com/recipe/6882534",
@@ -892,11 +921,6 @@
                 "name": "삶은 계란",
                 "quantity": "1",
                 "unit": "개"
-            },
-            {
-                "name": "상추",
-                "quantity": "",
-                "unit": "적당량"
             },
             {
                 "name": "고추장",
@@ -1023,8 +1047,13 @@
                 "unit": "큰술"
             },
             {
-                "name": "깨소금",
-                "quantity": "1",
+                "name": "참깨",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "소금",
+                "quantity": "1/2",
                 "unit": "큰술"
             }
         ]
@@ -2716,11 +2745,6 @@
                 "unit": "개"
             },
             {
-                "name": "김가루",
-                "quantity": "",
-                "unit": "적당량"
-            },
-            {
                 "name": "김치",
                 "quantity": "1",
                 "unit": "큰술"
@@ -4026,11 +4050,6 @@
                 "unit": "적당량"
             },
             {
-                "name": "김가루",
-                "quantity": "",
-                "unit": "적당량"
-            },
-            {
                 "name": "참기름",
                 "quantity": "",
                 "unit": "적당량"
@@ -4888,11 +4907,6 @@
                 "unit": "개"
             },
             {
-                "name": "김가루",
-                "quantity": "",
-                "unit": "적당량"
-            },
-            {
                 "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
@@ -4964,11 +4978,6 @@
                 "name": "냉면 육수",
                 "quantity": "1",
                 "unit": "팩"
-            },
-            {
-                "name": "김가루",
-                "quantity": "",
-                "unit": "적당량"
             },
             {
                 "name": "참깨",
@@ -6925,11 +6934,6 @@
                 "name": "계란",
                 "quantity": "1",
                 "unit": "개"
-            },
-            {
-                "name": "김가루",
-                "quantity": "",
-                "unit": "적당량"
             }
         ],
         "ingredients2": []
@@ -7542,11 +7546,6 @@
                 "name": "청양고추",
                 "quantity": "1",
                 "unit": "개"
-            },
-            {
-                "name": "김가루",
-                "quantity": "3",
-                "unit": "g"
             }
         ],
         "ingredients2": []
@@ -10465,11 +10464,6 @@
                 "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
-            },
-            {
-                "name": "김가루",
-                "quantity": "",
-                "unit": "적당량"
             }
         ],
         "ingredients2": []
@@ -11766,7 +11760,7 @@
                 "unit": "g"
             },
             {
-                "name": "골든카레",
+                "name": "카레가루",
                 "quantity": "220",
                 "unit": "g"
             },
@@ -12632,11 +12626,6 @@
                 "name": "상추",
                 "quantity": "",
                 "unit": "적당량"
-            },
-            {
-                "name": "김가루",
-                "quantity": "",
-                "unit": "적당량"
             }
         ],
         "ingredients2": []
@@ -12683,11 +12672,6 @@
             },
             {
                 "name": "소면",
-                "quantity": "",
-                "unit": "적당량"
-            },
-            {
-                "name": "김가루",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -12751,11 +12735,6 @@
             },
             {
                 "name": "계란",
-                "quantity": "",
-                "unit": "적당량"
-            },
-            {
-                "name": "김가루",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -13238,7 +13217,7 @@
                 "unit": "컵"
             },
             {
-                "name": "카레",
+                "name": "카레가루",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -15528,7 +15507,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "카레",
+                "name": "카레가루",
                 "quantity": "1/2",
                 "unit": "큰술"
             },
@@ -17247,6 +17226,44 @@
         "ingredients2": []
     },
     {
+        "menu": "분식집 떡볶이",
+        "type": "분식",
+        "link": "",
+        "ingredients1": [
+            {
+                "name": "비락식혜",
+                "quantity": "1",
+                "unit": "컵"
+            },
+            {
+                "name": "고추장",
+                "quantity": "1",
+                "unit": "큰술"
+            },
+            {
+                "name": "간장",
+                "quantity": "1/2",
+                "unit": "큰술"
+            },
+            {
+                "name": "떡",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "어묵",
+                "quantity": "",
+                "unit": "적당량"
+            },
+            {
+                "name": "대파",
+                "quantity": "",
+                "unit": "적당량"
+            }
+        ],
+        "ingredients2": []
+    },
+    {
         "menu": "즉석 떡볶이",
         "type": "분식",
         "link": "https://chef-choice.tistory.com/237",
@@ -17307,7 +17324,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "라면스프",
+                "name": "라면 분말스프",
                 "quantity": "1",
                 "unit": "큰술"
             },
@@ -17378,11 +17395,6 @@
                 "name": "굴소스",
                 "quantity": "1",
                 "unit": "큰술"
-            },
-            {
-                "name": "김가루",
-                "quantity": "",
-                "unit": "적당량"
             },
             {
                 "name": "마요네즈",
