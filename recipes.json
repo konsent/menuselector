@@ -52,7 +52,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -105,7 +105,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -179,7 +179,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -238,7 +238,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -382,7 +382,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -861,7 +861,7 @@
                 "unit": "개"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -924,7 +924,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -1065,7 +1065,7 @@
                 "unit": "개"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": ""
             }
@@ -1363,7 +1363,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "1",
                 "unit": "큰술"
             }
@@ -1395,7 +1395,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "1",
                 "unit": "큰술"
             }
@@ -1600,7 +1600,7 @@
                 "unit": "개"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -1612,7 +1612,7 @@
         "link": "https://www.10000recipe.com/recipe/6894096",
         "ingredients1": [
             {
-                "name": "떡볶이떡",
+                "name": "떡",
                 "quantity": "2",
                 "unit": "컵"
             },
@@ -1622,7 +1622,7 @@
                 "unit": "개"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -2075,7 +2075,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "1",
                 "unit": "큰술"
             }
@@ -2208,7 +2208,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "1",
                 "unit": "큰술"
             },
@@ -2289,7 +2289,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             },
@@ -2347,7 +2347,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -2494,7 +2494,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -3029,7 +3029,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -3204,19 +3204,19 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
         ]
     },
     {
-        "menu": "오뎅볶음",
+        "menu": "어묵볶음",
         "type": "볶음",
         "link": "https://www.10000recipe.com/recipe/6864526",
         "ingredients1": [
             {
-                "name": "오뎅",
+                "name": "어묵",
                 "quantity": "4",
                 "unit": "장"
             },
@@ -3380,7 +3380,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -6030,7 +6030,7 @@
                 "unit": "g"
             },
             {
-                "name": "흑설탕",
+                "name": "설탕",
                 "quantity": "100",
                 "unit": "g"
             },
@@ -6324,7 +6324,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "멸치 다시팩",
+                "name": "멸치 다시다",
                 "quantity": "1",
                 "unit": "팩"
             },
@@ -11011,7 +11011,7 @@
         "link": "https://chef-choice.tistory.com/618",
         "ingredients1": [
             {
-                "name": "멸치 다시팩",
+                "name": "멸치 다시다",
                 "quantity": "1",
                 "unit": "팩"
             },
@@ -15528,7 +15528,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "카레가루",
+                "name": "카레",
                 "quantity": "1/2",
                 "unit": "큰술"
             },
@@ -16041,7 +16041,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -16089,7 +16089,7 @@
                 "unit": "g"
             },
             {
-                "name": "우동면",
+                "name": "우동사리",
                 "quantity": "460",
                 "unit": "g"
             },
@@ -16572,7 +16572,7 @@
                 "unit": "적당량"
             },
             {
-                "name": "깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             }
@@ -16950,7 +16950,7 @@
                 "unit": "큰술"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "2",
                 "unit": "큰술"
             },
@@ -17234,7 +17234,7 @@
                 "unit": "개"
             },
             {
-                "name": "통깨",
+                "name": "참깨",
                 "quantity": "",
                 "unit": "적당량"
             },
