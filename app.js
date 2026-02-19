@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 상태 관리 ---
     let allMenus = [];
+    let menuNameMap = new Map(); // 메뉴 이름 → 메뉴 객체 (O(1) 조회용)
     let allIngredients = new Set();
     const selectedMenus = new Set();
     let ownedIngredients = new Set(); // 보유한 재료 이름 저장
@@ -92,13 +93,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // 유제품/계란
         '치즈': '유제품/계란', '파르미지아노': '유제품/계란', '계란': '유제품/계란', '버터': '유제품/계란', '생크림': '유제품/계란', '우유': '유제품/계란', '메추리알': '유제품/계란', '요거트': '유제품/계란', '모짜렐라': '유제품/계란',
         // 곡물/면/떡/가루
-        '카스테라': '곡물/면/떡/가루', '마늘가루': '곡물/면/떡/가루','분모자': '곡물/면/떡/가루','불닭볶음면': '곡물/면/떡/가루','밀가루': '곡물/면/떡/가루', '부침가루': '곡물/면/떡/가루', '당면': '곡물/면/떡/가루', '스파게티': '곡물/면/떡/가루', '떡': '곡물/면/떡/가루', '국수': '곡물/면/떡/가루', '밥': '곡물/면/떡/가루', '빵가루': '곡물/면/떡/가루', '소면': '곡물/면/떡/가루', '쌀': '곡물/면/떡/가루', '찹쌀': '곡물/면/떡/가루', '전분': '곡물/면/떡/가루', '가루': '곡물/면/떡/가루', '들깨가루': '곡물/면/떡/가루', '면': '곡물/면/떡/가루', '누룽지': '곡물/면/떡/가루', '식빵': '곡물/면/떡/가루', '베이글': '곡물/면/떡/가루', '바게트': '곡물/면/떡/가루', '또띠아': '곡물/면/떡/가루', '빵': '곡물/면/떡/가루', '안남미': '곡물/면/떡/가루', '에그누들': '곡물/면/떡/가루', '파스타': '곡물/면/떡/가루', '감자전분': '곡물/면/떡/가루', '라면': '곡물/면/떡/가루', '칼국수면': '곡물/면/떡/가루', '우동면': '곡물/면/떡/가루', '페투치네면': '곡물/면/떡/가루', '중화면': '곡물/면/떡/가루', '메밀면': '곡물/면/떡/가루', '소면': '곡물/면/떡/가루', '밀떡': '곡물/면/떡/가루', '가래떡': '곡물/면/떡/가루', '떡볶이떡': '곡물/면/떡/가루', '찹쌀누룽지': '곡물/면/떡/가루', '우동사리': '곡물/면/떡/가루', '분모자': '곡물/면/떡/가루',
+        '카스테라': '곡물/면/떡/가루', '마늘가루': '곡물/면/떡/가루', '분모자': '곡물/면/떡/가루', '불닭볶음면': '곡물/면/떡/가루', '밀가루': '곡물/면/떡/가루', '부침가루': '곡물/면/떡/가루', '당면': '곡물/면/떡/가루', '스파게티': '곡물/면/떡/가루', '떡': '곡물/면/떡/가루', '국수': '곡물/면/떡/가루', '밥': '곡물/면/떡/가루', '빵가루': '곡물/면/떡/가루', '소면': '곡물/면/떡/가루', '쌀': '곡물/면/떡/가루', '찹쌀': '곡물/면/떡/가루', '전분': '곡물/면/떡/가루', '가루': '곡물/면/떡/가루', '들깨가루': '곡물/면/떡/가루', '면': '곡물/면/떡/가루', '누룽지': '곡물/면/떡/가루', '식빵': '곡물/면/떡/가루', '베이글': '곡물/면/떡/가루', '바게트': '곡물/면/떡/가루', '또띠아': '곡물/면/떡/가루', '빵': '곡물/면/떡/가루', '안남미': '곡물/면/떡/가루', '에그누들': '곡물/면/떡/가루', '파스타': '곡물/면/떡/가루', '감자전분': '곡물/면/떡/가루', '라면': '곡물/면/떡/가루', '칼국수면': '곡물/면/떡/가루', '우동면': '곡물/면/떡/가루', '페투치네면': '곡물/면/떡/가루', '중화면': '곡물/면/떡/가루', '메밀면': '곡물/면/떡/가루', '밀떡': '곡물/면/떡/가루', '가래떡': '곡물/면/떡/가루', '떡볶이떡': '곡물/면/떡/가루', '찹쌀누룽지': '곡물/면/떡/가루', '우동사리': '곡물/면/떡/가루',
         // 소스/조미료
         '토마토 스파게티 소스': '소스/조미료','소고기 다시다': '소스/조미료', '액젓': '소스/조미료', '새우젓': '소스/조미료', '소스': '소스/조미료', '마요네즈': '소스/조미료', '두반장': '소스/조미료', '다시다': '소스/조미료', '간장': '소스/조미료', '고추장': '소스/조미료', '고춧가루': '소스/조미료', '소금': '소스/조미료', '깨': '소스/조미료', '된장': '소스/조미료', '맛술': '소스/조미료', '매실': '소스/조미료', '물엿': '소스/조미료', '설탕': '소스/조미료', '소주': '소스/조미료', '식초': '소스/조미료', '올리고당': '소스/조미료', '월계수': '소스/조미료', '커피': '소스/조미료', '청주': '소스/조미료', '케첩': '소스/조미료', '후추': '소스/조미료', '쌈장': '소스/조미료', '춘장': '소스/조미료', '우스터': '소스/조미료', '데리야끼': '소스/조미료', '스리라차': '소스/조미료', '타바스코': '소스/조미료', '머스타드': '소스/조미료', '연겨자': '소스/조미료', '와사비': '소스/조미료', '초고추장': '소스/조미료', '초생강': '소스/조미료', '쯔유': '소스/조미료', '노추': '소스/조미료', '조청': '소스/조미료', '시럽': '소스/조미료', '꿀': '소스/조미료', '참치액': '소스/조미료', '육수': '소스/조미료', '스톡': '소스/조미료', '혼다시': '소스/조미료', '미원': '소스/조미료', '페퍼': '소스/조미료', '시즈닝': '소스/조미료', '시치미': '소스/조미료', '바질': '소스/조미료', '오레가노': '소스/조미료', '오향분': '소스/조미료', '갈치속젓': '소스/조미료', '레몬즙': '소스/조미료', '유자청': '소스/조미료', '발사믹': '소스/조미료', '마라': '소스/조미료', '토마토페이스트': '소스/조미료', '가람마살라': '소스/조미료', '큐민': '소스/조미료', '강황': '소스/조미료', '스테비아': '소스/조미료', '허브솔트': '소스/조미료', '슈가파우더': '소스/조미료', '로즈마리': '소스/조미료', '멸치다시팩': '소스/조미료', '멸치 다시팩': '소스/조미료', '멸치 액젓': '소스/조미료', '멸치액젓': '소스/조미료', '진간장': '소스/조미료', '국간장': '소스/조미료', '양조간장': '소스/조미료', '참소스': '소스/조미료', '돈까스 소스': '소스/조미료', '캐러멜 소스': '소스/조미료', '애플 사이다 식초': '소스/조미료', '메이플 시럽': '소스/조미료', '맛소금': '소스/조미료', '꽃소금': '소스/조미료', '굵은 소금': '소스/조미료', '순후추': '소스/조미료', '통후추': '소스/조미료', '땅콩버터': '소스/조미료', '홀그레인머스타드': '소스/조미료', '라면 후레이크 스프': '소스/조미료', '라면 분말스프': '소스/조미료', '코인 육수': '소스/조미료', '사골곰탕': '소스/조미료', '도가니탕': '소스/조미료', '냉면 육수': '소스/조미료', '짜장가루': '소스/조미료',
         // 유지류
         '올리브유': '유지류', '들기름': '유지류', '식용유': '유지류', '참기름': '유지류', '고추기름': '유지류', '기름': '유지류',
         // 기타
-        '버섯': '기타', '두부': '기타', '유부': '기타', '만두': '기타', '김': '기타', '가쓰오부시': '기타', '베이크드빈': '기타', '스위트콘': '기타', '약재': '기타', '코코넛 밀크': '기타', '초콜릿': '기타', '코코아파우더': '기타', '갈아만든 배': '기타', '삼계탕 약재': '기타', '찹쌀가루': '기타', '김가루': '기타', '콩': '기타', '두태기름': '기타', '카스테라': '기타', '딸기잼': '기타', '페퍼론치노': '기타', '올리브': '기타', '쭈꾸미': '해산물', '연어': '해산물', '딸기': '채소/과일'
+        '두부': '기타', '유부': '기타', '만두': '기타', '김': '기타', '가쓰오부시': '기타', '베이크드빈': '기타', '스위트콘': '기타', '약재': '기타', '코코넛 밀크': '기타', '초콜릿': '기타', '코코아파우더': '기타', '갈아만든 배': '기타', '삼계탕 약재': '기타', '찹쌀가루': '기타', '김가루': '기타', '콩': '기타', '두태기름': '기타', '딸기잼': '기타', '페퍼론치노': '기타', '올리브': '기타'
     };
 
     // 가장 긴 키워드부터 확인하기 위해 키워드를 길이순으로 정렬합니다.
@@ -156,6 +157,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const storedPresets = localStorage.getItem(GROCERY_PLANNER_PRESETS_KEY);
             if (storedPresets) {
                 allPresets = JSON.parse(storedPresets);
+                // 레거시 포맷(mode/data) → 신규 포맷(menus/ingredients) 마이그레이션
+                allPresets = allPresets.map(preset => {
+                    if (!preset.menus && !preset.ingredients && preset.mode && preset.data) {
+                        return {
+                            id: preset.id,
+                            name: preset.name,
+                            timestamp: preset.timestamp,
+                            menus: preset.mode === 'menu' ? preset.data : [],
+                            ingredients: preset.mode === 'ingredient' ? preset.data : []
+                        };
+                    }
+                    return preset;
+                });
             }
         } catch (e) {
             console.error("프리셋을 불러오는 데 실패했습니다:", e);
@@ -228,7 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             allMenus = Array.from(menuMap.values());
-            
+            menuNameMap = new Map(allMenus.map(m => [m.name, m])); // O(1) 조회 인덱스 구축
+
             // 전체 재료 목록 생성 (그룹 모달에서 사용)
             allMenus.forEach(menu => {
                 menu.ingredients.forEach(ing => allIngredients.add(ing.name));
@@ -291,12 +306,19 @@ document.addEventListener('DOMContentLoaded', () => {
             return indexA - indexB; // 커스텀 순서대로 정렬
         });
 
-        sortedTypes.forEach(type => {
+        sortedTypes.forEach((type, index) => {
             const typeSection = document.createElement('div');
             typeSection.classList.add('menu-type-section');
 
             const typeHeading = document.createElement('h3');
             typeHeading.textContent = type;
+            typeHeading.setAttribute('role', 'button');
+            typeHeading.setAttribute('tabindex', '0');
+            typeHeading.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
+
+            // 첫 번째 카테고리는 기본으로 열기
+            if (index === 0) typeSection.classList.add('active');
+
             typeSection.appendChild(typeHeading);
 
             const typeMenuList = document.createElement('ul');
@@ -343,8 +365,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (targetH3) {
-                // h3의 부모인 .menu-type-section에 active 클래스를 토글
-                targetH3.parentElement.classList.toggle('active');
+                const section = targetH3.parentElement;
+                section.classList.toggle('active');
+                targetH3.setAttribute('aria-expanded', section.classList.contains('active') ? 'true' : 'false');
+            }
+        });
+
+        // 아코디언 키보드 접근성 (Enter/Space)
+        menuCategoriesEl.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                const targetH3 = event.target.closest('.menu-type-section h3');
+                if (targetH3) {
+                    event.preventDefault();
+                    const section = targetH3.parentElement;
+                    section.classList.toggle('active');
+                    targetH3.setAttribute('aria-expanded', section.classList.contains('active') ? 'true' : 'false');
+                }
             }
         });
 
@@ -413,11 +449,35 @@ document.addEventListener('DOMContentLoaded', () => {
         unitInfoModalCloseBtn.addEventListener('click', () => unitInfoModal.classList.remove('show'));
         groupModalCloseBtn.addEventListener('click', () => groupModal.classList.remove('show'));
 
-        // 모달 외부 클릭 시 닫기 (단위, 그룹, 프리셋 모달 통합 처리)
-        window.onclick = function(event) {
-            if (event.target == unitInfoModal) unitInfoModal.classList.remove('show');
-            if (event.target == groupModal) groupModal.classList.remove('show');
-            if (event.target == presetModal) presetModal.classList.remove('show');
+        // 모달 외부 클릭 시 닫기 (단위, 그룹, 프리셋, 다이얼로그 모달 통합 처리)
+        window.addEventListener('click', (event) => {
+            if (event.target === unitInfoModal) unitInfoModal.classList.remove('show');
+            if (event.target === groupModal) groupModal.classList.remove('show');
+            if (event.target === presetModal) presetModal.classList.remove('show');
+        });
+
+        // 검색 클리어 버튼
+        const searchClearBtn = document.getElementById('search-clear-btn');
+        if (searchClearBtn) {
+            searchClearBtn.addEventListener('click', () => {
+                menuSearchInput.value = '';
+                searchClearBtn.style.display = 'none';
+                autocompleteListEl.innerHTML = '';
+                filterMenuList('');
+            });
+        }
+
+        // 재료 전체 해제 버튼
+        const clearIngredientsBtn = document.getElementById('clear-ingredients-btn');
+        if (clearIngredientsBtn) {
+            clearIngredientsBtn.addEventListener('click', () => {
+                if (ownedIngredients.size === 0) return;
+                ownedIngredients.clear();
+                document.querySelectorAll('#all-ingredients-list li.selected').forEach(li => {
+                    li.classList.remove('selected');
+                });
+                updatePossibleMenus();
+            });
         }
     }
 
@@ -445,6 +505,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleMenuSearch(event) {
         const searchTerm = event.target.value.toLowerCase().trim();
 
+        // 클리어 버튼 표시/숨김
+        const searchClearBtn = document.getElementById('search-clear-btn');
+        if (searchClearBtn) {
+            searchClearBtn.style.display = searchTerm.length > 0 ? 'block' : 'none';
+        }
+
         // 1. 메인 메뉴 목록 필터링
         filterMenuList(searchTerm);
 
@@ -458,15 +524,22 @@ document.addEventListener('DOMContentLoaded', () => {
             filteredMenus.forEach(menu => {
                 const itemEl = document.createElement('div');
 
-                // 검색어 하이라이팅
-                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                // 검색어 하이라이팅 (특수문자 escape 처리)
+                const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(${escapedTerm})`, 'gi');
                 const highlightedName = menu.name.replace(regex, '<span class="highlight">$1</span>');
                 itemEl.innerHTML = highlightedName;
 
                 itemEl.addEventListener('click', () => {
-                    menuSearchInput.value = menu.name; // 입력창에 선택한 메뉴 이름 설정
-                    autocompleteListEl.innerHTML = ''; // 드롭다운 숨기기
-                    filterMenuList(menu.name.toLowerCase()); // 선택한 메뉴로 목록 필터링
+                    menuSearchInput.value = menu.name;
+                    autocompleteListEl.innerHTML = '';
+                    if (searchClearBtn) searchClearBtn.style.display = 'block';
+                    filterMenuList(menu.name.toLowerCase());
+                    // 해당 카테고리로 스크롤
+                    requestAnimationFrame(() => {
+                        const openSection = menuCategoriesEl.querySelector('.menu-type-section.active');
+                        if (openSection) openSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
                 });
                 autocompleteListEl.appendChild(itemEl);
             });
@@ -511,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             li.dataset.menuName = menuName; // 삭제 버튼 클릭 시 참조하기 위해 데이터 속성 추가
 
-            const menu = allMenus.find(m => m.name === menuName);
+            const menu = menuNameMap.get(menuName);
 
             const link = document.createElement('a');
             if (menu && menu.link) {
@@ -541,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const includedBasicIngredients = new Set();
 
         selectedMenus.forEach(menuName => {
-            const menu = allMenus.find(m => m.name === menuName);
+            const menu = menuNameMap.get(menuName);
             if (!menu) return;
 
             menu.ingredients.forEach(ingredient => {
@@ -591,7 +664,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         selectedMenus.forEach(menuName => {
-            const menu = allMenus.find(m => m.name === menuName);
+            const menu = menuNameMap.get(menuName);
             if (!menu) return;
 
             menu.ingredients.forEach(ingredient => {
@@ -644,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         selectedMenus.forEach(menuName => {
-            const menu = allMenus.find(m => m.name === menuName);
+            const menu = menuNameMap.get(menuName);
             if (!menu) return;
 
             menu.ingredients.forEach(ingredient => {
@@ -732,7 +805,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ingredients.sort((a, b) => a.name.localeCompare(b.name));
         }
 
-        const categoryOrder = ['육류', '해산물', '채소', '가공/유제품', '곡물/면/가루', '소스/기타', '기타'];
+        const categoryOrder = ['육류/가공육', '해산물', '채소/과일', '유제품/계란', '곡물/면/떡/가루', '소스/조미료', '유지류', '기타'];
         const sortedCategorizedIngredients = new Map(
             [...categorizedIngredients.entries()].sort(([catA], [catB]) => {
                 const indexA = categoryOrder.indexOf(catA);
@@ -810,7 +883,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function handleCopyClick() {
         if (!navigator.clipboard || !navigator.clipboard.writeText) {
-            alert('이 브라우저에서는 클립보드 복사 기능을 지원하지 않습니다. (HTTPS 또는 localhost 환경에서 사용해주세요)');
+            showToast('클립보드 복사는 HTTPS 환경에서만 지원됩니다.');
             return;
         }
         if (selectedMenus.size === 0) return;
@@ -852,7 +925,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
         }).catch(err => {
             console.error('클립보드 복사에 실패했습니다:', err);
-            alert('클립보드 복사에 실패했습니다.');
+            showToast('클립보드 복사에 실패했습니다.');
         });
     }
 
@@ -927,18 +1000,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 2. 화면에 렌더링
         allIngredientsListEl.innerHTML = ''; // This is now a div
+        const renderedGroups = new Set(); // 전체 목록에서 이미 렌더링된 그룹 추적 (카테고리 간 중복 방지)
         for (const [category, ingredients] of sortedCategorizedIngredients.entries()) {
             const categorySection = document.createElement('div');
             categorySection.className = 'ingredient-category-section';
 
             const categoryHeading = document.createElement('h3');
             categoryHeading.textContent = category;
+            categoryHeading.setAttribute('role', 'button');
+            categoryHeading.setAttribute('tabindex', '0');
+            categoryHeading.setAttribute('aria-expanded', 'false');
             categorySection.appendChild(categoryHeading);
 
             const ingredientGrid = document.createElement('ul');
             ingredientGrid.className = 'ingredient-grid';
-
-            const renderedGroups = new Set(); // 해당 카테고리에서 이미 렌더링된 그룹 추적
 
             ingredients.forEach(ingredient => {
                 const groupName = getIngredientGroup(ingredient);
@@ -991,8 +1066,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (targetH3) {
-                // h3의 부모인 .ingredient-category-section에 active 클래스를 토글
-                targetH3.parentElement.classList.toggle('active');
+                const section = targetH3.parentElement;
+                section.classList.toggle('active');
+                targetH3.setAttribute('aria-expanded', section.classList.contains('active') ? 'true' : 'false');
+            }
+        });
+
+        // 재료 모드 아코디언 키보드 접근성
+        allIngredientsListEl.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                const targetH3 = event.target.closest('.ingredient-category-section h3');
+                if (targetH3) {
+                    event.preventDefault();
+                    const section = targetH3.parentElement;
+                    section.classList.toggle('active');
+                    targetH3.setAttribute('aria-expanded', section.classList.contains('active') ? 'true' : 'false');
+                }
             }
         });
 
@@ -1174,6 +1263,94 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- 커스텀 다이얼로그 / 토스트 유틸리티 ---
+
+    const dialogModal = document.getElementById('custom-dialog-modal');
+    const dialogMessage = document.getElementById('dialog-message');
+    const dialogInput = document.getElementById('dialog-input');
+    const dialogConfirmBtn = document.getElementById('dialog-confirm-btn');
+    const dialogCancelBtn = document.getElementById('dialog-cancel-btn');
+    const toastEl = document.getElementById('toast-notification');
+    let dialogResolve = null;
+
+    /**
+     * 커스텀 입력 다이얼로그 (prompt 대체)
+     * @param {string} message
+     * @param {string} [placeholder]
+     * @returns {Promise<string|null>} 입력값 또는 취소 시 null
+     */
+    function showInputDialog(message, placeholder = '') {
+        return new Promise((resolve) => {
+            dialogMessage.textContent = message;
+            dialogInput.placeholder = placeholder;
+            dialogInput.value = '';
+            dialogInput.style.display = 'block';
+            dialogConfirmBtn.textContent = '저장';
+            dialogCancelBtn.textContent = '취소';
+            dialogModal.classList.add('show');
+            dialogInput.focus();
+            dialogResolve = resolve;
+        });
+    }
+
+    /**
+     * 커스텀 확인 다이얼로그 (confirm 대체)
+     * @param {string} message
+     * @param {string} [confirmText]
+     * @returns {Promise<boolean>}
+     */
+    function showConfirmDialog(message, confirmText = '확인') {
+        return new Promise((resolve) => {
+            dialogMessage.textContent = message;
+            dialogInput.style.display = 'none';
+            dialogInput.value = '';
+            dialogConfirmBtn.textContent = confirmText;
+            dialogCancelBtn.textContent = '취소';
+            dialogModal.classList.add('show');
+            dialogResolve = resolve;
+        });
+    }
+
+    function closeDialog(result) {
+        dialogModal.classList.remove('show');
+        if (dialogResolve) {
+            dialogResolve(result);
+            dialogResolve = null;
+        }
+    }
+
+    dialogConfirmBtn.addEventListener('click', () => {
+        const result = dialogInput.style.display !== 'none'
+            ? (dialogInput.value.trim() || null)
+            : true;
+        closeDialog(result);
+    });
+
+    dialogCancelBtn.addEventListener('click', () => closeDialog(null));
+
+    dialogInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            closeDialog(dialogInput.value.trim() || null);
+        }
+        if (e.key === 'Escape') closeDialog(null);
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === dialogModal) closeDialog(null);
+    });
+
+    /**
+     * 토스트 알림 표시 (alert 대체)
+     * @param {string} message
+     */
+    function showToast(message) {
+        if (!toastEl) return;
+        toastEl.textContent = message;
+        toastEl.classList.add('show');
+        setTimeout(() => toastEl.classList.remove('show'), 2500);
+    }
+
     // --- 프리셋 관련 함수 ---
 
     /**
@@ -1200,22 +1377,15 @@ document.addEventListener('DOMContentLoaded', () => {
         sortedPresets.forEach(preset => {
             const li = document.createElement('li');
             li.dataset.presetId = preset.id;
-            
-            // 현재 선택된 프리셋 하이라이트
+
             if (preset.id === currentPresetId) {
                 li.classList.add('active-preset');
             }
 
-            let detailsText = '';
-            if (preset.menus || preset.ingredients) {
-                const mCount = (preset.menus || []).length;
-                const iCount = (preset.ingredients || []).length;
-                detailsText = `메뉴 ${mCount}개, 재료 ${iCount}개`;
-            } else {
-                const modeText = preset.mode === 'menu' ? '메뉴' : '재료';
-                const itemCount = preset.data.length;
-                detailsText = `${modeText} 프리셋 | ${itemCount}개 항목`;
-            }
+            // 신규 포맷만 사용 (레거시는 loadPresetsFromStorage에서 마이그레이션됨)
+            const mCount = (preset.menus || []).length;
+            const iCount = (preset.ingredients || []).length;
+            const detailsText = `메뉴 ${mCount}개, 재료 ${iCount}개`;
 
             li.innerHTML = `
                 <div class="preset-info">
@@ -1234,40 +1404,31 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * 현재 상태를 프리셋으로 저장하는 함수
      */
-    function saveCurrentStateAsPreset() {
+    async function saveCurrentStateAsPreset() {
         const menusToSave = Array.from(selectedMenus);
         const ingredientsToSave = Array.from(ownedIngredients);
 
         if (menusToSave.length === 0 && ingredientsToSave.length === 0) {
-            alert('저장할 항목이 없습니다. 메뉴 또는 재료를 선택해주세요.');
+            showToast('저장할 항목이 없습니다. 메뉴 또는 재료를 선택해주세요.');
             return;
         }
 
-        const presetName = prompt('프리셋 이름을 입력하세요:', '');
-        if (!presetName || presetName.trim() === '') {
-            return; // 사용자가 취소하거나 빈 이름을 입력한 경우
-        }
+        const presetName = await showInputDialog('프리셋 이름을 입력하세요', '이름 입력...');
+        if (!presetName) return;
 
-        const existingPresetIndex = allPresets.findIndex(p => p.name === presetName.trim());
+        const existingPresetIndex = allPresets.findIndex(p => p.name === presetName);
 
         if (existingPresetIndex > -1) {
-            if (!confirm(`같은 이름의 프리셋이 이미 존재합니다. 덮어쓰시겠습니까?`)) {
-                return;
-            }
-            // 덮어쓰기
+            const overwrite = await showConfirmDialog(`'${presetName}' 프리셋이 이미 존재합니다. 덮어쓰시겠습니까?`, '덮어쓰기');
+            if (!overwrite) return;
             allPresets[existingPresetIndex].menus = menusToSave;
             allPresets[existingPresetIndex].ingredients = ingredientsToSave;
-            // 레거시 데이터 삭제
-            delete allPresets[existingPresetIndex].mode;
-            delete allPresets[existingPresetIndex].data;
-            
             allPresets[existingPresetIndex].timestamp = Date.now();
             currentPresetId = allPresets[existingPresetIndex].id;
         } else {
-            // 새로 추가
             const newPreset = {
                 id: `preset_${Date.now()}`,
-                name: presetName.trim(),
+                name: presetName,
                 menus: menusToSave,
                 ingredients: ingredientsToSave,
                 timestamp: Date.now()
@@ -1278,14 +1439,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
-            alert(`'${presetName.trim()}' 프리셋이 저장되었습니다.`);
+            showToast(`'${presetName}' 프리셋이 저장되었습니다.`);
             updateCurrentPresetDisplay();
-            if (presetModal.classList.contains('show')) {
-                renderPresetList(); // 모달이 열려있으면 목록 새로고침
-            }
+            if (presetModal.classList.contains('show')) renderPresetList();
         } catch (e) {
             console.error("프리셋 저장에 실패했습니다:", e);
-            alert('프리셋 저장 중 오류가 발생했습니다.');
+            showToast('프리셋 저장 중 오류가 발생했습니다.');
         }
     }
 
@@ -1315,23 +1474,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadPreset(presetId) {
         const preset = allPresets.find(p => p.id === presetId);
         if (!preset) {
-            alert('프리셋을 불러오는 데 실패했습니다.');
+            showToast('프리셋을 불러오는 데 실패했습니다.');
             return;
         }
 
-        let menusToLoad = [];
-        let ingredientsToLoad = [];
-
-        if (preset.menus || preset.ingredients) {
-            menusToLoad = preset.menus || [];
-            ingredientsToLoad = preset.ingredients || [];
-        } else if (preset.mode && preset.data) {
-            if (preset.mode === 'menu') {
-                menusToLoad = preset.data;
-            } else {
-                ingredientsToLoad = preset.data;
-            }
-        }
+        // 신규 포맷만 사용 (레거시는 loadPresetsFromStorage에서 마이그레이션됨)
+        const menusToLoad = preset.menus || [];
+        const ingredientsToLoad = preset.ingredients || [];
 
         // 메뉴 적용
         selectedMenus.clear();
@@ -1359,14 +1508,14 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCurrentPresetDisplay();
 
         presetModal.classList.remove('show');
-        alert(`'${preset.name}' 프리셋을 불러왔습니다.`);
+        showToast(`'${preset.name}' 프리셋을 불러왔습니다.`);
     }
 
     /**
      * 프리셋 업데이트 함수
-     * @param {string} presetId 
+     * @param {string} presetId
      */
-    function updatePreset(presetId) {
+    async function updatePreset(presetId) {
         const presetIndex = allPresets.findIndex(p => p.id === presetId);
         if (presetIndex === -1) return;
 
@@ -1375,27 +1524,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const ingredientsToSave = Array.from(ownedIngredients);
 
         if (menusToSave.length === 0 && ingredientsToSave.length === 0) {
-            alert('저장할 항목이 없습니다.');
+            showToast('저장할 항목이 없습니다.');
             return;
         }
 
-        if (confirm(`'${preset.name}' 프리셋을 현재 선택된 내용(메뉴 및 재료)으로 업데이트하시겠습니까?`)) {
-            allPresets[presetIndex].menus = menusToSave;
-            allPresets[presetIndex].ingredients = ingredientsToSave;
-            delete allPresets[presetIndex].mode;
-            delete allPresets[presetIndex].data;
-            allPresets[presetIndex].timestamp = Date.now();
-            
-            try {
-                localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
-                alert(`'${preset.name}' 프리셋이 업데이트되었습니다.`);
-                currentPresetId = presetId;
-                updateCurrentPresetDisplay();
-                renderPresetList();
-            } catch (e) {
-                console.error("프리셋 업데이트 실패:", e);
-                alert('프리셋 업데이트 중 오류가 발생했습니다.');
-            }
+        const confirmed = await showConfirmDialog(
+            `'${preset.name}' 프리셋을 현재 선택된 내용으로 업데이트하시겠습니까?`,
+            '업데이트'
+        );
+        if (!confirmed) return;
+
+        allPresets[presetIndex].menus = menusToSave;
+        allPresets[presetIndex].ingredients = ingredientsToSave;
+        allPresets[presetIndex].timestamp = Date.now();
+
+        try {
+            localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
+            showToast(`'${preset.name}' 프리셋이 업데이트되었습니다.`);
+            currentPresetId = presetId;
+            updateCurrentPresetDisplay();
+            if (presetModal.classList.contains('show')) renderPresetList();
+        } catch (e) {
+            console.error("프리셋 업데이트 실패:", e);
+            showToast('프리셋 업데이트 중 오류가 발생했습니다.');
         }
     }
 
@@ -1403,23 +1554,27 @@ document.addEventListener('DOMContentLoaded', () => {
      * 특정 프리셋을 삭제하는 함수
      * @param {string} presetId
      */
-    function deletePreset(presetId) {
+    async function deletePreset(presetId) {
         const presetToDelete = allPresets.find(p => p.id === presetId);
         if (!presetToDelete) return;
 
-        if (confirm(`'${presetToDelete.name}' 프리셋을 정말 삭제하시겠습니까?`)) {
-            allPresets = allPresets.filter(p => p.id !== presetId);
-            try {
-                localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
-                if (currentPresetId === presetId) {
-                    currentPresetId = null;
-                    updateCurrentPresetDisplay();
-                }
-                renderPresetList(); // 모달 목록 새로고침
-            } catch (e) {
-                console.error("프리셋 삭제에 실패했습니다:", e);
-                alert('프리셋 삭제 중 오류가 발생했습니다.');
+        const confirmed = await showConfirmDialog(
+            `'${presetToDelete.name}' 프리셋을 정말 삭제하시겠습니까?`,
+            '삭제'
+        );
+        if (!confirmed) return;
+
+        allPresets = allPresets.filter(p => p.id !== presetId);
+        try {
+            localStorage.setItem(GROCERY_PLANNER_PRESETS_KEY, JSON.stringify(allPresets));
+            if (currentPresetId === presetId) {
+                currentPresetId = null;
+                updateCurrentPresetDisplay();
             }
+            renderPresetList();
+        } catch (e) {
+            console.error("프리셋 삭제에 실패했습니다:", e);
+            showToast('프리셋 삭제 중 오류가 발생했습니다.');
         }
     }
 

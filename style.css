@@ -134,11 +134,13 @@ main {
 /* 모드별 섹션 디스플레이 처리 */
 .mode-section {
     display: none;
-    width: 100%;
 }
 
 .mode-section.active {
-    display: contents; /* flex/grid 컨텍스트를 유지하면서 자식 요소들을 부모에 직접 연결 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
 }
 
 /* 메뉴 타입 섹션 (아코디언) 스타일 */
@@ -182,6 +184,12 @@ section h2 {
     padding-bottom: 10px;
 }
 
+/* 그룹 버튼 스타일 (index.html의 인라인 style에서 이동) */
+.group-item {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
 /* 메뉴 검색창 스타일 */
 .search-container {
     margin-bottom: 15px;
@@ -190,11 +198,30 @@ section h2 {
 
 #menu-search-input {
     width: 100%;
-    padding: 10px 15px;
+    padding: 10px 40px 10px 15px; /* 오른쪽 여백 확보 (클리어 버튼 공간) */
     font-size: 1em;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--card-bg-color);
+}
+
+/* 검색창 클리어(✕) 버튼 */
+.search-clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1em;
+    color: #aaa;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+}
+
+.search-clear-btn:hover {
+    color: #555;
 }
 
 #menu-search-input:focus {
@@ -298,13 +325,13 @@ section h2 {
 }
 
 .menu-type-section.active .type-menu-list {
-    max-height: 1000px; /* 펼쳐질 때의 최대 높이 (충분히 큰 값) */
+    max-height: 5000px;
     padding: 15px;
     transition: max-height 0.5s ease-in, padding 0.2s ease-in;
 }
 
 .ingredient-category-section.active .ingredient-grid {
-    max-height: 1000px; /* 펼쳐질 때의 최대 높이 (충분히 큰 값) */
+    max-height: 5000px;
     padding: 15px;
     transition: max-height 0.5s ease-in, padding 0.2s ease-in;
 }
@@ -585,6 +612,7 @@ section h2 {
     .mode-section.active {
         flex-direction: row;
         align-items: flex-start;
+        gap: 30px;
     }
 
     .menu-container {
@@ -636,9 +664,11 @@ section h2 {
     transform: scale(1.1);
 }
 
-/* 단위 설명 모달 스타일 */
+/* 모달 공통 스타일 */
 .modal {
-    display: flex; /* 항상 flex로 두고, 투명도와 가시성으로 제어 */
+    display: flex;
+    justify-content: center; /* 기본: 중앙 정렬 */
+    align-items: center;
     position: fixed;
     z-index: 1001;
     left: 0;
@@ -646,7 +676,7 @@ section h2 {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.4);
-    
+
     /* 숨김 상태 (애니메이션 시작점) */
     opacity: 0;
     visibility: hidden;
@@ -659,18 +689,17 @@ section h2 {
     visibility: visible;
 }
 
+/* 기본 모달 콘텐츠: 중앙 배치 */
 .modal-content {
     background-color: var(--card-bg-color);
     padding: 25px 30px;
-    border: 1px solid var(--border-color);    
+    border: 1px solid var(--border-color);
     width: auto;
-    min-width: 300px; /* 최소 너비 지정 */
-    max-width: 90vw; /* 화면 너비를 넘지 않도록 */
+    min-width: 300px;
+    max-width: 90vw;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    position: absolute;
-    bottom: 90px;
-    right: 30px;
+    position: relative; /* absolute 해제 → flex 중앙 정렬 적용 */
 
     /* 나타나는 애니메이션 */
     transform: translateY(10px);
@@ -681,8 +710,19 @@ section h2 {
     transform: translateY(0);
 }
 
-/* 모달 꼬리 모양 추가 */
-.modal-content::after {
+/* 단위 설명 모달만 우측 하단 고정 (? 버튼 근처) */
+#unit-info-modal {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+#unit-info-modal .modal-content {
+    position: relative;
+    margin: 0 30px 90px 0;
+}
+
+/* 단위 설명 모달 꼬리 화살표 (unit-info 전용) */
+#unit-info-modal .modal-content::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -733,9 +773,6 @@ section h2 {
 }
 
 #group-ingredient-list li.selected {
-    background-color: #e8f5e9;
-    border-color: #4caf50;
-    color: #2e7d32;
     background-color: var(--primary-color);
     border-color: var(--primary-color);
     color: white;
@@ -824,4 +861,94 @@ section h2 {
     border-radius: 15px;
     vertical-align: middle;
     display: none;
+}
+
+/* 커스텀 다이얼로그 모달 */
+.dialog-content {
+    max-width: 400px;
+    width: 90vw;
+}
+
+.dialog-message {
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    color: var(--text-color);
+}
+
+.dialog-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1em;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.dialog-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.dialog-btn {
+    padding: 8px 20px;
+    font-size: 0.95em;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.dialog-btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+}
+
+.dialog-btn-primary:hover {
+    background-color: #357abd;
+    border-color: #357abd;
+}
+
+.dialog-btn-secondary {
+    background-color: transparent;
+    color: #666;
+    border: 1px solid #ccc;
+}
+
+.dialog-btn-secondary:hover {
+    background-color: #f0f0f0;
+}
+
+/* 토스트 알림 */
+.toast-notification {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background-color: #323232;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
 }
