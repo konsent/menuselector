@@ -110,6 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (savedState.currentPresetId && allPresets.some(p => p.id === savedState.currentPresetId)) {
                 currentPresetId = savedState.currentPresetId;
             }
+            const restoredCount = selectedMenus.size + ownedIngredients.size;
+            if (restoredCount > 0) {
+                setTimeout(() => showToast(`이전 선택 ${restoredCount}개를 불러왔습니다.`), 400);
+            }
 
             // 프리셋 표시 요소 생성
             const presetDisplay = document.createElement('span');
@@ -1028,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     missingGroups.push(ing.name);
                 }
-                return group ? `${group} [ ${ing.name} ]` : ing.name;
+                return ing.name; // 대분류(그룹) 없이 세부 재료명만 표시
             }).sort();
             const missingKey = formattedMissingIngredients.join('|');
 
@@ -1136,7 +1140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderPresetList() {
         presetListEl.innerHTML = '';
         if (allPresets.length === 0) {
-            presetListEl.innerHTML = '<li class="placeholder">저장된 프리셋이 없습니다.</li>';
+            presetListEl.innerHTML = '<li class="placeholder">저장된 프리셋이 없습니다.<br><span class="placeholder-hint">메뉴나 재료를 선택한 뒤 <b>프리셋 저장</b>을 누르면 여기에 저장됩니다.</span></li>';
             return;
         }
 
