@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return indexA - indexB; // 커스텀 순서대로 정렬
         });
 
-        sortedTypes.forEach((type, index) => {
+        sortedTypes.forEach((type) => {
             const typeSection = document.createElement('div');
             typeSection.classList.add('menu-type-section');
 
@@ -179,10 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
             typeHeading.textContent = type;
             typeHeading.setAttribute('role', 'button');
             typeHeading.setAttribute('tabindex', '0');
-            typeHeading.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
-
-            // 첫 번째 카테고리는 기본으로 열기
-            if (index === 0) typeSection.classList.add('active');
+            typeHeading.setAttribute('aria-expanded', 'false');
 
             typeSection.appendChild(typeHeading);
 
